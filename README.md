@@ -3,9 +3,9 @@ jPasswortBunker Zielvereinbarung
 
 **Projektmitglieder**
 _____________________
-*Michael Kopp
-*Marcel Eglseder
-*Günther Wagenhuber
+..* Michael Kopp
+..* Marcel Eglseder
+..* Günther Wagenhuber
 
 **Zweck**
 _________
