@@ -7,9 +7,11 @@ _____________________
 * Marcel Eglseder
 * Günther Wagenhuber
 
+
 **Zweck**
 _________
 Im Rahmen der Projektarbeit im Fach Programmieren wird eine Client Java-Anwendung erstellt, dokumentiert und vorgestellt. Die Anwendung mit der Bezeichnung jPasswortBunker soll eine Software zur sicheren Verwaltung von Passwörtern darstellen.
+
 
 **Ziel**
 ________
@@ -24,6 +26,7 @@ Passwörter sollen mittels der Zwischenablage des Betriebssystems aus dem Passwo
 
 Bei Änderung eines Passwortes, soll mittels einer Historien-Funktion, auf das Vorgänger-Passwort zugegriffen werden können. Ebenso soll beim Löschen eines kompletten Datensatzes mittels Historien-Funktion auf den gelöschten Eintrag zugegriffen werden können.
 
+
 **Strukturierte objektorientierte Programmierung**
 __________________________________________________
 Das Programm wird so entwickelt, dass es
@@ -33,6 +36,7 @@ Das Programm wird so entwickelt, dass es
 *modular aufgebaut ist (GUI / Logik / Datenbank)
 *die in der Zielvereinbarung beschriebenen Funktionen erfüllt
 
+
 **Datenbank**
 _____________
 * Strukturierte und organisierte Datenerfassung der Zugangsdaten mit folgenden Inhalten:
@@ -41,6 +45,7 @@ _____________
 * Passwort
 * Url für Websites
 * Zusätzliche Anmerkungen
+
 
 **Ausschluss**
 ______________
