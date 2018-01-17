@@ -2,7 +2,7 @@ jPasswortBunker Zielvereinbarung
 ================================
 
 [logo]:https://github.com/gbs-technikum/JPasswortBunker/blob/master/logoJpasswortBunker.png
-![nur ein Beispiel](https://commons.wikimedia.org/wiki/File:Example_de.jpg "Beispielbild")
+![Logo](https://github.com/gbs-technikum/JPasswortBunker/blob/master/logoJpasswortBunker.png "Logo")
 
 **Projektmitglieder**
 _____________________
