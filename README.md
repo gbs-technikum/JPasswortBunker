@@ -29,9 +29,9 @@ Passwörter sollen mittels der Zwischenablage des Betriebssystems aus dem Passwo
 Bei Änderung eines Passwortes, soll mittels einer Historien-Funktion, auf das Vorgänger-Passwort zugegriffen werden können. Ebenso soll beim Löschen eines kompletten Datensatzes mittels Historien-Funktion auf den gelöschten Eintrag zugegriffen werden können.
 
 
-## **Strukturierte objektorientierte Programmierung**
+**Strukturierte objektorientierte Programmierung**
 __________________________________________________
-#### Das Programm wird so entwickelt, dass es
+**Das Programm wird so entwickelt, dass es**
 * durch seine Plattformunabhängigkeit auf möglichst vielen Systemen ohne aufwendige Installation lauffähig, lediglich eine Java Laufzeitumgebung  ab Version 1.7 wird benötigt um alle Funktionen des Package Java Cryptography Extension bereitzustellen
 * Passwörter werden verschlüsselt in einer lokalen SQL Datenbank abgelegt
 * eine intuitive Oberfläche auf Basis von JavaFX besitzt
