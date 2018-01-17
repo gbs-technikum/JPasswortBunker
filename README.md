@@ -1,6 +1,8 @@
 jPasswortBunker Zielvereinbarung
 ================================
 
+[logo]:https://github.com/gbs-technikum/JPasswortBunker/blob/master/logoJpasswortBunker.png
+
 **Projektmitglieder**
 _____________________
 * Michael Kopp
