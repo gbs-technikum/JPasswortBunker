@@ -2,6 +2,7 @@ jPasswortBunker Zielvereinbarung
 ================================
 
 [logo]:https://github.com/gbs-technikum/JPasswortBunker/blob/master/logoJpasswortBunker.png
+![nur ein Beispiel](https://commons.wikimedia.org/wiki/File:Example_de.jpg "Beispielbild")
 
 **Projektmitglieder**
 _____________________
@@ -9,12 +10,12 @@ _____________________
 * Marcel Eglseder
 * Günther Wagenhuber
 
-
+  
 **Zweck**
 _________
 Im Rahmen der Projektarbeit im Fach Programmieren wird eine Client Java-Anwendung erstellt, dokumentiert und vorgestellt. Die Anwendung mit der Bezeichnung jPasswortBunker soll eine Software zur sicheren Verwaltung von Passwörtern darstellen.
 
-
+  
 **Ziel**
 ________
 Der Anwender soll über eine intuitive grafische Oberfläche in der Lage sein, beliebige Zugänge bzw. Anmelde/Login-Daten zu verwalten. Diese Daten werden zusammen mit begleitenden Informationen wie URLs und Beschreibungen in einer lokalen Datenbank gespeichert. 
