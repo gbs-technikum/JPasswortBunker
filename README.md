@@ -4,8 +4,8 @@ jPasswortBunker Zielvereinbarung
 **Projektmitglieder**
 _____________________
 * Michael Kopp
-..* Marcel Eglseder
-..* Günther Wagenhuber
+* Marcel Eglseder
+* Günther Wagenhuber
 
 **Zweck**
 _________
@@ -35,13 +35,13 @@ Das Programm wird so entwickelt, dass es
 
 **Datenbank**
 _____________
-*Strukturierte und organisierte Datenerfassung der Zugangsdaten mit folgenden Inhalten:
-*Bezeichnung des Zugangs
-*Benutzername
-*Passwort
-*Url für Websites
-*Zusätzliche Anmerkungen
+* Strukturierte und organisierte Datenerfassung der Zugangsdaten mit folgenden Inhalten:
+* Bezeichnung des Zugangs
+* Benutzername
+* Passwort
+* Url für Websites
+* Zusätzliche Anmerkungen
 
 **Ausschluss**
 ______________
-Die Anwendung wird das direkte Übertragen von Zugangsdaten in Browser nicht unterstützen
+* Die Anwendung wird das direkte Übertragen von Zugangsdaten in Browser nicht unterstützen
