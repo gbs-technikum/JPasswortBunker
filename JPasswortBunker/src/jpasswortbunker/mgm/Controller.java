@@ -1,4 +1,4 @@
-package sample;
+package jpasswortbunker.mgm;
 
 public class Controller {
 }
