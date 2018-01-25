@@ -25,14 +25,10 @@ public class MainInterfaceController {
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network;
 
     @FXML
-    private AnchorPane pane_finance, pane_social;
-
-    @FXML
-    private AnchorPane pane_ddd;
-
+    private AnchorPane pane_finance, pane_social, pane_email, pane_network;
 
     public void test(ActionEvent actionEvent) {
         System.out.println("Test Button");
