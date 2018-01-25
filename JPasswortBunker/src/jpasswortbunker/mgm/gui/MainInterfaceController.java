@@ -1,5 +1,6 @@
 package jpasswortbunker.mgm.gui;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,34 +25,43 @@ public class MainInterfaceController {
     private Locale locale;
 
     @FXML
-    private Menu btn_File;
+    private JFXButton btn_finance, btn_social;
 
     @FXML
-    private Menu btn_Edit;
+    private AnchorPane pane_finance, pane_social;
 
     @FXML
-    private Menu btn_Help;
-
-    @FXML
-    private Menu btn_Settings;
-
-    @FXML
-    private Menu btn_Language;
+    private AnchorPane pane_ddd;
 
 
+    public void test(ActionEvent actionEvent) {
+        System.out.println("Test Button");
+    }
+
+    public void btn_finance(ActionEvent actionEvent) {
+        System.out.println("test btn_finance");
+        pane_finance.setVisible(true);
+        pane_social.setVisible(false);
+    }
+
+    public void btn_social(ActionEvent actionEvent) {
+        System.out.println("test btn_social");
+        pane_social.setVisible(true);
+        pane_finance.setVisible(false);
+    }
 
 
-    public void newEntry(MouseEvent actionEvent) throws IOException {
-        System.out.println("neuer Eintrag wurde erstellt");
+//    public void newEntry(MouseEvent actionEvent) throws IOException {
+//        System.out.println("neuer Eintrag wurde erstellt");
 
-        //neues Fenster im Vordergrund
-        Stage stage2 = new Stage();
-        Parent root2 = FXMLLoader.load(getClass().getResource("NewEntry.fxml"));
-        Scene scene2 = new Scene(root2, 500, 400);
-        stage2.setTitle("zweites Fenster");
-        stage2.setScene(scene2);
-        stage2.setAlwaysOnTop(true);
-        stage2.show();
+//        //neues Fenster im Vordergrund
+//        Stage stage2 = new Stage();
+//        Parent root2 = FXMLLoader.load(getClass().getResource("NewEntry.fxml"));
+//        Scene scene2 = new Scene(root2, 500, 400);
+//        stage2.setTitle("zweites Fenster");
+//        stage2.setScene(scene2);
+//        stage2.setAlwaysOnTop(true);
+//        stage2.show();
 
         //Neues Fenster, altes wird geschlossen
 //        Parent home_page_parent = FXMLLoader.load(getClass().getResource("NewEntry.fxml"));
@@ -59,39 +70,37 @@ public class MainInterfaceController {
 //        app_stage.setScene(home_page_scene);
 //        app_stage.show();
 
+//    }
 
-    }
+//
+//    public void save(MouseEvent actionEvent) {
+//        System.out.println("Datenbank gespeichert");
+//    }
+//
+//
 
+//
+//    public void btn_lang_en(ActionEvent actionEvent) {
+//        System.out.println("Englisch");
+//        loadLang("en");
+//    }
+//
+//    public void btn_lang_de(ActionEvent actionEvent) {
+//        System.out.println("Deutsch");
+//        loadLang("de");
+//    }
+//
+//
+//    private void loadLang(String lang) {
+//        locale = new Locale(lang);
+//        bundle = ResourceBundle.getBundle("sample.gui.lang", locale);
+//        labelTest.setText(bundle.getString("labelTest"));
+//        btn_File.setText(bundle.getString("btn_File"));
+//        btn_Settings.setText(bundle.getString("btn_Settings"));
+//        btn_Language.setText(bundle.getString("btn_Language"));
+//        btn_Edit.setText(bundle.getString("btn_Edit"));
+//        btn_Help.setText(bundle.getString("btn_Help"));
+//
+//    }
 
-    public void save(MouseEvent actionEvent) {
-        System.out.println("Datenbank gespeichert");
-    }
-
-    public void test(ActionEvent actionEvent) {
-        System.out.println("Test Button in toolbar");
-    }
-
-
-    public void btn_lang_en(ActionEvent actionEvent) {
-        System.out.println("Englisch");
-        loadLang("en");
-    }
-
-    public void btn_lang_de(ActionEvent actionEvent) {
-        System.out.println("Deutsch");
-        loadLang("de");
-    }
-
-
-    private void loadLang(String lang) {
-        locale = new Locale(lang);
-        bundle = ResourceBundle.getBundle("sample.gui.lang", locale);
-        labelTest.setText(bundle.getString("labelTest"));
-        btn_File.setText(bundle.getString("btn_File"));
-        btn_Settings.setText(bundle.getString("btn_Settings"));
-        btn_Language.setText(bundle.getString("btn_Language"));
-        btn_Edit.setText(bundle.getString("btn_Edit"));
-        btn_Help.setText(bundle.getString("btn_Help"));
-
-    }
 }
