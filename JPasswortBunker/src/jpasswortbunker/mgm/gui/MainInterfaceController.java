@@ -25,10 +25,10 @@ public class MainInterfaceController {
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social, btn_email, btn_network;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings;
 
     @FXML
-    private AnchorPane pane_finance, pane_social, pane_email, pane_network;
+    private AnchorPane pane_finance, pane_social, pane_email, pane_network, pane_settings;
 
     public void test(ActionEvent actionEvent) {
         System.out.println("Test Button");
@@ -44,6 +44,18 @@ public class MainInterfaceController {
         System.out.println("test btn_social");
         pane_social.setVisible(true);
         pane_finance.setVisible(false);
+    }
+
+    public void btn_email(ActionEvent actionEvent) {
+        System.out.println("email");
+    }
+
+    public void btn_network(ActionEvent actionEvent) {
+        System.out.println("network");
+    }
+
+    public void btn_settings(ActionEvent actionEvent) {
+        System.out.println("settings");
     }
 
 

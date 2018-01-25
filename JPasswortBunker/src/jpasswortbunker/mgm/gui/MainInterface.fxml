@@ -37,7 +37,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="11.0" layoutY="176.0" onAction="#test" prefHeight="49.0" prefWidth="178.0" text="   E-Mail" textFill="WHITE">
+            <JFXButton fx:id="btn_email" layoutX="11.0" layoutY="176.0" onAction="#btn_email" prefHeight="49.0" prefWidth="178.0" text="   E-Mail" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -49,19 +49,19 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="11.0" layoutY="234.0" onAction="#test" prefHeight="49.0" prefWidth="178.0" text="   Button" textFill="WHITE">
+            <JFXButton fx:id="btn_network" layoutX="11.0" layoutY="234.0" onAction="#btn_network" prefHeight="49.0" prefWidth="178.0" text="Network" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="23.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="27.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/logo.png" />
+                        <Image url="@images/wifi_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="467.0" onAction="#test" prefHeight="49.0" prefWidth="178.0" text="   Settings" textFill="WHITE">
+            <JFXButton fx:id="btn_settings" layoutX="10.0" layoutY="467.0" onAction="#btn_settings" prefHeight="49.0" prefWidth="178.0" text="   Settings" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
