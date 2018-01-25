@@ -38,24 +38,45 @@ public class MainInterfaceController {
         System.out.println("test btn_finance");
         pane_finance.setVisible(true);
         pane_social.setVisible(false);
+        pane_email.setVisible(false);
+        pane_network.setVisible(false);
+        pane_settings.setVisible(false);
     }
 
     public void btn_social(ActionEvent actionEvent) {
         System.out.println("test btn_social");
         pane_social.setVisible(true);
         pane_finance.setVisible(false);
+        pane_email.setVisible(false);
+        pane_network.setVisible(false);
+        pane_settings.setVisible(false);
     }
 
     public void btn_email(ActionEvent actionEvent) {
         System.out.println("email");
+        pane_email.setVisible(true);
+        pane_social.setVisible(false);
+        pane_finance.setVisible(false);
+        pane_network.setVisible(false);
+        pane_settings.setVisible(false);
     }
 
     public void btn_network(ActionEvent actionEvent) {
         System.out.println("network");
+        pane_network.setVisible(true);
+        pane_social.setVisible(false);
+        pane_finance.setVisible(false);
+        pane_email.setVisible(false);
+        pane_settings.setVisible(false);
     }
 
     public void btn_settings(ActionEvent actionEvent) {
         System.out.println("settings");
+        pane_settings.setVisible(true);
+        pane_social.setVisible(false);
+        pane_finance.setVisible(false);
+        pane_email.setVisible(false);
+        pane_network.setVisible(false);
     }
 
 
