@@ -5,10 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 
-import java.io.*;
+import java.io.FileNotFoundException;
 
-public class SetMasterKeyController {
-
+public class SetMasterPasswordController {
 
     @FXML
     private PasswordField password_box;
@@ -28,7 +27,8 @@ public class SetMasterKeyController {
     }
 
     private boolean equalsPasswordwithList(String password) throws FileNotFoundException {
-       new BufferedReader()br =
+        //new BufferedReader()br =
+        return false;
     }
 
     private boolean equalsPassword(String password) {
