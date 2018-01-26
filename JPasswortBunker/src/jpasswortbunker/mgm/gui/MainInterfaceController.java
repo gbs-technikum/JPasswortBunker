@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -25,10 +26,22 @@ public class MainInterfaceController {
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry;
 
     @FXML
-    private AnchorPane pane_finance, pane_social, pane_email, pane_network, pane_settings;
+    private ImageView btn_logo;
+
+    @FXML
+    private AnchorPane pane_start, pane_finance, pane_social, pane_email, pane_network, pane_settings;
+
+    //public MainInterfaceController() {
+    //    pane_start.setVisible(true);
+    //    pane_finance.setVisible(false);
+    //    pane_social.setVisible(false);
+    //    pane_email.setVisible(false);
+    //    pane_network.setVisible(false);
+    //    pane_settings.setVisible(false);
+    //}
 
     public void test(ActionEvent actionEvent) {
         System.out.println("Test Button");
@@ -37,6 +50,7 @@ public class MainInterfaceController {
     public void btn_finance(ActionEvent actionEvent) {
         System.out.println("test btn_finance");
         pane_finance.setVisible(true);
+        pane_start.setVisible(false);
         pane_social.setVisible(false);
         pane_email.setVisible(false);
         pane_network.setVisible(false);
@@ -46,6 +60,7 @@ public class MainInterfaceController {
     public void btn_social(ActionEvent actionEvent) {
         System.out.println("test btn_social");
         pane_social.setVisible(true);
+        pane_start.setVisible(false);
         pane_finance.setVisible(false);
         pane_email.setVisible(false);
         pane_network.setVisible(false);
@@ -55,6 +70,7 @@ public class MainInterfaceController {
     public void btn_email(ActionEvent actionEvent) {
         System.out.println("email");
         pane_email.setVisible(true);
+        pane_start.setVisible(false);
         pane_social.setVisible(false);
         pane_finance.setVisible(false);
         pane_network.setVisible(false);
@@ -64,6 +80,7 @@ public class MainInterfaceController {
     public void btn_network(ActionEvent actionEvent) {
         System.out.println("network");
         pane_network.setVisible(true);
+        pane_start.setVisible(false);
         pane_social.setVisible(false);
         pane_finance.setVisible(false);
         pane_email.setVisible(false);
@@ -73,10 +90,36 @@ public class MainInterfaceController {
     public void btn_settings(ActionEvent actionEvent) {
         System.out.println("settings");
         pane_settings.setVisible(true);
+        pane_start.setVisible(false);
         pane_social.setVisible(false);
         pane_finance.setVisible(false);
         pane_email.setVisible(false);
         pane_network.setVisible(false);
+    }
+
+    public void btn_logo(MouseEvent mouseEvent) {
+        System.out.println("start");
+        pane_start.setVisible(true);
+        pane_settings.setVisible(false);
+        pane_social.setVisible(false);
+        pane_finance.setVisible(false);
+        pane_email.setVisible(false);
+        pane_network.setVisible(false);
+    }
+
+    public void btn_newEntry() {
+        Stage stageNewEntry = new Stage();
+        Parent parentNewEntry = null;
+        try {
+            parentNewEntry = FXMLLoader.load(getClass().getResource("NewEntry.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene2 = new Scene(parentNewEntry, 300, 400);
+        stageNewEntry.setTitle("zweites Fenster");
+        stageNewEntry.setScene(scene2);
+        stageNewEntry.setAlwaysOnTop(true);
+        stageNewEntry.show();
     }
 
 
