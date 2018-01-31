@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -34,6 +35,8 @@ public class MainInterfaceController {
     @FXML
     private AnchorPane pane_start, pane_finance, pane_social, pane_email, pane_network, pane_settings;
 
+
+
     //public MainInterfaceController() {
     //    pane_start.setVisible(true);
     //    pane_finance.setVisible(false);
@@ -55,6 +58,7 @@ public class MainInterfaceController {
         pane_email.setVisible(false);
         pane_network.setVisible(false);
         pane_settings.setVisible(false);
+
     }
 
     public void btn_social(ActionEvent actionEvent) {
@@ -116,11 +120,13 @@ public class MainInterfaceController {
             e.printStackTrace();
         }
         Scene scene2 = new Scene(parentNewEntry, 300, 400);
-        stageNewEntry.setTitle("zweites Fenster");
+        stageNewEntry.setTitle("New Entry");
         stageNewEntry.setScene(scene2);
         stageNewEntry.setAlwaysOnTop(true);
         stageNewEntry.show();
+        stageNewEntry.setResizable(false);
     }
+
 
 
 //    public void newEntry(MouseEvent actionEvent) throws IOException {
@@ -174,5 +180,7 @@ public class MainInterfaceController {
 //        btn_Help.setText(bundle.getString("btn_Help"));
 //
 //    }
+
+
 
 }
