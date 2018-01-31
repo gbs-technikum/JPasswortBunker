@@ -31,7 +31,9 @@ public class Main {
         System.out.println("__________________Test Hashfunktion____________________");
         HashService hashService = new HashService();
         System.out.println(hashService.getAlgorithm());
-        System.out.println(hashService.setValueToHash("Franz jagt im komplett verwahrlosten Taxi quer durch Bayern"));
+//        System.out.println(hashService.setValueToHash("Franz jagt im komplett verwahrlosten Taxi quer durch Bayern"));
+
+        System.out.println(hashService.getHashValue("a"));
 
 
     }

@@ -1,9 +1,11 @@
 package model;
 
+
 import javax.xml.bind.DatatypeConverter;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 public class HashService {
 
@@ -26,11 +28,15 @@ public class HashService {
      * @return String hashValue
      * @throws UnsupportedEncodingException
      */
-    public String setValueToHash(String stringToHash) throws UnsupportedEncodingException {
+    public String getHashValue(String stringToHash) throws UnsupportedEncodingException {
         messageDigest.update(stringToHash.getBytes("UTF-8"));
         valueToHashByteArray = messageDigest.digest();
-        String hashValue = DatatypeConverter.printHexBinary(valueToHashByteArray);
-        return hashValue;
+        /*String hashValue = DatatypeConverter.printHexBinary(valueToHashByteArray);
+        return hashValue;*/
+
+        return Base64.getEncoder().encodeToString(valueToHashByteArray);
+        System.out.println(String.format("%040x", new BigInteger(1, decoded)));
+
     }
 
 
