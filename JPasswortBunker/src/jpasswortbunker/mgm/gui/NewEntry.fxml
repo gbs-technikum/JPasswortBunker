@@ -5,14 +5,13 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="300.0" prefHeight="372.0" prefWidth="311.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="300.0" prefHeight="372.0" prefWidth="311.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.gui.NewEntryController">
    <children>
-      <JFXTextField layoutX="85.0" layoutY="102.0" promptText="Title" />
       <AnchorPane prefHeight="66.0" prefWidth="311.0" style="-fx-background-color: #0747A6;">
          <children>
             <Label layoutX="91.0" layoutY="16.0" text="NEW ENTRY" textFill="WHITE">
@@ -22,6 +21,7 @@
             </Label>
          </children>
       </AnchorPane>
+      <JFXTextField layoutX="85.0" layoutY="102.0" promptText="Title" />
       <JFXTextField layoutX="85.0" layoutY="135.0" promptText="Username" />
       <JFXPasswordField layoutX="85.0" layoutY="174.0" promptText="Password" />
       <JFXPasswordField layoutX="85.0" layoutY="217.0" promptText="Repeat Password" />
@@ -33,13 +33,13 @@
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <MenuButton id="Categorie_MenuBox" fx:id="Categorie_MenuBox" layoutX="111.0" layoutY="77.0" mnemonicParsing="false" text="Categorie" textOverrun="CLIP">
+      <SplitMenuButton fx:id="categorie_menuBox" layoutX="107.0" layoutY="77.0" mnemonicParsing="false" text="Categorie">
         <items>
-          <MenuItem mnemonicParsing="false" text="Finance" />
-          <MenuItem mnemonicParsing="false" text="Social" />
-            <MenuItem mnemonicParsing="false" text="E-Mail" />
-            <MenuItem mnemonicParsing="false" text="Network" />
+          <MenuItem fx:id="menuItem1" mnemonicParsing="false" text="Finance" />
+          <MenuItem fx:id="menuItem2" mnemonicParsing="false" text="Social" />
+            <MenuItem fx:id="menuItem3" mnemonicParsing="false" text="E-Mail" />
+            <MenuItem fx:id="menuItem4" mnemonicParsing="false" text="Network" />
         </items>
-      </MenuButton>
+      </SplitMenuButton>
    </children>
 </AnchorPane>
