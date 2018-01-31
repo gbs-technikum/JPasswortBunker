@@ -28,6 +28,11 @@ public class Main {
         String entschlüselt = encryptionService.decrypt(verschlüsselt);
         System.out.println(entschlüselt);
 
+        System.out.println("__________________Test Hashfunktion____________________");
+        HashService hashService = new HashService();
+        System.out.println(hashService.getAlgorithm());
+        System.out.println(hashService.setValueToHash("A"));
+
 
     }
 }

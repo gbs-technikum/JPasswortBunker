@@ -1,35 +1,48 @@
 package model;
 
+import javax.xml.bind.DatatypeConverter;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class HashService {
 
-/*
-    StringBuilder stringBuilder = new StringBuilder();
+    private MessageDigest messageDigest;
+    private byte[] valueToHashByteArray;
 
 
-
-    MessageDigest md = null;
-        try {
-        md = MessageDigest.getInstance("SHA");
-    } catch (NoSuchAlgorithmException e) {
-        e.printStackTrace();
+    /** Konstruktor erzeugt ein Object der Klasse MessageDigest und initialsiert diesen für die Verwendung von HASH-Algorithmus SHA-512.
+     *
+     * @throws NoSuchAlgorithmException
+     */
+    public HashService() throws NoSuchAlgorithmException {
+        this.messageDigest = MessageDigest.getInstance("SHA-512");
     }
 
-    //Zeichen zu MD-Object hinzufügen
-        md.update("abc".getBytes());
 
-    //Inhalt MD-Object verschlüssseln und Byte[] Array zuweisen
-    byte[] digest = md.digest();
-
-    //Ausgabe des Arrays
-        for (byte b : digest) {
-        stringBuilder.append(b);
-        //System.out.printf("%02x", b);
-        System.out.println(b);
+    /** Erzeugt Hashwert mittels des Algorithmus SHA-512
+     *
+     * @param stringToHash
+     * @return String hashValue
+     * @throws UnsupportedEncodingException
+     */
+    public String setValueToHash(String stringToHash) throws UnsupportedEncodingException {
+        messageDigest.update(stringToHash.getBytes("UTF-8"));
+        valueToHashByteArray = messageDigest.digest();
+        String hashValue = DatatypeConverter.printHexBinary(valueToHashByteArray);
+        return hashValue;
     }
-        System.out.println(stringBuilder);*/
+
+
+    /**Gibt den Namen des verwendeten Hash-Algorithmus aus.
+     *
+     * @return
+     */
+    public String getAlgorithm() {
+        return messageDigest.getAlgorithm();
+    }
+
+
 
 
 }
