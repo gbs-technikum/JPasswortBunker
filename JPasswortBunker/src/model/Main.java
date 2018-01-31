@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 public class Main {
     public static void main(String[] args) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
 
-        PasswordObject.getInstance().setPassword("supergeheim");
+        PasswordObject.getInstance().setPassword("WagenhuberWagenhuberWagenhuberWa");
         System.out.println(PasswordObject.getInstance().getPassword());
 
 
@@ -31,7 +31,7 @@ public class Main {
         System.out.println("__________________Test Hashfunktion____________________");
         HashService hashService = new HashService();
         System.out.println(hashService.getAlgorithm());
-        System.out.println(hashService.setValueToHash("A"));
+        System.out.println(hashService.setValueToHash("Franz jagt im komplett verwahrlosten Taxi quer durch Bayern"));
 
 
     }

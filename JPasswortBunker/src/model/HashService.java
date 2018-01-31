@@ -11,16 +11,16 @@ public class HashService {
     private byte[] valueToHashByteArray;
 
 
-    /** Konstruktor erzeugt ein Object der Klasse MessageDigest und initialsiert diesen für die Verwendung von HASH-Algorithmus SHA-512.
+    /** Konstruktor erzeugt ein Object der Klasse MessageDigest und initialsiert diesen für die Verwendung von HASH-Algorithmus SHA-265.
      *
      * @throws NoSuchAlgorithmException
      */
     public HashService() throws NoSuchAlgorithmException {
-        this.messageDigest = MessageDigest.getInstance("SHA-512");
+        this.messageDigest = MessageDigest.getInstance("SHA-256");
     }
 
 
-    /** Erzeugt Hashwert mittels des Algorithmus SHA-512
+    /** Erzeugt Hashwert und gibt diesen als String in HEX-Code aus.
      *
      * @param stringToHash
      * @return String hashValue

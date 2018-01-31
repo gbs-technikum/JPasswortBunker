@@ -23,7 +23,7 @@ public class EncryptionService {
     public EncryptionService() throws UnsupportedEncodingException, NoSuchPaddingException, NoSuchAlgorithmException {
         this.password = PasswordObject.getInstance().getPassword();
         this.keyByteArray = password.getBytes("UTF-8");
-        this.keyByteArray = Arrays.copyOf(keyByteArray, 16);
+        this.keyByteArray = Arrays.copyOf(keyByteArray, 32);
         this.secretKeySpec = new SecretKeySpec(keyByteArray, "AES");
         this.cipher = Cipher.getInstance("AES");
     }
