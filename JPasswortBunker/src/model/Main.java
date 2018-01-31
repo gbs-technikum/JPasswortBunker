@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 public class Main {
     public static void main(String[] args) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
 
-        PasswordObject.getInstance().setPassword("WagenhuberWagenhuberWagenhuberWa");
+        PasswordObject.getInstance().setPassword("a");
         System.out.println(PasswordObject.getInstance().getPassword());
 
 
@@ -29,12 +29,20 @@ public class Main {
         System.out.println(entschlüselt);
 
         System.out.println("__________________Test Hashfunktion____________________");
-        HashService hashService = new HashService();
-        System.out.println(hashService.getAlgorithm());
-//        System.out.println(hashService.setValueToHash("Franz jagt im komplett verwahrlosten Taxi quer durch Bayern"));
+        HashService hashServiceMD5 = new HashService("MD5");
+        HashService hashServiceSHA256 = new HashService("SHA-256");
 
-        System.out.println(hashService.getHashValue("a"));
+        System.out.println(hashServiceMD5.getAlgorithm());
+        System.out.println(hashServiceMD5.getHashValue("wagenhuber"));
+        System.out.println(hashServiceSHA256.getAlgorithm());
+        System.out.println(hashServiceSHA256.getHashValue("wagenhuber"));
+
+        System.out.println("____________Test Passwort Hash______________");
 
 
+        byte[] a = hashServiceMD5.getHashValue(PasswordObject.getInstance().getPassword()).getBytes();
+        System.out.println(a.length);
+        byte[] b = hashServiceSHA256.getHashValue(PasswordObject.getInstance().getPassword()).getBytes();
+        System.out.println(b.length);
     }
 }

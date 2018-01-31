@@ -13,7 +13,6 @@ import java.util.Arrays;
 public class EncryptionService {
 
 
-    private String geheimeDaten;
     private SecretKeySpec secretKeySpec;
     private byte[] keyByteArray;
     private byte[] geheimeDatenByteArray;
@@ -38,23 +37,16 @@ public class EncryptionService {
         this.geheimeDatenByteArray = geheimeDaten.getBytes();
         cipher.init(Cipher.ENCRYPT_MODE, this.secretKeySpec);
         byte[] verschluesselteDatenByteArray = cipher.doFinal(geheimeDatenByteArray);
-        /*String geheimeDatenNachVerschluesselung = new String(verschluesselteDatenByteArray, "UTF-8");
-        return geheimeDatenNachVerschluesselung;*/
         return verschluesselteDatenByteArray;
     }
 
 
     public String decrypt(byte[] verschluesselteDatenByteArray) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
-        //byte[] verschluesselteDatenByteArray = verschluesselteGeheimeDaten.getBytes();
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
         byte[] entschluesselteDatenByteArray = cipher.doFinal(verschluesselteDatenByteArray);
         String geheimeDatenNachEntschluesselung = new String(entschluesselteDatenByteArray, "UTF-8");
         return geheimeDatenNachEntschluesselung;
     }
-
-
-
-
 
 
 

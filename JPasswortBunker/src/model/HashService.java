@@ -1,11 +1,11 @@
 package model;
 
 
-import javax.xml.bind.DatatypeConverter;
+import org.apache.commons.codec.binary.Hex;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
+
 
 public class HashService {
 
@@ -13,17 +13,17 @@ public class HashService {
     private byte[] valueToHashByteArray;
 
 
-    /** Konstruktor erzeugt ein Object der Klasse MessageDigest und initialsiert diesen für die Verwendung von HASH-Algorithmus SHA-265.
+    /** Konstruktor erzeugt ein Object der Klasse MessageDigest und initialsiert diesen für die Verwendung eines HASH-Algorithmus welcher übergeben wird
      *
      * @throws NoSuchAlgorithmException
      */
-    public HashService() throws NoSuchAlgorithmException {
-        this.messageDigest = MessageDigest.getInstance("SHA-256");
+    public HashService(String hashTyp) throws NoSuchAlgorithmException {
+        this.messageDigest = MessageDigest.getInstance(hashTyp);
     }
 
 
     /** Erzeugt Hashwert und gibt diesen als String in HEX-Code aus.
-     *
+     * Codierung Hex-String via External Libary Apache Common Codec
      * @param stringToHash
      * @return String hashValue
      * @throws UnsupportedEncodingException
@@ -31,12 +31,8 @@ public class HashService {
     public String getHashValue(String stringToHash) throws UnsupportedEncodingException {
         messageDigest.update(stringToHash.getBytes("UTF-8"));
         valueToHashByteArray = messageDigest.digest();
-        /*String hashValue = DatatypeConverter.printHexBinary(valueToHashByteArray);
-        return hashValue;*/
-
-        return Base64.getEncoder().encodeToString(valueToHashByteArray);
-        System.out.println(String.format("%040x", new BigInteger(1, decoded)));
-
+        String sha256hex = Hex.encodeHexString(valueToHashByteArray);
+        return sha256hex;
     }
 
 
