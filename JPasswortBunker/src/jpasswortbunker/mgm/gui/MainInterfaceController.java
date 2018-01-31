@@ -107,6 +107,8 @@ public class MainInterfaceController {
         pane_network.setVisible(false);
     }
 
+
+
     public void btn_newEntry() {
         Stage stageNewEntry = new Stage();
         Parent parentNewEntry = null;

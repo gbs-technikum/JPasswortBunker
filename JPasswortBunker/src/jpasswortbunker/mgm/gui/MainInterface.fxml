@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.gui.MainInterfaceController">
    <children>
-      <AnchorPane layoutX="200.0" prefHeight="70.0" prefWidth="700.0" style="-fx-background-color: #0747A6;">
+      <AnchorPane id="topBar" layoutX="200.0" prefHeight="70.0" prefWidth="700.0">
          <children>
             <JFXTextField focusColor="WHITE" layoutX="184.0" layoutY="12.0" prefHeight="41.0" prefWidth="297.0" promptText="    Search...." style="-fx-prompt-text-fill: white; -fx-text-inner-color: white; -fx-background-color: #0c50b5;" unFocusColor="#d3cece">
                <font>
@@ -34,7 +34,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #0747A6;">
+      <AnchorPane id="sideBar" prefHeight="600.0" prefWidth="200.0" stylesheets="@style/default_style.css">
          <children>
             <JFXButton fx:id="btn_newEntry" layoutX="11.0" layoutY="101.0" onAction="#btn_finance" prefHeight="49.0" prefWidth="178.0" text="   Finance" textFill="WHITE">
                <font>
