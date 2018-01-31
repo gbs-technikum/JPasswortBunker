@@ -10,8 +10,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("gui/SetMasterPassword.fxml"));
-        primaryStage.setTitle("jPasswordBunker");
+        Parent root = FXMLLoader.load(getClass().getResource("gui/LoginScreen2.fxml"));
+        primaryStage.setTitle("loginScreen2");
         primaryStage.setScene(new Scene(root, 390, 310));
         primaryStage.show();
     }

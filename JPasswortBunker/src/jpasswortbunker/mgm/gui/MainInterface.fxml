@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -12,11 +13,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="548.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.gui.MainInterfaceController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.gui.MainInterfaceController">
    <children>
-      <AnchorPane layoutX="-3.0" prefHeight="548.0" prefWidth="201.0" style="-fx-background-color: #0747A6;">
+      <AnchorPane layoutX="200.0" prefHeight="70.0" prefWidth="700.0" style="-fx-background-color: #0747A6;">
          <children>
-            <JFXButton fx:id="btn_newEntry" layoutX="12.0" layoutY="82.0" onAction="#btn_finance" prefHeight="49.0" prefWidth="178.0" text="   Finance" textFill="WHITE">
+            <JFXTextField focusColor="WHITE" layoutX="184.0" layoutY="12.0" prefHeight="41.0" prefWidth="297.0" promptText="    Search...." style="-fx-prompt-text-fill: white; -fx-text-inner-color: white; -fx-background-color: #0c50b5;" unFocusColor="#d3cece">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXTextField>
+            <JFXButton layoutX="14.0" layoutY="11.0" onAction="#btn_newEntry" prefHeight="44.0" prefWidth="156.0" text="NEW Entry" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="41.0" fitWidth="31.0" layoutX="14.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/plus_icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #0747A6;">
+         <children>
+            <JFXButton fx:id="btn_newEntry" layoutX="11.0" layoutY="101.0" onAction="#btn_finance" prefHeight="49.0" prefWidth="178.0" text="   Finance" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -28,7 +48,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_social" layoutX="12.0" layoutY="137.0" onAction="#btn_social" prefHeight="49.0" prefWidth="178.0" text="   Social" textFill="WHITE">
+            <JFXButton fx:id="btn_social" layoutX="11.0" layoutY="156.0" onAction="#btn_social" prefHeight="49.0" prefWidth="178.0" text="   Social" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -40,7 +60,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_email" layoutX="12.0" layoutY="193.0" onAction="#btn_email" prefHeight="49.0" prefWidth="178.0" text="   E-Mail" textFill="WHITE">
+            <JFXButton fx:id="btn_email" layoutX="11.0" layoutY="212.0" onAction="#btn_email" prefHeight="49.0" prefWidth="178.0" text="   E-Mail" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -52,7 +72,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_network" layoutX="12.0" layoutY="251.0" onAction="#btn_network" prefHeight="49.0" prefWidth="178.0" text="Network" textFill="WHITE">
+            <JFXButton fx:id="btn_network" layoutX="11.0" layoutY="270.0" onAction="#btn_network" prefHeight="49.0" prefWidth="178.0" text="Network" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -64,7 +84,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_settings" layoutX="10.0" layoutY="467.0" onAction="#btn_settings" prefHeight="49.0" prefWidth="178.0" text="   Settings" textFill="WHITE">
+            <JFXButton fx:id="btn_settings" layoutX="11.0" layoutY="525.0" onAction="#btn_settings" prefHeight="49.0" prefWidth="178.0" text="   Settings" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -76,57 +96,19 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <ImageView fx:id="btn_logo" fitHeight="65.0" fitWidth="106.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#btn_logo" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btn_logo" fitHeight="58.0" fitWidth="90.0" layoutX="56.0" layoutY="14.0" onMouseClicked="#btn_logo" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/logo.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="198.0" layoutY="-3.0" prefHeight="65.0" prefWidth="692.0" style="-fx-background-color: #0747A6;">
+      <AnchorPane fx:id="pane_finance" layoutX="200.0" layoutY="70.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
-            <JFXTextField focusColor="WHITE" layoutX="184.0" layoutY="12.0" prefHeight="41.0" prefWidth="297.0" promptText="    Search...." style="-fx-prompt-text-fill: white; -fx-text-inner-color: white; -fx-background-color: #0c50b5;" unFocusColor="#d3cece">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </JFXTextField>
-            <JFXButton layoutY="11.0" onAction="#btn_newEntry" text="NEW Entry" textFill="WHITE">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="27.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/logo.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
+            <JFXTextArea layoutX="171.0" layoutY="156.0" text="Finanzen" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pane_finance" layoutX="198.0" layoutY="62.0" prefHeight="486.0" prefWidth="692.0" style="-fx-background-color: white;">
-         <children>
-            <JFXTextArea layoutX="124.0" layoutY="143.0" text="Finanzen" />
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pane_social" layoutX="197.0" layoutY="61.0" prefHeight="486.0" prefWidth="692.0" style="-fx-background-color: white;">
-         <children>
-            <TextField layoutX="213.0" layoutY="200.0" prefHeight="175.0" prefWidth="305.0" text="Social">
-               <font>
-                  <Font size="64.0" />
-               </font>
-            </TextField>
-         </children></AnchorPane>
-      <AnchorPane fx:id="pane_email" layoutX="196.0" layoutY="60.0" prefHeight="486.0" prefWidth="692.0" style="-fx-background-color: white;">
-         <children>
-            <TextField layoutX="213.0" layoutY="200.0" prefHeight="175.0" prefWidth="305.0" text="E-Mail">
-               <font>
-                  <Font size="64.0" />
-               </font>
-            </TextField>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pane_network" layoutX="195.0" layoutY="60.0" prefHeight="486.0" prefWidth="692.0" style="-fx-background-color: white;">
+      <AnchorPane fx:id="pane_network" layoutX="200.0" layoutY="70.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
             <TextField layoutX="213.0" layoutY="200.0" prefHeight="175.0" prefWidth="305.0" text="Network">
                <font>
@@ -135,7 +117,24 @@
             </TextField>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pane_settings" layoutX="195.0" layoutY="60.0" prefHeight="486.0" prefWidth="692.0" style="-fx-background-color: white;">
+      <AnchorPane fx:id="pane_email" layoutX="200.0" layoutY="70.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
+         <children>
+            <TextField layoutX="213.0" layoutY="200.0" prefHeight="175.0" prefWidth="305.0" text="E-Mail">
+               <font>
+                  <Font size="64.0" />
+               </font>
+            </TextField>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="pane_social" layoutX="200.0" layoutY="70.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
+         <children>
+            <TextField layoutX="213.0" layoutY="200.0" prefHeight="175.0" prefWidth="305.0" text="Social">
+               <font>
+                  <Font size="64.0" />
+               </font>
+            </TextField>
+         </children></AnchorPane>
+      <AnchorPane fx:id="pane_settings" layoutX="200.0" layoutY="70.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
             <TextField layoutX="213.0" layoutY="200.0" prefHeight="175.0" prefWidth="305.0" text="Settings">
                <font>
@@ -146,9 +145,9 @@
             <JFXToggleButton layoutX="42.0" layoutY="111.0" text="was auch immer" unToggleColor="WHITE" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pane_start" layoutX="193.0" layoutY="57.0" prefHeight="486.0" prefWidth="692.0" style="-fx-background-color: white;">
+      <AnchorPane fx:id="pane_start" layoutX="200.0" layoutY="70.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
-            <TableView layoutX="-2.0" prefHeight="486.0" prefWidth="692.0">
+            <TableView fixedCellSize="0.0" prefHeight="530.0" prefWidth="700.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn prefWidth="36.0" text="ID" />
                   <TableColumn prefWidth="129.33331298828125" text="Title" />
@@ -156,6 +155,9 @@
                   <TableColumn minWidth="0.0" prefWidth="137.33331298828125" text="URL" />
                   <TableColumn prefWidth="252.0" text="Description" />
               </columns>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </TableView>
          </children>
       </AnchorPane>
