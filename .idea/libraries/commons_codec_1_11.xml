@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="commons-codec-1.11">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/JPasswortBunker/External Libaries Source Files/commons-codec-1.11.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>
