@@ -20,7 +20,7 @@ public class EncryptionService {
     private String password;
 
     public EncryptionService() throws UnsupportedEncodingException, NoSuchPaddingException, NoSuchAlgorithmException {
-        this.password = PasswordObject.getInstance().getPassword();
+        this.password = PasswordObject.getInstance().getSaltPassword();
         this.keyByteArray = password.getBytes("UTF-8");
         this.keyByteArray = Arrays.copyOf(keyByteArray, 32);
         this.secretKeySpec = new SecretKeySpec(keyByteArray, "AES");
@@ -29,9 +29,6 @@ public class EncryptionService {
 
 
 
-    public String getPassword() {
-        return password;
-    }
 
     public byte[] encrypt(String geheimeDaten) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
         this.geheimeDatenByteArray = geheimeDaten.getBytes();
