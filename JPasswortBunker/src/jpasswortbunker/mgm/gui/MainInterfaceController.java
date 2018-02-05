@@ -53,9 +53,10 @@ public class MainInterfaceController implements Initializable {
     @FXML
     private JFXTreeTableView<Entry> treeView;
 
-
+    //Spalten für Tabelle werden angelegt, kann für die Libery jfoenix nicht über Scenebuilder gemacht werden
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Spalte Title
         JFXTreeTableColumn<Entry, String> titleName = new JFXTreeTableColumn<>("Title");
         titleName.setPrefWidth(150);
         titleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
@@ -65,6 +66,7 @@ public class MainInterfaceController implements Initializable {
             }
         });
 
+        //Spalte Username
         JFXTreeTableColumn<Entry, String> usernameCol = new JFXTreeTableColumn<>("Username");
         usernameCol.setPrefWidth(150);
         usernameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
@@ -74,6 +76,7 @@ public class MainInterfaceController implements Initializable {
             }
         });
 
+        //Spalte Password
         JFXTreeTableColumn<Entry, String> passwordCol = new JFXTreeTableColumn<>("Password");
         passwordCol.setPrefWidth(150);
         passwordCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
@@ -83,6 +86,7 @@ public class MainInterfaceController implements Initializable {
             }
         });
 
+        //Spalte URL
         JFXTreeTableColumn<Entry, String> urlCol = new JFXTreeTableColumn<>("URL");
         urlCol.setPrefWidth(150);
         urlCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
@@ -92,6 +96,7 @@ public class MainInterfaceController implements Initializable {
             }
         });
 
+        //Spalte Description
         JFXTreeTableColumn<Entry, String> desCol = new JFXTreeTableColumn<>("Description");
         desCol.setPrefWidth(150);
         desCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
@@ -101,13 +106,14 @@ public class MainInterfaceController implements Initializable {
             }
         });
 
+        //Temp Einträge zum testen
         ObservableList<Entry> entrys = FXCollections.observableArrayList();
         entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
         entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
         entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
         entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
 
-
+        //Inhalte werden in die Tabelle geschrieben
         final TreeItem<Entry> root = new RecursiveTreeItem<Entry>(entrys, RecursiveTreeObject::getChildren);
         treeView.getColumns().setAll(titleName, usernameCol, passwordCol, urlCol, desCol);
         treeView.setRoot(root);
@@ -123,6 +129,7 @@ public class MainInterfaceController implements Initializable {
 
     }
 
+    //Button Kategorie_Finanzen
     public void btn_finance(ActionEvent actionEvent) {
         System.out.println("test btn_finance");
         pane_finance.setVisible(true);
@@ -133,6 +140,7 @@ public class MainInterfaceController implements Initializable {
         pane_settings.setVisible(false);
     }
 
+    //Button Kategorie_Social
     public void btn_social(ActionEvent actionEvent) {
         System.out.println("test btn_social");
         pane_social.setVisible(true);
@@ -143,6 +151,7 @@ public class MainInterfaceController implements Initializable {
         pane_settings.setVisible(false);
     }
 
+    //Button Kategorie_E-Mail
     public void btn_email(ActionEvent actionEvent) {
         System.out.println("email");
         pane_email.setVisible(true);
@@ -153,6 +162,8 @@ public class MainInterfaceController implements Initializable {
         pane_settings.setVisible(false);
     }
 
+
+    //Button Kategorie_Netzwerk
     public void btn_network(ActionEvent actionEvent) {
         System.out.println("network");
         pane_network.setVisible(true);
@@ -163,6 +174,8 @@ public class MainInterfaceController implements Initializable {
         pane_settings.setVisible(false);
     }
 
+
+    //Button für die Einstellungen
     public void btn_settings(ActionEvent actionEvent) {
         System.out.println("settings");
         pane_settings.setVisible(true);
@@ -173,6 +186,7 @@ public class MainInterfaceController implements Initializable {
         pane_network.setVisible(false);
     }
 
+    //Button Logo zeit alle Einträge an
     public void btn_logo(MouseEvent mouseEvent) {
         System.out.println("start");
         pane_start.setVisible(true);
@@ -184,7 +198,7 @@ public class MainInterfaceController implements Initializable {
     }
 
 
-
+    //Button für neuen Eintrag, startet eine neue Scene
     public void btn_newEntry() {
         Stage stageNewEntry = new Stage();
         Parent parentNewEntry = null;
