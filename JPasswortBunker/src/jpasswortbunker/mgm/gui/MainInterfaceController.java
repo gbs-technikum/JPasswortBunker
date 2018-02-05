@@ -1,24 +1,37 @@
 package jpasswortbunker.mgm.gui;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTreeTableColumn;
+import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import jpasswortbunker.mgm.entry.Entry;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 
-public class MainInterfaceController {
+public class MainInterfaceController implements Initializable {
 
     @FXML
     private Label labelTest;
@@ -34,17 +47,80 @@ public class MainInterfaceController {
     @FXML
     private AnchorPane pane_start, pane_finance, pane_social, pane_email, pane_network, pane_settings;
 
-    //public MainInterfaceController() {
-    //    pane_start.setVisible(true);
-    //    pane_finance.setVisible(false);
-    //    pane_social.setVisible(false);
-    //    pane_email.setVisible(false);
-    //    pane_network.setVisible(false);
-    //    pane_settings.setVisible(false);
-    //}
+    @FXML
+    private TableColumn columnID;
+
+    @FXML
+    private JFXTreeTableView<Entry> treeView;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        JFXTreeTableColumn<Entry, String> titleName = new JFXTreeTableColumn<>("Title");
+        titleName.setPrefWidth(150);
+        titleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
+                return param.getValue().getValue().titleProperty();
+            }
+        });
+
+        JFXTreeTableColumn<Entry, String> usernameCol = new JFXTreeTableColumn<>("Username");
+        usernameCol.setPrefWidth(150);
+        usernameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
+                return param.getValue().getValue().usernameProperty();
+            }
+        });
+
+        JFXTreeTableColumn<Entry, String> passwordCol = new JFXTreeTableColumn<>("Password");
+        passwordCol.setPrefWidth(150);
+        passwordCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
+                return param.getValue().getValue().passwordProperty();
+            }
+        });
+
+        JFXTreeTableColumn<Entry, String> urlCol = new JFXTreeTableColumn<>("URL");
+        urlCol.setPrefWidth(150);
+        urlCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
+                return param.getValue().getValue().urlProperty();
+            }
+        });
+
+        JFXTreeTableColumn<Entry, String> desCol = new JFXTreeTableColumn<>("Description");
+        desCol.setPrefWidth(150);
+        desCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
+                return param.getValue().getValue().descriptionProperty();
+            }
+        });
+
+        ObservableList<Entry> entrys = FXCollections.observableArrayList();
+        entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
+        entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
+        entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
+        entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
+
+
+        final TreeItem<Entry> root = new RecursiveTreeItem<Entry>(entrys, RecursiveTreeObject::getChildren);
+        treeView.getColumns().setAll(titleName, usernameCol, passwordCol, urlCol, desCol);
+        treeView.setRoot(root);
+        treeView.setShowRoot(false);
+    }
+
+
+
+    //#######################################################
 
     public void test(ActionEvent actionEvent) {
         System.out.println("Test Button");
+
     }
 
     public void btn_finance(ActionEvent actionEvent) {
@@ -125,8 +201,9 @@ public class MainInterfaceController {
     }
 
 
-//    public void newEntry(MouseEvent actionEvent) throws IOException {
-//        System.out.println("neuer Eintrag wurde erstellt");
+
+
+
 
 //        //neues Fenster im Vordergrund
 //        Stage stage2 = new Stage();
@@ -143,17 +220,7 @@ public class MainInterfaceController {
 //        Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 //        app_stage.setScene(home_page_scene);
 //        app_stage.show();
-
 //    }
-
-//
-//    public void save(MouseEvent actionEvent) {
-//        System.out.println("Datenbank gespeichert");
-//    }
-//
-//
-
-//
 //    public void btn_lang_en(ActionEvent actionEvent) {
 //        System.out.println("Englisch");
 //        loadLang("en");
