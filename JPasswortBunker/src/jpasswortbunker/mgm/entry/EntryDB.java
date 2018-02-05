@@ -9,7 +9,7 @@ public class EntryDB {
 
     private ObservableList<Entry> entryList;
 
-    public EntryDB(ObservableList<Entry> entrys) {
+    public EntryDB() {
         this.entryList = FXCollections.observableArrayList();
     }
 
@@ -21,6 +21,8 @@ public class EntryDB {
                          String description, int categorieID) {
         entryList.add(new Entry(title, username, password, url, description, categorieID));
     }
+
+
 
 
 

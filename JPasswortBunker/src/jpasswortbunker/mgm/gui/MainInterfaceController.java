@@ -24,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import jpasswortbunker.mgm.entry.Entry;
+import jpasswortbunker.mgm.entry.EntryDB;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +33,9 @@ import java.util.ResourceBundle;
 
 
 public class MainInterfaceController implements Initializable {
+
+
+    public EntryDB entryDB = new EntryDB();
 
     @FXML
     private Label labelTest;

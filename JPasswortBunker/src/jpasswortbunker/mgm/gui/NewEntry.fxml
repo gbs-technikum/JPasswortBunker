@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -8,29 +9,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="412.0" prefWidth="431.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="300.0" prefHeight="435.0" prefWidth="389.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.gui.NewEntryController">
    <children>
-      <AnchorPane prefHeight="66.0" prefWidth="431.0" style="-fx-background-color: blue;">
+      <AnchorPane prefHeight="66.0" prefWidth="389.0" style="-fx-background-color: #0747A6;">
          <children>
-            <Label layoutX="54.0" layoutY="15.0" text="NEW ENTRY" textFill="WHITE">
+            <Label layoutX="91.0" layoutY="16.0" text="NEW ENTRY" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <JFXTextField layoutX="99.0" layoutY="94.0" promptText="Title" />
-      <JFXTextField layoutX="99.0" layoutY="132.0" promptText="Username" />
-      <JFXPasswordField layoutX="99.0" layoutY="173.0" promptText="Password" />
-      <JFXPasswordField layoutX="98.0" layoutY="215.0" promptText="Repeat Password" />
-      <JFXTextField layoutX="99.0" layoutY="256.0" promptText="URL" />
-      <JFXTextArea layoutX="98.0" layoutY="320.0" prefHeight="81.0" prefWidth="263.0" promptText="Description" unFocusColor="WHITE" />
-      <Label layoutX="98.0" layoutY="303.0" prefHeight="17.0" prefWidth="81.0" text="Descripntion" />
-      <JFXButton layoutX="336.0" layoutY="320.0" text="OK">
+      <JFXTextField layoutX="50.0" layoutY="102.0" promptText="Title" />
+      <JFXTextField layoutX="50.0" layoutY="140.0" promptText="Username" />
+      <JFXPasswordField layoutX="50.0" layoutY="176.0" promptText="Password" />
+      <JFXPasswordField layoutX="50.0" layoutY="218.0" promptText="Repeat Password" />
+      <JFXTextField layoutX="50.0" layoutY="256.0" promptText="URL" />
+      <JFXTextArea layoutX="50.0" layoutY="338.0" prefHeight="75.0" prefWidth="222.0" style="-fx-background-color: lightgrey;" unFocusColor="WHITE" />
+      <Label layoutX="50.0" layoutY="313.0" prefHeight="17.0" prefWidth="81.0" text="Descripntion" />
+      <JFXButton layoutX="294.0" layoutY="368.0" prefHeight="45.0" prefWidth="74.0" style="-fx-background-color: #0747A6;" text="OK" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
+      <JFXComboBox fx:id="comboBox" layoutX="272.0" layoutY="102.0" prefHeight="25.0" prefWidth="96.0" promptText="Categorie" unFocusColor="#fffafa" />
    </children>
 </AnchorPane>
