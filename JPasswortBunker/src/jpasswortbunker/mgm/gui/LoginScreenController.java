@@ -18,7 +18,7 @@ import java.net.URL;
 public class LoginScreenController {
 
     //ToDo nur zum Test
-    private String password = "hallo";
+    private String password = "";
 
     @FXML
     private PasswordField password_box;

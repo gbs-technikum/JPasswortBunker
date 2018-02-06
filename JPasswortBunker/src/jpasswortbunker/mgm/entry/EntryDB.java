@@ -22,10 +22,6 @@ public class EntryDB {
         entryList.add(new Entry(title, username, password, url, description, categorieID));
     }
 
-
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

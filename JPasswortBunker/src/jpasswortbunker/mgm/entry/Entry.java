@@ -148,15 +148,15 @@ public class Entry extends RecursiveTreeObject<Entry> {
 
     @Override
     public String toString() {
-        return "Entry{" +
-                "dbID=" + dbID +
-                ", entryID=" + entryID +
-                ", title=" + title +
-                ", username=" + username +
-                ", password=" + password +
-                ", url=" + url +
-                ", description=" + description +
-                ", categorieID=" + categorieID +
+        return "Entry " +
+                "\t dbID: " + dbID +
+                "\t entryID: " + entryID +
+                "\t title: " + title.getValue() +
+                "\t username: " + username.getValue() +
+                "\t password: " + password.getValue() +
+                "\t url: " + url.getValue() +
+                "\t description: " + description.getValue() +
+                "\t categorieID: " + categorieID.getValue() +
                 '}';
     }
 }

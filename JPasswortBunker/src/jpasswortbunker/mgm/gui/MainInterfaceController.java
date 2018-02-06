@@ -60,6 +60,18 @@ public class MainInterfaceController implements Initializable {
     //Spalten für Tabelle werden angelegt, kann für die Libery jfoenix nicht über Scenebuilder gemacht werden
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+//        //Spalte ID
+//        JFXTreeTableColumn<Entry, Integer> idColum = new JFXTreeTableColumn<>("ID");
+//        idColum.setPrefWidth(150);
+//        idColum.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, Integer>, ObservableValue<Integer>>() {
+//            @Override
+//            public ObservableValue<Integer> call(TreeTableColumn.CellDataFeatures<Entry, Integer> param) {
+//                return param.getValue().getValue().categorieIDProperty();
+//            }
+//        });
+
+
         //Spalte Title
         JFXTreeTableColumn<Entry, String> titleName = new JFXTreeTableColumn<>("Title");
         titleName.setPrefWidth(150);
@@ -199,6 +211,7 @@ public class MainInterfaceController implements Initializable {
         pane_finance.setVisible(false);
         pane_email.setVisible(false);
         pane_network.setVisible(false);
+
     }
 
 
@@ -211,7 +224,7 @@ public class MainInterfaceController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Scene scene2 = new Scene(parentNewEntry, 300, 400);
+        Scene scene2 = new Scene(parentNewEntry, 400, 400);
         stageNewEntry.setTitle("zweites Fenster");
         stageNewEntry.setScene(scene2);
         stageNewEntry.setAlwaysOnTop(true);
