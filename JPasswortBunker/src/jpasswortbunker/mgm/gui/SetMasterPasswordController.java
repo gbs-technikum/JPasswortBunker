@@ -39,10 +39,10 @@ public class SetMasterPasswordController {
     }
 
     private boolean equalsPasswordwithList() throws IOException {
-        String url = String.valueOf(this.getClass().getResource("passwordliste.txt" ));
+        String url = String.valueOf(this.getClass().getResource("/images/passwordliste.txt" ));
 
         System.out.println(url);
-        File file = new File("passwordliste.txt");
+        File file = new File("/images/passwordliste.txt");
 
         BufferedReader br = null;
         br = new BufferedReader(new FileReader(file));

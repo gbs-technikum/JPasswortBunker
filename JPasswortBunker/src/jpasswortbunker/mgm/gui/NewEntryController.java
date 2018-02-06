@@ -99,7 +99,7 @@ public class NewEntryController extends Application {
 
         group.getChildren().add(m);
 
-        stage.setTitle("Welcome to JavaFX!");
+        stage.setTitle("jPasswortBunker");
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
