@@ -1,10 +1,8 @@
 package jpasswortbunker.mgm.gui;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +28,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 
 public class MainInterfaceController implements Initializable {
@@ -57,24 +56,17 @@ public class MainInterfaceController implements Initializable {
     @FXML
     private JFXTreeTableView<Entry> treeView;
 
+    @FXML
+    private JFXTextField textField_Search;
+
     //Spalten für Tabelle werden angelegt, kann für die Libery jfoenix nicht über Scenebuilder gemacht werden
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-//        //Spalte ID
-//        JFXTreeTableColumn<Entry, Integer> idColum = new JFXTreeTableColumn<>("ID");
-//        idColum.setPrefWidth(150);
-//        idColum.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, Integer>, ObservableValue<Integer>>() {
-//            @Override
-//            public ObservableValue<Integer> call(TreeTableColumn.CellDataFeatures<Entry, Integer> param) {
-//                return param.getValue().getValue().categorieIDProperty();
-//            }
-//        });
-
 
         //Spalte Title
         JFXTreeTableColumn<Entry, String> titleName = new JFXTreeTableColumn<>("Title");
-        titleName.setPrefWidth(150);
+        titleName.setPrefWidth(100);
         titleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
@@ -84,7 +76,7 @@ public class MainInterfaceController implements Initializable {
 
         //Spalte Username
         JFXTreeTableColumn<Entry, String> usernameCol = new JFXTreeTableColumn<>("Username");
-        usernameCol.setPrefWidth(150);
+        usernameCol.setPrefWidth(100);
         usernameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
@@ -124,25 +116,38 @@ public class MainInterfaceController implements Initializable {
 
         //Temp Einträge zum testen
         ObservableList<Entry> entrys = FXCollections.observableArrayList();
-        entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
-        entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
-        entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
-        entrys.add(new Entry("neuer Titel", "neuer Username", "mein Passwort", "derLink", "Beschreibung", 2));
+        entrys.add(new Entry("Hallo", "neuer alter", "mein Passwort", "Link", "Beschreibung", 2));
+        entrys.add(new Entry("Haus", "neuer Adi", "mein Passwort", "dieLink", "was auch immer", 2));
+        entrys.add(new Entry("Nix", "niemand", "mein Passwort", "desLink", "hier könnte deine Werbung stehen", 2));
+        entrys.add(new Entry("Test", "Eva", "mein Passwort", "derLink", "leer", 2));
 
         //Inhalte werden in die Tabelle geschrieben
         final TreeItem<Entry> root = new RecursiveTreeItem<Entry>(entrys, RecursiveTreeObject::getChildren);
         treeView.getColumns().setAll(titleName, usernameCol, passwordCol, urlCol, desCol);
         treeView.setRoot(root);
         treeView.setShowRoot(false);
+
     }
 
 
 
     //#######################################################
 
-    public void test(ActionEvent actionEvent) {
-        System.out.println("Test Button");
-
+    //Suchfunktion in Suchleiste Suche nach: Title und Username
+    public void searchFunction() {
+        textField_Search.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+                    @Override
+                    public boolean test(TreeItem<Entry> entryTreeItem) {
+                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase())||
+                                entryTreeItem.getValue().usernameProperty().getValue().toLowerCase().contains(newValue.toLowerCase());
+                        return flag;
+                    }
+                });
+            }
+        });
     }
 
     //Button Kategorie_Finanzen
