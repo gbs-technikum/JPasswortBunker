@@ -4,12 +4,9 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -106,32 +103,6 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pane_network" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
-         <children>
-            <TextField layoutX="213.0" layoutY="200.0" prefHeight="175.0" prefWidth="305.0" text="Network">
-               <font>
-                  <Font size="64.0" />
-               </font>
-            </TextField>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pane_email" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
-         <children>
-            <TextField layoutX="213.0" layoutY="200.0" prefHeight="175.0" prefWidth="305.0" text="E-Mail">
-               <font>
-                  <Font size="64.0" />
-               </font>
-            </TextField>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pane_social" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
-         <children>
-            <TextField layoutX="213.0" layoutY="200.0" prefHeight="175.0" prefWidth="305.0" text="Social">
-               <font>
-                  <Font size="64.0" />
-               </font>
-            </TextField>
-         </children></AnchorPane>
       <AnchorPane fx:id="pane_settings" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
             <TextField layoutX="213.0" layoutY="200.0" prefHeight="175.0" prefWidth="305.0" text="Settings">
@@ -141,22 +112,6 @@
             </TextField>
             <JFXToggleButton layoutX="42.0" layoutY="37.0" text="Autosave" unToggleColor="WHITE" />
             <JFXToggleButton layoutX="42.0" layoutY="111.0" text="was auch immer" unToggleColor="WHITE" />
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pane_start" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
-         <children>
-            <TableView fx:id="table" fixedCellSize="0.0" prefHeight="530.0" prefWidth="700.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <columns>
-                <TableColumn fx:id="columnID" prefWidth="36.0" text="ID" />
-                  <TableColumn prefWidth="129.33331298828125" text="Title" />
-                <TableColumn prefWidth="136.0" text="Username" />
-                  <TableColumn minWidth="0.0" prefWidth="137.33331298828125" text="URL" />
-                  <TableColumn prefWidth="252.0" text="Description" />
-              </columns>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </TableView>
          </children>
       </AnchorPane>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="900.0">
@@ -181,7 +136,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="pane_finance" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
+      <AnchorPane fx:id="pane_entrys" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
             <JFXTreeTableView fx:id="treeView" prefHeight="530.0" prefWidth="700.0" />
          </children>

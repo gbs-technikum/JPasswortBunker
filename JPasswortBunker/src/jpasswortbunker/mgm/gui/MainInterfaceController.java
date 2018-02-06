@@ -48,7 +48,7 @@ public class MainInterfaceController implements Initializable {
     private ImageView btn_logo;
 
     @FXML
-    private AnchorPane pane_start, pane_finance, pane_social, pane_email, pane_network, pane_settings;
+    private AnchorPane pane_entrys, pane_settings;
 
     @FXML
     private TableColumn columnID;
@@ -116,10 +116,15 @@ public class MainInterfaceController implements Initializable {
 
         //Temp Einträge zum testen
         ObservableList<Entry> entrys = FXCollections.observableArrayList();
-        entrys.add(new Entry("Hallo", "neuer alter", "mein Passwort", "Link", "Beschreibung", 2));
-        entrys.add(new Entry("Haus", "neuer Adi", "mein Passwort", "dieLink", "was auch immer", 2));
-        entrys.add(new Entry("Nix", "niemand", "mein Passwort", "desLink", "hier könnte deine Werbung stehen", 2));
-        entrys.add(new Entry("Test", "Eva", "mein Passwort", "derLink", "leer", 2));
+        entrys.add(new Entry("Hallo", "neuer alter", "mein Passwort", "Link", "Beschreibung", 1));
+        entrys.add(new Entry("Haus", "neuer Adi", "mein Passwort", "dieLink", "was auch immer", 1));
+        entrys.add(new Entry("Nix", "niemand", "mein Passwort", "desLink", "hier könnte deine Werbung stehen", 3));
+        entrys.add(new Entry("Netflix", "GeilSerien", "mein Passwort", "derLink", "leer", 3));
+        entrys.add(new Entry("Yotube", "Moneyboy", "mein Passwort", "derLink", "leer", 4));
+        entrys.add(new Entry("Facebook", "ka", "mein Passwort", "derLink", "leer", 2));
+        entrys.add(new Entry("Schule", "Musterman", "mein Passwort", "derLink", "leer", 4));
+        entrys.add(new Entry("Test", "nobody", "mein Passwort", "derLink", "leer", 1));
+
 
         //Inhalte werden in die Tabelle geschrieben
         final TreeItem<Entry> root = new RecursiveTreeItem<Entry>(entrys, RecursiveTreeObject::getChildren);
@@ -150,73 +155,83 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
+    //Button Logo zeit alle Einträge an und setzt Suchfilter bzw Kategorie zurück
+    public void btn_logo(MouseEvent mouseEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+            @Override
+            public boolean test(TreeItem<Entry> entryTreeItem) {
+                return true;
+            }
+        });
+    }
+
     //Button Kategorie_Finanzen
     public void btn_finance(ActionEvent actionEvent) {
-        System.out.println("test btn_finance");
-        pane_finance.setVisible(true);
-        pane_start.setVisible(false);
-        pane_social.setVisible(false);
-        pane_email.setVisible(false);
-        pane_network.setVisible(false);
         pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+            @Override
+            public boolean test(TreeItem<Entry> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(1);
+                return flag;
+            }
+        });
     }
 
     //Button Kategorie_Social
     public void btn_social(ActionEvent actionEvent) {
-        System.out.println("test btn_social");
-        pane_social.setVisible(true);
-        pane_start.setVisible(false);
-        pane_finance.setVisible(false);
-        pane_email.setVisible(false);
-        pane_network.setVisible(false);
         pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+            @Override
+            public boolean test(TreeItem<Entry> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(2);
+                return flag;
+                }
+        });
     }
+
 
     //Button Kategorie_E-Mail
     public void btn_email(ActionEvent actionEvent) {
-        System.out.println("email");
-        pane_email.setVisible(true);
-        pane_start.setVisible(false);
-        pane_social.setVisible(false);
-        pane_finance.setVisible(false);
-        pane_network.setVisible(false);
         pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+            @Override
+            public boolean test(TreeItem<Entry> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(3);
+                return flag;
+            }
+        });
     }
 
 
     //Button Kategorie_Netzwerk
     public void btn_network(ActionEvent actionEvent) {
-        System.out.println("network");
-        pane_network.setVisible(true);
-        pane_start.setVisible(false);
-        pane_social.setVisible(false);
-        pane_finance.setVisible(false);
-        pane_email.setVisible(false);
         pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+            @Override
+            public boolean test(TreeItem<Entry> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(4);
+                return flag;
+            }
+        });
     }
 
 
     //Button für die Einstellungen
     public void btn_settings(ActionEvent actionEvent) {
-        System.out.println("settings");
         pane_settings.setVisible(true);
-        pane_start.setVisible(false);
-        pane_social.setVisible(false);
-        pane_finance.setVisible(false);
-        pane_email.setVisible(false);
-        pane_network.setVisible(false);
-    }
-
-    //Button Logo zeit alle Einträge an
-    public void btn_logo(MouseEvent mouseEvent) {
-        System.out.println("start");
-        pane_start.setVisible(true);
-        pane_settings.setVisible(false);
-        pane_social.setVisible(false);
-        pane_finance.setVisible(false);
-        pane_email.setVisible(false);
-        pane_network.setVisible(false);
-
+        pane_entrys.setVisible(false);
+        textField_Search.clear();
     }
 
 
@@ -235,8 +250,6 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setAlwaysOnTop(true);
         stageNewEntry.show();
     }
-
-
 
 
 
