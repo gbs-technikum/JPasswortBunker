@@ -176,7 +176,8 @@ public class MainInterfaceController implements Initializable {
         treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
             @Override
             public boolean test(TreeItem<Entry> entryTreeItem) {
-                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(1);
+                //Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(1);
+                Boolean flag = entryTreeItem.getValue().getCategorieID() == 1;
                 return flag;
             }
         });
