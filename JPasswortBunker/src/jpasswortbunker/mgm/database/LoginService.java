@@ -1,12 +1,12 @@
-package jpasswortbunker.mgm.Database;
+package jpasswortbunker.mgm.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+        import java.sql.Connection;
+        import java.sql.DriverManager;
+        import java.sql.SQLException;
 
 public class LoginService {
 
-    private static final String URL = "jdbc:sqlite:\\PFADDB";
+    private static final String URL = "jdbc:sqlite:\\";
 
     private Connection connection;
 
@@ -24,3 +24,9 @@ public class LoginService {
 
 
 }
+
+//Alle Lesen
+//Alle löschen
+//einzelen Löschen
+//einzeln eintragen
+//einzelne ändern

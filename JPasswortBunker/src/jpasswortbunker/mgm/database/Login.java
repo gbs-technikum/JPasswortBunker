@@ -1,4 +1,4 @@
-package jpasswortbunker.mgm.Database;
+package jpasswortbunker.mgm.database;
 
 import java.util.Objects;
 
