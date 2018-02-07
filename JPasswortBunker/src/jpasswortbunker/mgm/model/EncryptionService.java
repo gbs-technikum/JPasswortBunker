@@ -1,4 +1,4 @@
-package model;
+package jpasswortbunker.mgm.model;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;

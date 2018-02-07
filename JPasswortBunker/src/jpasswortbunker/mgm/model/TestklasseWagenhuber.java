@@ -1,4 +1,4 @@
-package model;
+package jpasswortbunker.mgm.model;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public final class Main {
+public final class TestklasseWagenhuber {
     public static void main(String[] args) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
 
         PasswordObject.getInstance().setPassword("MasterKey_");
