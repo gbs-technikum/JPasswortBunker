@@ -10,9 +10,9 @@ public class EntryService {
 
 
 
-    public Entry updateEntry(Entry entry) {
-        entry.updateEntry();
-    }
+//    public Entry updateEntry(Entry entry) {
+//        entry.updateEntry();
+//    }
 
 
 
