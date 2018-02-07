@@ -1,115 +1,78 @@
 package jpasswortbunker.mgm.gui;
 
+import com.jfoenix.controls.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import jpasswortbunker.mgm.entry.Entry;
 
-public class NewEntryController extends Application {
-
-    @FXML
-    private SplitMenuButton categorie_menuBox;
+public class NewEntryController{
 
     @FXML
-    private MenuItem menuItem1, menuItem2, menuItem3, menuItem4;
+    private JFXTextField tfTitle, tfUsername, tfURL;
 
-    private void setCategorie_menuBox() {
+    @FXML
+    private JFXPasswordField pf1, pf2;
 
+    @FXML
+    private JFXTextArea taDescription;
 
+    @FXML
+    private Label labelErrorMessage;
+
+    @FXML
+    private JFXButton btn_save;
+
+    @FXML
+    public JFXComboBox<Label> comboBox = new JFXComboBox<Label>();
+
+    @FXML
+    public void initialize() {
+        comboBox.getItems().add(new Label("Java 1.8"));
+        comboBox.getItems().add(new Label("Java 1.7"));
+        comboBox.getItems().add(new Label("Java 1.6"));
+        comboBox.getItems().add(new Label("Java 1.5"));
+
+        comboBox.setPromptText("Select categorie");
     }
 
+    public void btn_save(ActionEvent actionEvent) {
 
-//    @Override
-//    public void start(Stage primaryStage) throws Exception {
-//
-//        primaryStage.setTitle("ImageView Experiment 1");
-//
-//
-//
-//
-//        MenuItem menuItem1 = new MenuItem("Finance");
-//        MenuItem menuItem2 = new MenuItem("Social");
-//        MenuItem menuItem3 = new MenuItem("E-Mail");
-//        MenuItem menuItem4 = new MenuItem("Network");
-//
-//        MenuButton menuButton = new MenuButton("Categorie",null, menuItem1, menuItem2, menuItem3, menuItem4);
-//
-//
-//        HBox hbox = new HBox(menuButton);
-//
-//        Scene scene = new Scene(hbox, 200, 100);
-//        primaryStage.setScene(scene);
-//        primaryStage.show();
-//
-//
-//        menuItem1.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                menuButton.setText("Fincane");
-//            }
-//        });
-//
-//
-//
-//        menuItem2.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                menuButton.setText("Social");
-//            }
-//        });
-//
-//        menuItem3.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                menuButton.setText("E-Mail");
-//            }
-//        });
-//
-//        menuItem4.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                menuButton.setText("Network");
-//            }
-//        });
-//
-//
-//
-//    }
 
-    @Override public void start(Stage stage) {
-        Group group = new Group();
-        Scene scene = new Scene(group);
-
-        SplitMenuButton m = new SplitMenuButton();
-        m.setText("Shutdown");
-        m.getItems().addAll(new MenuItem("Logout"), new MenuItem("Sleep"), new MenuItem("Hallo"), new MenuItem("Test"));
-        m.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                System.out.println("Shutdown");
+        if (equalsPassword()) {
+            try {
+                Entry entry = new Entry(tfTitle.getText(), tfUsername.getText(), pf1.getText(), tfURL.getText(), taDescription.getText(), 1);
+                System.out.println("neuer Eintrag angelegt");
+                System.out.println(comboBox.getValue().getText());
+                System.out.println(entry.toString());
+                Stage stage = (Stage) btn_save.getScene().getWindow();
+                stage.close();
+            } catch (NullPointerException e) {
+                System.out.println("Kategorie nicht ausgewählt");
+                labelErrorMessage.setText("Please choose a categorie");
             }
-        });
+        } else {
+            System.out.println("Eintrag konnte nicht erstellt werden");
+        }
 
-        group.getChildren().add(m);
-
-        stage.setTitle("jPasswortBunker");
-        stage.setScene(scene);
-        stage.sizeToScene();
-        stage.show();
     }
 
-    public static void main(String[] args) {
-        Application.launch(args);
+    //Ueberpruefung ob Passwoerter gleich sind gibt true oder false zurück und setzt Label bei false
+    private boolean equalsPassword() {
+        if (pf1.getText().equals(pf2.getText())) {
+            return true;
+        }
+        labelErrorMessage.setText("Password not Equals");
+        return false;
     }
+
+
+
 }
-
-
-
 

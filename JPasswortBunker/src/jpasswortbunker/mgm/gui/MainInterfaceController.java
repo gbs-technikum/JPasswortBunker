@@ -1,25 +1,40 @@
 package jpasswortbunker.mgm.gui;
 
-import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.*;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import jpasswortbunker.mgm.entry.Entry;
+import jpasswortbunker.mgm.entry.EntryDB;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 
-public class MainInterfaceController {
+public class MainInterfaceController implements Initializable {
+
+
+    public EntryDB entryDB = new EntryDB();
 
     @FXML
     private Label labelTest;
@@ -33,84 +48,194 @@ public class MainInterfaceController {
     private ImageView btn_logo;
 
     @FXML
-    private AnchorPane pane_start, pane_finance, pane_social, pane_email, pane_network, pane_settings;
+    private AnchorPane pane_entrys, pane_settings;
+
+    @FXML
+    private TableColumn columnID;
+
+    @FXML
+    private JFXTreeTableView<Entry> treeView;
+
+    @FXML
+    private JFXTextField textField_Search;
+
+    //Spalten für Tabelle werden angelegt, kann für die Libery jfoenix nicht über Scenebuilder gemacht werden
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
 
 
+        //Spalte Title
+        JFXTreeTableColumn<Entry, String> titleName = new JFXTreeTableColumn<>("Title");
+        titleName.setPrefWidth(100);
+        titleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
+                return param.getValue().getValue().titleProperty();
+            }
+        });
 
-    //public MainInterfaceController() {
-    //    pane_start.setVisible(true);
-    //    pane_finance.setVisible(false);
-    //    pane_social.setVisible(false);
-    //    pane_email.setVisible(false);
-    //    pane_network.setVisible(false);
-    //    pane_settings.setVisible(false);
-    //}
+        //Spalte Username
+        JFXTreeTableColumn<Entry, String> usernameCol = new JFXTreeTableColumn<>("Username");
+        usernameCol.setPrefWidth(100);
+        usernameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
+                return param.getValue().getValue().usernameProperty();
+            }
+        });
 
-    public void test(ActionEvent actionEvent) {
-        System.out.println("Test Button");
+        //Spalte Password
+        JFXTreeTableColumn<Entry, String> passwordCol = new JFXTreeTableColumn<>("Password");
+        passwordCol.setPrefWidth(150);
+        passwordCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
+                return param.getValue().getValue().passwordProperty();
+            }
+        });
+
+        //Spalte URL
+        JFXTreeTableColumn<Entry, String> urlCol = new JFXTreeTableColumn<>("URL");
+        urlCol.setPrefWidth(150);
+        urlCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
+                return param.getValue().getValue().urlProperty();
+            }
+        });
+
+        //Spalte Description
+        JFXTreeTableColumn<Entry, String> desCol = new JFXTreeTableColumn<>("Description");
+        desCol.setPrefWidth(150);
+        desCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry, String> param) {
+                return param.getValue().getValue().descriptionProperty();
+            }
+        });
+
+        //Temp Einträge zum testen
+        ObservableList<Entry> entrys = FXCollections.observableArrayList();
+        entrys.add(new Entry("Hallo", "neuer alter", "mein Passwort", "Link", "Beschreibung", 1));
+        entrys.add(new Entry("Haus", "neuer Adi", "mein Passwort", "dieLink", "was auch immer", 1));
+        entrys.add(new Entry("Nix", "niemand", "mein Passwort", "desLink", "hier könnte deine Werbung stehen", 3));
+        entrys.add(new Entry("Netflix", "GeilSerien", "mein Passwort", "derLink", "leer", 3));
+        entrys.add(new Entry("Yotube", "Moneyboy", "mein Passwort", "derLink", "leer", 4));
+        entrys.add(new Entry("Facebook", "ka", "mein Passwort", "derLink", "leer", 2));
+        entrys.add(new Entry("Schule", "Musterman", "mein Passwort", "derLink", "leer", 4));
+        entrys.add(new Entry("Test", "nobody", "mein Passwort", "derLink", "leer", 1));
+
+
+        //Inhalte werden in die Tabelle geschrieben
+        final TreeItem<Entry> root = new RecursiveTreeItem<Entry>(entrys, RecursiveTreeObject::getChildren);
+        treeView.getColumns().setAll(titleName, usernameCol, passwordCol, urlCol, desCol);
+        treeView.setRoot(root);
+        treeView.setShowRoot(false);
+
     }
 
-    public void btn_finance(ActionEvent actionEvent) {
-        System.out.println("test btn_finance");
-        pane_finance.setVisible(true);
-        pane_start.setVisible(false);
-        pane_social.setVisible(false);
-        pane_email.setVisible(false);
-        pane_network.setVisible(false);
-        pane_settings.setVisible(false);
 
+
+    //#######################################################
+
+    //Suchfunktion in Suchleiste Suche nach: Title und Username
+    public void searchFunction() {
+        textField_Search.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+                    @Override
+                    public boolean test(TreeItem<Entry> entryTreeItem) {
+                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase())||
+                                entryTreeItem.getValue().usernameProperty().getValue().toLowerCase().contains(newValue.toLowerCase());
+                        return flag;
+                    }
+                });
+            }
+        });
     }
 
-    public void btn_social(ActionEvent actionEvent) {
-        System.out.println("test btn_social");
-        pane_social.setVisible(true);
-        pane_start.setVisible(false);
-        pane_finance.setVisible(false);
-        pane_email.setVisible(false);
-        pane_network.setVisible(false);
-        pane_settings.setVisible(false);
-    }
-
-    public void btn_email(ActionEvent actionEvent) {
-        System.out.println("email");
-        pane_email.setVisible(true);
-        pane_start.setVisible(false);
-        pane_social.setVisible(false);
-        pane_finance.setVisible(false);
-        pane_network.setVisible(false);
-        pane_settings.setVisible(false);
-    }
-
-    public void btn_network(ActionEvent actionEvent) {
-        System.out.println("network");
-        pane_network.setVisible(true);
-        pane_start.setVisible(false);
-        pane_social.setVisible(false);
-        pane_finance.setVisible(false);
-        pane_email.setVisible(false);
-        pane_settings.setVisible(false);
-    }
-
-    public void btn_settings(ActionEvent actionEvent) {
-        System.out.println("settings");
-        pane_settings.setVisible(true);
-        pane_start.setVisible(false);
-        pane_social.setVisible(false);
-        pane_finance.setVisible(false);
-        pane_email.setVisible(false);
-        pane_network.setVisible(false);
-    }
-
+    //Button Logo zeit alle Einträge an und setzt Suchfilter bzw Kategorie zurück
     public void btn_logo(MouseEvent mouseEvent) {
-        System.out.println("start");
-        pane_start.setVisible(true);
         pane_settings.setVisible(false);
-        pane_social.setVisible(false);
-        pane_finance.setVisible(false);
-        pane_email.setVisible(false);
-        pane_network.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+            @Override
+            public boolean test(TreeItem<Entry> entryTreeItem) {
+                return true;
+            }
+        });
     }
 
+    //Button Kategorie_Finanzen
+    public void btn_finance(ActionEvent actionEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+            @Override
+            public boolean test(TreeItem<Entry> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(1);
+                return flag;
+            }
+        });
+    }
+
+    //Button Kategorie_Social
+    public void btn_social(ActionEvent actionEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+            @Override
+            public boolean test(TreeItem<Entry> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(2);
+                return flag;
+                }
+        });
+    }
+
+
+    //Button Kategorie_E-Mail
+    public void btn_email(ActionEvent actionEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+            @Override
+            public boolean test(TreeItem<Entry> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(3);
+                return flag;
+            }
+        });
+    }
+
+
+    //Button Kategorie_Netzwerk
+    public void btn_network(ActionEvent actionEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+            @Override
+            public boolean test(TreeItem<Entry> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(4);
+                return flag;
+            }
+        });
+    }
+
+
+    //Button für die Einstellungen
+    public void btn_settings(ActionEvent actionEvent) {
+        pane_settings.setVisible(true);
+        pane_entrys.setVisible(false);
+        textField_Search.clear();
+    }
+
+
+    //Button für neuen Eintrag, startet eine neue Scene
     public void btn_newEntry() {
         Stage stageNewEntry = new Stage();
         Parent parentNewEntry = null;
@@ -119,18 +244,15 @@ public class MainInterfaceController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Scene scene2 = new Scene(parentNewEntry, 300, 400);
-        stageNewEntry.setTitle("New Entry");
+        Scene scene2 = new Scene(parentNewEntry, 400, 400);
+        stageNewEntry.setTitle("zweites Fenster");
         stageNewEntry.setScene(scene2);
         stageNewEntry.setAlwaysOnTop(true);
         stageNewEntry.show();
-        stageNewEntry.setResizable(false);
     }
 
 
 
-//    public void newEntry(MouseEvent actionEvent) throws IOException {
-//        System.out.println("neuer Eintrag wurde erstellt");
 
 //        //neues Fenster im Vordergrund
 //        Stage stage2 = new Stage();
@@ -147,17 +269,7 @@ public class MainInterfaceController {
 //        Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 //        app_stage.setScene(home_page_scene);
 //        app_stage.show();
-
 //    }
-
-//
-//    public void save(MouseEvent actionEvent) {
-//        System.out.println("Datenbank gespeichert");
-//    }
-//
-//
-
-//
 //    public void btn_lang_en(ActionEvent actionEvent) {
 //        System.out.println("Englisch");
 //        loadLang("en");
@@ -180,7 +292,5 @@ public class MainInterfaceController {
 //        btn_Help.setText(bundle.getString("btn_Help"));
 //
 //    }
-
-
 
 }
