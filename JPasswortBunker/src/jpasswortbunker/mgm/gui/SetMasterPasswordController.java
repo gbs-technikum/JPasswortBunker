@@ -64,5 +64,6 @@ public class SetMasterPasswordController {
             return true;
         }
         return false;
+
     }
 }
