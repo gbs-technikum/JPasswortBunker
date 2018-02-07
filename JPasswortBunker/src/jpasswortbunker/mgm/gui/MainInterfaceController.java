@@ -36,6 +36,7 @@ public class MainInterfaceController implements Initializable {
 
     public EntryDB entryDB = new EntryDB();
 
+
     @FXML
     private Label labelTest;
     private ResourceBundle bundle;
