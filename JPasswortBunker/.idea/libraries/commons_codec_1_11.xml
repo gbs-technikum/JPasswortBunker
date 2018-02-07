@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="jfoenix-9.0.1">
+  <library name="commons-codec-1.11">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/libs/jfoenix-9.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-codec-1.11.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
