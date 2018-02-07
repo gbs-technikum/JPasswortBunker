@@ -1,4 +1,4 @@
-package model;
+package jpasswortbunker.mgm.model;
 
 
 import org.apache.commons.codec.binary.Hex;

@@ -1,6 +1,4 @@
-package model;
-
-import java.net.URL;
+package jpasswortbunker.mgm.model;
 
 public class Entry {
 
