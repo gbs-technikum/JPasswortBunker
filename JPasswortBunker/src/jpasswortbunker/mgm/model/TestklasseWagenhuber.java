@@ -48,5 +48,10 @@ public final class TestklasseWagenhuber {
         System.out.println("____________Passwort-Hash 512 bit for Store______________");
         System.out.println(PasswordObject.getInstance().getSaltPasswordHashForPasswortStore());
 
+        System.out.println("____________Ckeck-Passwort_____________________________");
+        System.out.println(PasswordObject.getInstance().getSaltPasswordHashForPasswortStore());
+        System.out.println(PasswordObject.getInstance().createSaltPasswordHashForPasswortStore(PasswordObject.getInstance().createSaltyPassword("MasterKey_")));
+        System.out.println(PasswordObject.getInstance().checkPassword("MasterKey_"));
+
     }
 }

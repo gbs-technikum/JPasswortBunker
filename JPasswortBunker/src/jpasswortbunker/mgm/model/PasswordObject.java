@@ -16,24 +16,24 @@ public class PasswordObject {
         }
     }
 
+    //Salt entpricht MD5-Hash des Wortes "jPasswortBunker"
     private static final String SALT = "90ada22b4f3eb13290de049b7a87ffe3";
     private HashService hashServiceForEncryption = new HashService("MD5");
     private HashService hashServiceForPasswordStore = new HashService("SHA-512");
     private String saltPasswordHashForEncryption;
     private String saltPasswordHashForPasswortStore;
-    private Boolean ckeckPassword;
 
 
     private PasswordObject() throws NoSuchAlgorithmException {
 
     }
 
-    public static PasswordObject getInstance(){
+    public static PasswordObject getInstance() {
         return instance;
     }
 
 
-    private String createSaltyPassword(String password){
+    protected String createSaltyPassword(String password) {
         String saltyPassword = password + this.SALT;
         return saltyPassword;
     }
@@ -45,25 +45,30 @@ public class PasswordObject {
     }
 
 
-    public String createSaltPasswordHashForEncryption(String saltyPassword) throws UnsupportedEncodingException {
-         String a = hashServiceForEncryption.getHashValue(saltyPassword);
-
+    protected String createSaltPasswordHashForEncryption(String saltyPassword) throws UnsupportedEncodingException {
+        String hash = hashServiceForEncryption.getHashValue(saltyPassword);
+        return hash;
     }
 
-    public void createSaltPasswordHashForPasswortStore(String saltyPassword) throws UnsupportedEncodingException {
-        hashServiceForPasswordStore.getHashValue(saltyPassword);
+    protected String createSaltPasswordHashForPasswortStore(String saltyPassword) throws UnsupportedEncodingException {
+        String hash = hashServiceForPasswordStore.getHashValue(saltyPassword);
+        return hash;
     }
 
 
-    public String getSaltPasswordHashForEncryption() {
+    protected String getSaltPasswordHashForEncryption() {
         return saltPasswordHashForEncryption;
     }
 
-    public String getSaltPasswordHashForPasswortStore() {
+
+    protected String getSaltPasswordHashForPasswortStore() {
         return saltPasswordHashForPasswortStore;
     }
 
-    public Boolean checkPassword(String password){
-        String check = createSaltyPassword(password);
+    public Boolean checkPassword(String password) throws UnsupportedEncodingException {
+        if (createSaltPasswordHashForPasswortStore(createSaltyPassword(password)).equals(this.saltPasswordHashForPasswortStore)) {
+            return true;
+        }
+        return false;
     }
 }
