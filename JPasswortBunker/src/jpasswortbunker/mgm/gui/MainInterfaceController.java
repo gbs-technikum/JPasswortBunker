@@ -2,11 +2,13 @@ package jpasswortbunker.mgm.gui;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,10 +35,6 @@ import java.util.function.Predicate;
 
 public class MainInterfaceController implements Initializable {
 
-
-    public EntryDB entryDB = new EntryDB();
-
-
     @FXML
     private Label labelTest;
     private ResourceBundle bundle;
@@ -59,6 +57,8 @@ public class MainInterfaceController implements Initializable {
 
     @FXML
     private JFXTextField textField_Search;
+
+    public ObservableList<Entry> entrys = FXCollections.observableArrayList();
 
     //Spalten für Tabelle werden angelegt, kann für die Libery jfoenix nicht über Scenebuilder gemacht werden
     @Override
@@ -116,15 +116,32 @@ public class MainInterfaceController implements Initializable {
         });
 
         //Temp Einträge zum testen
-        ObservableList<Entry> entrys = FXCollections.observableArrayList();
+
         entrys.add(new Entry("Hallo", "neuer alter", "mein Passwort", "Link", "Beschreibung", 1));
         entrys.add(new Entry("Haus", "neuer Adi", "mein Passwort", "dieLink", "was auch immer", 1));
         entrys.add(new Entry("Nix", "niemand", "mein Passwort", "desLink", "hier könnte deine Werbung stehen", 3));
         entrys.add(new Entry("Netflix", "GeilSerien", "mein Passwort", "derLink", "leer", 3));
-        entrys.add(new Entry("Yotube", "Moneyboy", "mein Passwort", "derLink", "leer", 4));
+        entrys.add(new Entry("Yotube", "Moneyboy", "mein Passwort", "derLink", "leer", 0));
         entrys.add(new Entry("Facebook", "ka", "mein Passwort", "derLink", "leer", 2));
-        entrys.add(new Entry("Schule", "Musterman", "mein Passwort", "derLink", "leer", 4));
+        entrys.add(new Entry("Schule", "Musterman", "mein Passwort", "derLink", "leer", 0));
         entrys.add(new Entry("Test", "nobody", "mein Passwort", "derLink", "leer", 1));
+        entrys.add(new Entry("Hallo", "neuer alter", "mein Passwort", "Link", "Beschreibung", 1));
+        entrys.add(new Entry("Haus", "neuer Adi", "mein Passwort", "dieLink", "was auch immer", 1));
+        entrys.add(new Entry("Nix", "niemand", "mein Passwort", "desLink", "hier könnte deine Werbung stehen", 3));
+        entrys.add(new Entry("Netflix", "GeilSerien", "mein Passwort", "derLink", "leer", 3));
+        entrys.add(new Entry("Yotube", "Moneyboy", "mein Passwort", "derLink", "leer", 0));
+        entrys.add(new Entry("Facebook", "ka", "mein Passwort", "derLink", "leer", 2));
+        entrys.add(new Entry("Schule", "Musterman", "mein Passwort", "derLink", "leer", 0));
+        entrys.add(new Entry("Test", "nobody", "mein Passwort", "derLink", "leer", 1));
+        entrys.add(new Entry("Hallo", "neuer alter", "mein Passwort", "Link", "Beschreibung", 1));
+        entrys.add(new Entry("Haus", "neuer Adi", "mein Passwort", "dieLink", "was auch immer", 1));
+        entrys.add(new Entry("Nix", "niemand", "mein Passwort", "desLink", "hier könnte deine Werbung stehen", 3));
+        entrys.add(new Entry("Netflix", "GeilSerien", "mein Passwort", "derLink", "leer", 3));
+        entrys.add(new Entry("Yotube", "Moneyboy", "mein Passwort", "derLink", "leer", 0));
+        entrys.add(new Entry("Facebook", "ka", "mein Passwort", "derLink", "leer", 2));
+        entrys.add(new Entry("Schule", "Musterman", "mein Passwort", "derLink", "leer", 0));
+
+
 
 
         //Inhalte werden in die Tabelle geschrieben
@@ -133,9 +150,35 @@ public class MainInterfaceController implements Initializable {
         treeView.setRoot(root);
         treeView.setShowRoot(false);
 
+
+        //Eventhandling für die Elemente
+        treeView.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent ee) {
+                if (ee.isPrimaryButtonDown() && ee.getClickCount() == 2) {
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("EditEntry.fxml"));
+                    try {
+                        loader.load();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //übergibt an EditEntryController den ausgewählten Eintrag
+                    EditEntryController editEntryController = loader.getController();
+                    //Ausgewähltes Element treeView.getSelectionModel().getSelectedItem()
+                    editEntryController.setEntry(treeView.getSelectionModel().getSelectedItem());
+
+                    Parent parentEditEntry = loader.getRoot();
+                    Stage stageEditEntry = new Stage();
+                    Scene sceneEditentry = new Scene(parentEditEntry, 400, 400);
+                    stageEditEntry.setTitle("Edit your Entry");
+                    stageEditEntry.setScene(sceneEditentry);
+                    stageEditEntry.show();
+                }
+            }
+        });
+
     }
-
-
 
     //#######################################################
 
@@ -177,7 +220,7 @@ public class MainInterfaceController implements Initializable {
         treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
             @Override
             public boolean test(TreeItem<Entry> entryTreeItem) {
-                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(1);
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(0);
                 return flag;
             }
         });
@@ -191,7 +234,7 @@ public class MainInterfaceController implements Initializable {
         treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
             @Override
             public boolean test(TreeItem<Entry> entryTreeItem) {
-                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(2);
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(1);
                 return flag;
                 }
         });
@@ -206,7 +249,7 @@ public class MainInterfaceController implements Initializable {
         treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
             @Override
             public boolean test(TreeItem<Entry> entryTreeItem) {
-                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(3);
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(2);
                 return flag;
             }
         });
@@ -221,7 +264,7 @@ public class MainInterfaceController implements Initializable {
         treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
             @Override
             public boolean test(TreeItem<Entry> entryTreeItem) {
-                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(4);
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(3);
                 return flag;
             }
         });
