@@ -24,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import jpasswortbunker.mgm.entry.Entry;
+import jpasswortbunker.mgm.entry.Entry2;
 import jpasswortbunker.mgm.entry.EntryDB;
 
 import java.io.IOException;
@@ -115,6 +116,14 @@ public class MainInterfaceController implements Initializable {
             }
         });
 
+        JFXTreeTableColumn<Entry2, String> test = new JFXTreeTableColumn<>("test");
+        test.setPrefWidth(40);
+        test.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Entry2, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Entry2, String> param) {
+                return null;
+            }
+        });
         //Temp Einträge zum testen
 
         entrys.add(new Entry("Hallo", "neuer alter", "mein Passwort", "Link", "Beschreibung", 1));
