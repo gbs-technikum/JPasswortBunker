@@ -26,25 +26,27 @@ public class LoginScreenController {
     @FXML
     private Label wrongPassword;
 
+    private Presenter presenter;
+
     //EventHandling von Login Button
     public void btn_login(ActionEvent actionEvent) throws IOException {
         System.out.println("eingegebenes Passwort: " + password_box.getText());
         if (checkPassword(password_box.getText())) {
-            Parent home_page_parent = FXMLLoader.load(getClass().getResource("MainInterface.fxml"));
-            Scene home_page_scene = new Scene(home_page_parent);
-
-            URL url = this.getClass().getResource("style/default_style.css");
-            if (url == null) {
-                System.out.println(" css Resource not found. Aborting.");
-                System.exit(-1);
-            }
-            String css = url.toExternalForm();
-            home_page_scene.getStylesheets().add(css);
-
-            Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            app_stage.setResizable(false);
-            app_stage.setScene(home_page_scene);
-            app_stage.show();
+//            Parent home_page_parent = FXMLLoader.load(getClass().getResource("MainInterface.fxml"));
+//            Scene home_page_scene = new Scene(home_page_parent);
+//
+//            URL url = this.getClass().getResource("style/default_style.css");
+//            if (url == null) {
+//                System.out.println(" css Resource not found. Aborting.");
+//                System.exit(-1);
+//            }
+//            String css = url.toExternalForm();
+//            home_page_scene.getStylesheets().add(css);
+//
+//            Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+//            app_stage.setResizable(false);
+//            app_stage.setScene(home_page_scene);
+//            app_stage.show();
         } else {
             wrongPassword.setText("Wrong Password");
         }
@@ -59,6 +61,10 @@ public class LoginScreenController {
             return true;
         }
         return false;
+    }
+
+    public void setPresenter(Presenter presenter) {
+        this.presenter = presenter;
     }
 }
 

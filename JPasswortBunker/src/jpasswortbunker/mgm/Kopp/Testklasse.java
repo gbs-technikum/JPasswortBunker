@@ -8,12 +8,23 @@ import javafx.stage.Stage;
 
 public class Testklasse extends Application {
 
+    private static  Stage primaryStage;
+
+    private void setPrimaryStage(Stage stage) {
+        Testklasse.primaryStage = stage;
+    }
+
+    static public Stage getPrimaryStage() {
+        return Testklasse.primaryStage;
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception{
+        setPrimaryStage(primaryStage);
         Parent root = FXMLLoader.load(getClass().getResource("MainInterface.fxml"));
         primaryStage.setTitle("loginScreen2");
         primaryStage.setScene(new Scene(root, 900, 625));
-        primaryStage.show();
+        //primaryStage.show();
     }
 
 

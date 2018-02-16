@@ -20,7 +20,6 @@ public class Presenter {
     public Presenter(MainInterfaceController controller) {
         this.controller = controller;
         model = new Model(this);
-        controllerSetMasterPassword.setPresenter(this);
         initStringProperty();
     }
 
@@ -44,9 +43,6 @@ public class Presenter {
 
     }
 
-    //######################################################################################################
-
-
 
     public void setStringProperty(String string) throws IOException {
         this.stringProperty.setValue(string);
@@ -65,6 +61,13 @@ public class Presenter {
 //        controller.updateGui();
 //    }
 
+    //######################################################################################################
+
+
+    public Presenter getPresenter() {
+        return this;
+    }
+
     //Schreibt die Liste der Arraylist aus Model in die Observable List im Presenter
     public void writeToObservableList() {
         Iterator<Entry> iterator = model.getEntryList().iterator();
@@ -75,13 +78,28 @@ public class Presenter {
 
 
     public boolean checkSetMasterpassword() {
-        return model.checkSetMasterpassword();
+        if (model.checkSetMasterpassword()) {
+
+            return true;
+        } else {
+
+            return false;
+        }
     }
 
     //Bekommt die zwei Passwörter vom SetMasterPassword Fenster
     //Gibt diese an das Model weiter
     public boolean setMasterpassword() {
-        return model.setMasterpassword(controllerSetMasterPassword.getPassword_box(), controllerSetMasterPassword.getRepeatPassword_box());
+        //return model.setMasterpassword(controllerSetMasterPassword.getPassword_box(), controllerSetMasterPassword.getRepeatPassword_box());
+//        controllerSetMasterPassword = new SetMasterPasswordController();
+//
+//        model.test();
+        //controllerSetMasterPassword.test();
+        return false;
+    }
+
+    public void test() {
+        System.out.println("testMethode Presenter");
     }
 
 }

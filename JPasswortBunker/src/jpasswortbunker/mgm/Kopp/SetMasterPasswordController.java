@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class SetMasterPasswordController {
+public final class SetMasterPasswordController{
 
     @FXML
     private PasswordField password_box;
@@ -22,6 +22,14 @@ public class SetMasterPasswordController {
     private Label l_MasterKeyWrong;
 
     private Presenter presenter;
+
+
+    public void initialize() throws IOException {
+        System.out.println("Methode initialize");
+
+
+
+    }
 
     public void setPresenter(Presenter presenter) {
         this.presenter = presenter;
@@ -37,7 +45,23 @@ public class SetMasterPasswordController {
 
     public void btn_setMasterPassword(ActionEvent actionEvent) {
         System.out.println("Button gedrückt");
-        //System.out.println(presenter.setMasterpassword());
+
+//        presenter.setMasterpassword();
+        if (presenter.setMasterpassword()) {
+            System.out.println("ja");
+        } else {
+            System.out.println("nein");
+        }
+
+    }
+
+
+    public void test() {
+        System.out.println("testMethode SetmasterPassword Controller");
+    }
+
+    public SetMasterPasswordController getController() {
+        return this;
     }
 
 

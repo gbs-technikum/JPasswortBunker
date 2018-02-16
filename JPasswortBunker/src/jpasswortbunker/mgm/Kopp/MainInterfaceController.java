@@ -1,37 +1,20 @@
 package jpasswortbunker.mgm.Kopp;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.util.Callback;
-import jpasswortbunker.mgm.entry.Entry;
-import jpasswortbunker.mgm.gui.EditEntryController;
-
 import java.io.IOException;
-import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
 
 public class MainInterfaceController {
@@ -62,11 +45,14 @@ public class MainInterfaceController {
     @FXML
     private AnchorPane mainAnchorPane;
 
+    private Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin;
+
     private Presenter presenter = new Presenter(this);
 
     //Methode wird bei Controlleraufruf ausgeführt
     public void initialize() throws IOException {
         checkSetMasterpassword();
+        stageMainInterfaceController = Testklasse.getPrimaryStage();
     }
 
     //Methode überprüft ob ein MasterPasswort gesetzt ist
@@ -75,23 +61,32 @@ public class MainInterfaceController {
     private void checkSetMasterpassword() throws IOException {
         if (presenter.checkSetMasterpassword()) {
             System.out.println("gesetzt");
-            Stage stageLogin= new Stage();
-            Parent parentLogin = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
-            Scene scene2 = new Scene(parentLogin, 500, 400);
-            stageLogin.setTitle("zweites Fenster");
-            stageLogin.setScene(scene2);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
+            Parent parent = fxmlLoader.load();
+            LoginScreenController setMasterPasswordController = fxmlLoader.<LoginScreenController>getController();
+            setMasterPasswordController.setPresenter(presenter);
+            this.stageLogin = new Stage();
+            stageLogin.setTitle("SetMasterPassword");
+            stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
             stageLogin.show();
         } else {
             System.out.println("nicht gesetzt");
-            Stage stageSetMasterPassword = new Stage();
-            Parent parentSetMasterPassword = FXMLLoader.load(getClass().getResource("SetMasterPassword.fxml"));
-            Scene scene2 = new Scene(parentSetMasterPassword, 500, 400);
-            stageSetMasterPassword.setTitle("zweites Fenster");
-            stageSetMasterPassword.setScene(scene2);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SetMasterPassword.fxml"));
+            Parent parent = fxmlLoader.load();
+            SetMasterPasswordController setMasterPasswordController = fxmlLoader.<SetMasterPasswordController>getController();
+            setMasterPasswordController.setPresenter(presenter);
+            this.stageSetMasterPassword = new Stage();
+            stageSetMasterPassword.setTitle("SetMasterPassword");
+            stageSetMasterPassword.setScene(new Scene(parent, 500, 400));
             stageSetMasterPassword.setAlwaysOnTop(true);
             stageSetMasterPassword.show();
         }
+    }
+
+    public void mainTest() {
+
+
     }
 
 

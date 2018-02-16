@@ -56,7 +56,7 @@ public class Model {
             System.out.println("MasterPasswort wurde gesetzt");
             return true;
         }
-        System.out.println("MasterPassword konnte nicht gesetzt werden");
+        System.out.println("MasterPassword konnte nicht gesetzt werden -> Eingaben nicht gleich");
         return false;
     }
 
@@ -108,6 +108,10 @@ public class Model {
         entryList.add(new Entry("Youtube", "meinName", "dasPasswort", "www.netflix.com", "kaka", 1));
         entryList.add(new Entry("Facebook", "meinName", "dasPasswort", "www.netflix.com", "kaka", 3));
         entryList.add(new Entry("Bitcoin", "meinName", "dasPasswort", "www.netflix.com", "kaka", 2));
+    }
+
+    public void test() {
+        System.out.println("testMethode Model");
     }
 
 }
