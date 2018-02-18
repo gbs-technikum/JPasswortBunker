@@ -45,7 +45,7 @@ public class MainInterfaceController {
     @FXML
     private AnchorPane mainAnchorPane;
 
-    private Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin;
+    private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin;
 
     private Presenter presenter = new Presenter(this);
 
@@ -53,6 +53,14 @@ public class MainInterfaceController {
     public void initialize() throws IOException {
         checkSetMasterpassword();
         stageMainInterfaceController = Testklasse.getPrimaryStage();
+    }
+
+    public static Stage getStageSetMasterPassword() {
+        return stageSetMasterPassword;
+    }
+
+    public static Stage getStageLogin() {
+        return stageLogin;
     }
 
     //Methode überprüft ob ein MasterPasswort gesetzt ist

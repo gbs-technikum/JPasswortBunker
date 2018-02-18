@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 import java.io.IOException;
 import java.util.Iterator;
 
-public class Presenter {
+public final class Presenter {
 
     private MainInterfaceController controller;
     private SetMasterPasswordController controllerSetMasterPassword;
@@ -89,13 +89,18 @@ public class Presenter {
 
     //Bekommt die zwei Passwörter vom SetMasterPassword Fenster
     //Gibt diese an das Model weiter
-    public boolean setMasterpassword() {
-        //return model.setMasterpassword(controllerSetMasterPassword.getPassword_box(), controllerSetMasterPassword.getRepeatPassword_box());
-//        controllerSetMasterPassword = new SetMasterPasswordController();
+    public boolean setMasterpassword(String password1, String password2) {
+        //return model.setMasterpassword(password1, password2);
+        controllerSetMasterPassword = new SetMasterPasswordController();
 //
 //        model.test();
-        //controllerSetMasterPassword.test();
-        return false;
+        controllerSetMasterPassword.test();
+
+//        controllerSetMasterPassword = new SetMasterPasswordController();
+//        controllerSetMasterPassword.test();
+        System.out.println("####" + controllerSetMasterPassword.getPassword_box());
+
+    return true;
     }
 
     public void test() {

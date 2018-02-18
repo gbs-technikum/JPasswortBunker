@@ -4,7 +4,7 @@ package jpasswortbunker.mgm.Kopp;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Model {
+public final class Model {
 
     private String text;
     private Presenter presenter;

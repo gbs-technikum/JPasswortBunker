@@ -27,9 +27,9 @@ public final class SetMasterPasswordController{
     public void initialize() throws IOException {
         System.out.println("Methode initialize");
 
-
-
     }
+
+
 
     public void setPresenter(Presenter presenter) {
         this.presenter = presenter;
@@ -45,13 +45,14 @@ public final class SetMasterPasswordController{
 
     public void btn_setMasterPassword(ActionEvent actionEvent) {
         System.out.println("Button gedrückt");
-
+        presenter.test();
 //        presenter.setMasterpassword();
-        if (presenter.setMasterpassword()) {
-            System.out.println("ja");
-        } else {
-            System.out.println("nein");
-        }
+//        if (presenter.setMasterpassword()) {
+//            System.out.println("ja");
+//        } else {
+//            System.out.println("nein");
+//        }
+        presenter.setMasterpassword(password_box.getText(), repeatPassword_box.getText());
 
     }
 
@@ -60,9 +61,9 @@ public final class SetMasterPasswordController{
         System.out.println("testMethode SetmasterPassword Controller");
     }
 
-    public SetMasterPasswordController getController() {
-        return this;
-    }
+//    public SetMasterPasswordController getController() {
+//        return this;
+//    }
 
 
     //    public void correctMasterKey(ActionEvent actionEvent) throws IOException {
