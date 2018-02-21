@@ -91,7 +91,7 @@ public final class Presenter {
     //Gibt diese an das Model weiter
     public boolean setMasterpassword(String password1, String password2) {
         //return model.setMasterpassword(password1, password2);
-        controllerSetMasterPassword = new SetMasterPasswordController();
+        //controllerSetMasterPassword = new SetMasterPasswordController();
 //
 //        model.test();
         controllerSetMasterPassword.test();

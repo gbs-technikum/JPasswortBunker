@@ -9,7 +9,7 @@ public final class Model {
     private String text;
     private Presenter presenter;
     private ArrayList<Entry> entryList;
-    private String masterpassword;
+    private String masterpassword = "dddde";
 
 
     public Model(Presenter presenter) {
