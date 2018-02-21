@@ -31,8 +31,8 @@ public class HashService {
     public String getHashValue(String stringToHash) throws UnsupportedEncodingException {
         messageDigest.update(stringToHash.getBytes("UTF-8"));
         valueToHashByteArray = messageDigest.digest();
-        String sha256hex = Hex.encodeHexString(valueToHashByteArray);
-        return sha256hex;
+        String hexCodeHashValue = Hex.encodeHexString(valueToHashByteArray);
+        return hexCodeHashValue;
     }
 
 

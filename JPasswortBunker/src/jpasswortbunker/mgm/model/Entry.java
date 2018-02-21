@@ -1,34 +1,63 @@
+
 package jpasswortbunker.mgm.model;
+
+import java.sql.Timestamp;
+import java.util.UUID;
 
 public class Entry {
 
     private String title, description, url, username, password;
-    private int dbID, entryID, categoryID;
+    private int dbID, categoryID;
+    private UUID entryID;
+    private long timestamp;
 
-    public Entry(String title, String description, String url, String username, String password, int dbID, int entryID, int categoryID) {
+
+    private Entry(){
+        this.entryID = UUID.randomUUID();
+        this.categoryID = 0;
+        timestamp = System.currentTimeMillis() / 1000L;
+    }
+
+    public Entry(String title, String username, String password){
+        this();
         this.title = title;
-        this.description = description;
-        this.url = url;
         this.username = username;
         this.password = password;
-        this.dbID = dbID;
-        this.entryID = entryID;
+    }
+
+    public Entry(String title, String username, String password, String description) {
+        this(title, username, password);
+        this.description = description;
+    }
+
+
+    public Entry(String title, String username, String password, String description, String url) {
+        this(title, username, password, description);
+        this.url = url;
+    }
+
+
+    public Entry(String title, String username, String password, String description, String url, int categoryID) {
+        this(title, username, password, description, url);
         this.categoryID = categoryID;
     }
+
+
 
     public String getTitle() {
         return title;
     }
 
-    private void setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
+
 
     public String getDescription() {
         return description;
     }
 
-    private void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -36,7 +65,7 @@ public class Entry {
         return url;
     }
 
-    private void setUrl(String url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 
@@ -44,7 +73,7 @@ public class Entry {
         return username;
     }
 
-    private void setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -52,7 +81,7 @@ public class Entry {
         return password;
     }
 
-    private void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -60,15 +89,15 @@ public class Entry {
         return dbID;
     }
 
-    private void setDbID(int dbID) {
+    public void setDbID(int dbID) {
         this.dbID = dbID;
     }
 
-    public int getEntryID() {
+    public UUID getEntryID() {
         return entryID;
     }
 
-    private void setEntryID(int entryID) {
+    public void setEntryID(UUID entryID) {
         this.entryID = entryID;
     }
 
@@ -76,18 +105,9 @@ public class Entry {
         return categoryID;
     }
 
-    private void setCategoryID(int categoryID) {
+    public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
     }
 
-    public void updateEntry(String title, String url, String description, String username, String password){
-        this.setTitle(title);
-        this.setUrl(url);
-        this.setDescription(description);
-        this.setUsername(username);
-        this.setPassword(password);
-
-
-    }
 
 }
