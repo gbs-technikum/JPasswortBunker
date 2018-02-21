@@ -66,6 +66,7 @@ public class EntryList {
     }
 
 
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("dbID \t" + "entryID \t"
