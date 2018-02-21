@@ -57,6 +57,7 @@ public class LoginScreenController {
     private boolean checkPassword(String eingabePassword) {
         if (eingabePassword.equals(password)) {
             return true;
+
         }
         return false;
     }
