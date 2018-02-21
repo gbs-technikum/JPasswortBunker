@@ -1,4 +1,4 @@
-package model;
+package jpasswortbunker.mgm.model;
 
 public class EntryService {
 

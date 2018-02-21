@@ -1,4 +1,4 @@
-package model;
+package jpasswortbunker.mgm.model;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -7,15 +7,15 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public final class Main {
+public final class TestklasseWagenhuber {
     public static void main(String[] args) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
 
         PasswordObject.getInstance().setPassword("MasterKey_");
 
 
         EncryptionService encryptionService = new EncryptionService();
-        System.out.println("______Passwort für Verschlüsselung__________");
-        System.out.println(PasswordObject.getInstance().getSaltPassword());
+        System.out.println("______Salt-Passwort-Hash für Verschlüsselung__________");
+        System.out.println(PasswordObject.getInstance().getSaltPasswordHashForEncryption());
 
 
         System.out.println("____________Daten verschlüsselt:____________________");
@@ -39,9 +39,19 @@ public final class Main {
         System.out.println("____________Test Passwort Hash______________");
 
 
-        byte[] a = hashServiceMD5.getHashValue(PasswordObject.getInstance().getSaltPassword()).getBytes();
+        byte[] a = hashServiceMD5.getHashValue(PasswordObject.getInstance().getSaltPasswordHashForEncryption()).getBytes();
         System.out.println(a.length);
-        byte[] b = hashServiceSHA256.getHashValue(PasswordObject.getInstance().getSaltPassword()).getBytes();
+        byte[] b = hashServiceSHA256.getHashValue(PasswordObject.getInstance().getSaltPasswordHashForEncryption()).getBytes();
         System.out.println(b.length);
+
+
+        System.out.println("____________Passwort-Hash 512 bit for Store______________");
+        System.out.println(PasswordObject.getInstance().getSaltPasswordHashForPasswortStore());
+
+        System.out.println("____________Ckeck-Passwort_____________________________");
+        System.out.println(PasswordObject.getInstance().getSaltPasswordHashForPasswortStore());
+        System.out.println(PasswordObject.getInstance().createSaltPasswordHashForPasswortStore(PasswordObject.getInstance().createSaltyPassword("MasterKey_")));
+        System.out.println(PasswordObject.getInstance().checkPassword("MasterKey_"));
+
     }
 }
