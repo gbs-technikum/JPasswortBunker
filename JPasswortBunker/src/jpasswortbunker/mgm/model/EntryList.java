@@ -3,6 +3,7 @@ package jpasswortbunker.mgm.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 public class EntryList {
 
@@ -17,7 +18,7 @@ public class EntryList {
         return entryList;
     }
 
-    public Entry getEntry(int entryID) {
+    public Entry getEntry(UUID entryID) {
         Iterator<Entry> iterator = entryList.iterator();
         while (iterator.hasNext()) {
             if (iterator.next().getEntryID() == entryID) ;
@@ -41,7 +42,7 @@ public class EntryList {
     }
 
     //Parameter entryID
-    public Entry removeEntry(int entryID) {
+    public Entry removeEntry(UUID entryID) {
         Iterator<Entry> iterator = entryList.iterator();
         while (iterator.hasNext()) {
             if (iterator.next().getEntryID() == entryID) ;
