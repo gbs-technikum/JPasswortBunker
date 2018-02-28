@@ -37,8 +37,9 @@ public class EntryList {
     }
 
     //Parameter Entry
-    public void removeEntry(Entry entry) {
+    public Entry removeEntry(Entry entry) {
         entryList.remove(entry);
+        return  entry;
     }
 
     //Parameter entryID

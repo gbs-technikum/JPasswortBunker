@@ -12,30 +12,73 @@ public class ModelMain {
     private EncryptionService encryptionService;
 
 
-
-
     public ModelMain() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException {
         this.entryList = new EntryList();
         this.encryptionService = new EncryptionService();
-
     }
 
+    //##############################################################################################
+    //Einträge zur Liste hinzufügen
     public void addEntryToList(Entry entry) {
         entryList.addEntry(entry);
     }
 
-    public void removeEntryFromList(Entry entry) {
-        entryList.removeEntry(entry);
+    public void addEntryToList(String title, String username, String password, String repeatPassword) {
+        if (equalsPassword(password, repeatPassword)) {
+            entryList.addEntry(new Entry(title, username, password));
+        }
     }
 
 
+    public void addEntryToList(String title, String username, String password, String repeatPassword, String description, String url) {
+        if (equalsPassword(password, repeatPassword)) {
+            entryList.addEntry(new Entry(title, username, password, description, url));
+        }
+    }
+
+    public void addEntryToList(String title, String username, String password, String repeatPassword, String description, String url, int categoryID) {
+        if (equalsPassword(password, repeatPassword)) {
+            entryList.addEntry(new Entry(title, username, password, description, url, categoryID));
+        }
+    }
+
+    //überprüfung ob die eingegebene Passwörter übereinstimmen
+    //Wird für Entry's und Masterpasswort verwendet
+    private boolean equalsPassword(String password, String repeatPassword) {
+        if (password.equals(repeatPassword)) {
+            return true;
+        }
+        System.out.println("Passwörter stimmen nicht überein");
+        return false;
+    }
+    //##############################################################################################
+
+    //Einträge aus Liste entferen
+    public void removeEntryFromList(Entry entry) {
+        if (entryList.removeEntry(entry) != null) {
+            System.out.println("Eintrag wurde gelöscht");
+            return;
+        }
+        System.out.println("eintrag konnte nicht gelöscht werden");
+    }
+
     public void removeEntryFromList(UUID uuid) {
-        entryList.removeEntry(uuid);
+        if (entryList.removeEntry(uuid) != null) {
+            System.out.println("Eintrag wurde gelöscht");
+            return;
+        }
+        System.out.println("eintrag konnte nicht gelöscht werden");
     }
 
     public void removeEntryFromList(String title) {
-        entryList.removeEntry(title);
+        if (entryList.removeEntry(title) != null) {
+            System.out.println("Eintrag wurde gelöscht");
+            return;
+        }
+        System.out.println("eintrag konnte nicht gelöscht werden");
     }
+
+
 
 
 
