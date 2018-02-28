@@ -1,8 +1,10 @@
 package jpasswortbunker.mgm.model;
 
+import javax.crypto.NoSuchPaddingException;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
 public class Test {
@@ -41,10 +43,13 @@ public class Test {
         }
     }
 
-    public static void main(String[] args) throws URISyntaxException {
+    public static void main(String[] args) throws URISyntaxException, NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException {
 
-        Test test = new Test();
-        test.test3();
+//        Test test = new Test();
+//        test.test3();
+
+        ModelMain modelMain = new ModelMain();
+        modelMain.addEntryToList("Netflix", "Underwoo", "123", "12d3");
 
     }
 }

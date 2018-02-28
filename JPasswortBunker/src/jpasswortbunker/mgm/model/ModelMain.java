@@ -14,7 +14,13 @@ public class ModelMain {
 
     public ModelMain() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException {
         this.entryList = new EntryList();
+        PasswordObject.getInstance().setPassword("test");
         this.encryptionService = new EncryptionService();
+
+    }
+
+    public EntryList getEntryList() {
+        return entryList;
     }
 
     //##############################################################################################
@@ -48,7 +54,7 @@ public class ModelMain {
         if (password.equals(repeatPassword)) {
             return true;
         }
-        System.out.println("Passwörter stimmen nicht überein");
+        System.out.println("Passwörter stimmen nicht überein, Entry wurde nicht erstellt");
         return false;
     }
     //##############################################################################################
