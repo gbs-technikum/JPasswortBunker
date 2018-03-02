@@ -29,7 +29,7 @@ public class ModelMain {
         entryList.addEntry(entry);
     }
 
-    public void addEntryToList(String title, String username, String password, String repeatPassword) {
+    /*public void addEntryToList(String title, String username, String password, String repeatPassword) {
         if (equalsPassword(password, repeatPassword)) {
             entryList.addEntry(new Entry(title, username, password));
         }
@@ -46,7 +46,7 @@ public class ModelMain {
         if (equalsPassword(password, repeatPassword)) {
             entryList.addEntry(new Entry(title, username, password, description, url, categoryID));
         }
-    }
+    }*/
 
     //überprüfung ob die eingegebene Passwörter übereinstimmen
     //Wird für Entry's und Masterpasswort verwendet

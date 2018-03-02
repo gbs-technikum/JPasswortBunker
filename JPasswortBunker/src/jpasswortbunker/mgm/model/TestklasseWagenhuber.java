@@ -6,9 +6,11 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public final class TestklasseWagenhuber {
-    public static void main(String[] args) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
+    public static void main(String[] args) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, SQLException {
 
         PasswordObject.getInstance().setPassword("MasterKey_");
 
@@ -52,6 +54,35 @@ public final class TestklasseWagenhuber {
         System.out.println(PasswordObject.getInstance().getSaltPasswordHashForPasswortStore());
         System.out.println(PasswordObject.getInstance().createSaltPasswordHashForPasswortStore(PasswordObject.getInstance().createSaltyPassword("MasterKey_")));
         System.out.println(PasswordObject.getInstance().checkPassword("MasterKey_"));
+
+
+        System.out.println("_______________TEST-DB_________________");
+
+        ArrayList<Entry> entryList;
+        DBService dbService = new DBService();
+        System.out.println("Read all Entries");
+        entryList = dbService.readAllEntries();
+        for (Entry entry : entryList) {
+            System.out.println(entry);
+        }
+        System.out.println("Read single Entries");
+        Entry entry;
+        entry = dbService.readSingleEntry(2);
+        System.out.println(entry);
+
+
+
+
+        System.out.println("Insert new Entry");
+        Entry PeterEnis = new Entry("InsertDBEintragTest2", "Peter Lang", "zukurz");
+        System.out.println(PeterEnis);
+        System.out.println(dbService.getNextDbId());
+
+
+
+        dbService.insertEntry(PeterEnis);
+        System.out.println("Close-DB");
+        dbService.close();
 
     }
 }

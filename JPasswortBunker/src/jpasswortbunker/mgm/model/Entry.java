@@ -1,6 +1,7 @@
 
 package jpasswortbunker.mgm.model;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -10,38 +11,70 @@ public class Entry {
     private int dbID, categoryID;
     private UUID entryID;
     private long timestamp;
+    private DBService dbService;
 
-
-    private Entry(){
-        this.entryID = UUID.randomUUID();
-        this.categoryID = 0;
-        timestamp = System.currentTimeMillis() / 1000L;
+    private Entry() throws SQLException {
+        setMetaData();
     }
 
-    public Entry(String title, String username, String password){
+    public Entry(String title, String username, String password) throws SQLException {
         this();
         this.title = title;
         this.username = username;
         this.password = password;
+        setMetaData();
     }
 
-    public Entry(String title, String username, String password, String description) {
+
+    public Entry(String title, String username, String password, String description) throws SQLException {
         this(title, username, password);
         this.description = description;
+        setMetaData();
     }
 
 
-    public Entry(String title, String username, String password, String description, String url) {
+    public Entry(String title, String username, String password, String description, String url) throws SQLException {
         this(title, username, password, description);
         this.url = url;
+        setMetaData();
     }
 
 
-    public Entry(String title, String username, String password, String description, String url, int categoryID) {
+    public Entry(String title, String username, String password, String description, String url, int categoryID) throws SQLException {
         this(title, username, password, description, url);
         this.categoryID = categoryID;
+        setMetaData();
     }
 
+
+    public Entry(String title, String username, String password, String description, String url, int categoryID, int dbID, UUID entryID, long timestamp) throws SQLException {
+        this.title = title;
+        this.description = description;
+        this.url = url;
+        this.username = username;
+        this.password = password;
+        this.dbID = dbID;
+        this.categoryID = categoryID;
+        this.entryID = entryID;
+        this.timestamp = timestamp;
+    }
+
+
+    private void setMetaData() throws SQLException {
+        dbService = new DBService();
+        dbID = dbService.getNextDbId();
+        dbService.close();
+        dbService = null;
+
+        if (entryID == null) {
+            this.entryID = UUID.randomUUID();
+        }
+
+        if (timestamp == 0) {
+            this.timestamp = System.currentTimeMillis() / 1000L;
+        }
+
+    }
 
 
     public String getTitle() {
@@ -109,5 +142,14 @@ public class Entry {
         this.categoryID = categoryID;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
 
+    @Override
+    public String toString() {
+        String ausgabe = this.dbID + " " + this.entryID + " " + this.title + " " + this.username + " " + this.password + " " + this.url + " " + this.description + " " + this.categoryID + " " + this.timestamp;
+
+        return ausgabe;
+    }
 }

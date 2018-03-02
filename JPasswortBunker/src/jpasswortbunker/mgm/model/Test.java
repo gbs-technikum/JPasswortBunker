@@ -48,8 +48,8 @@ public class Test {
 //        Test test = new Test();
 //        test.test3();
 
-        ModelMain modelMain = new ModelMain();
-        modelMain.addEntryToList("Netflix", "Underwoo", "123", "12d3");
+        /*ModelMain modelMain = new ModelMain();
+        modelMain.addEntryToList("Netflix", "Underwoo", "123", "12d3");*/
 
     }
 }
