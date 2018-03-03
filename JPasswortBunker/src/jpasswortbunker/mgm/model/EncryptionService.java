@@ -1,5 +1,7 @@
 package jpasswortbunker.mgm.model;
 
+import org.apache.commons.codec.binary.Base64;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -43,8 +45,39 @@ public class EncryptionService {
 
 
 
+    public String encrypt(String geheimeDaten) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+        if (geheimeDaten == null) {
+            return null;
+        }
+        this.geheimeDatenByteArray = geheimeDaten.getBytes();
+        cipher.init(Cipher.ENCRYPT_MODE, this.secretKeySpec);
+        byte[] verschluesselteDatenByteArray = cipher.doFinal(geheimeDatenByteArray);
+        return Base64.encodeBase64String(verschluesselteDatenByteArray);
+    }
 
-    public byte[] encrypt(String geheimeDaten) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+
+
+
+    public String decrypt(String verschluesselteDatenByteArray) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+        byte[] array = Base64.decodeBase64(verschluesselteDatenByteArray);
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+        byte[] entschluesselteDatenByteArray = cipher.doFinal(array);
+        String geheimeDatenNachEntschluesselung = new String(entschluesselteDatenByteArray, "UTF-8");
+        return geheimeDatenNachEntschluesselung;
+    }
+
+
+    /**ALT - kann gelöscht werden! Klassen wurden mittels Base64 auf String Ein- und Ausgabe umgestellt.
+     * 3.3.2018 - Wagenhuber
+     * @param geheimeDaten
+     * @return
+     * @throws InvalidKeyException
+     * @throws BadPaddingException
+     * @throws IllegalBlockSizeException
+     * @throws UnsupportedEncodingException
+     */
+
+    /*public byte[] encryptByteArray(String geheimeDaten) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
         this.geheimeDatenByteArray = geheimeDaten.getBytes();
         cipher.init(Cipher.ENCRYPT_MODE, this.secretKeySpec);
         byte[] verschluesselteDatenByteArray = cipher.doFinal(geheimeDatenByteArray);
@@ -52,13 +85,11 @@ public class EncryptionService {
     }
 
 
-    public String decrypt(byte[] verschluesselteDatenByteArray) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+    public String decryptByteArray(byte[] verschluesselteDatenByteArray) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
         byte[] entschluesselteDatenByteArray = cipher.doFinal(verschluesselteDatenByteArray);
         String geheimeDatenNachEntschluesselung = new String(entschluesselteDatenByteArray, "UTF-8");
         return geheimeDatenNachEntschluesselung;
-    }
-
-
+    }*/
 
 }

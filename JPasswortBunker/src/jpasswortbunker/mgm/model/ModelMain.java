@@ -1,33 +1,73 @@
 package jpasswortbunker.mgm.model;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class ModelMain {
 
-    private EntryList entryList;
     private PasswordObject masterPassword;
+    private EntryList entryList;
     private EncryptionService encryptionService;
+    private DBService dbService;
 
 
-    public ModelMain() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException {
-        this.entryList = new EntryList();
+    public ModelMain() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException {
         PasswordObject.getInstance().setPassword("test");
+        this.entryList = new EntryList();
         this.encryptionService = new EncryptionService();
-
+        this.dbService = new DBService();
     }
 
-    public EntryList getEntryList() {
-        return entryList;
+    /**ArrayList aus Klasse EntryList zurückgeben
+     *
+     * @return
+     */
+    public ArrayList<Entry> getEntryList() {
+        ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
+        return arrayList;
     }
 
-    //##############################################################################################
-    //Einträge zur Liste hinzufügen
+    /**Objekt aus Datenbank holen und in Liste schreiben
+     *
+     * @throws SQLException
+     */
+    public void FillEntryListFromDb() throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        ArrayList<Entry> arrayListEncrypted;
+        arrayListEncrypted = dbService.readAllEntries();
+        ArrayList<Entry> arrayListDecrypted = new ArrayList<>();
+
+        for (Entry encryptedEntry : arrayListEncrypted) {
+            Entry decryptedEntry = new Entry(encryptionService.decrypt(encryptedEntry.getTitle()),encryptionService.decrypt(encryptedEntry.getUsername()),encryptionService.decrypt(encryptedEntry.getPassword()),encryptionService.decrypt(encryptedEntry.getDescription()),encryptionService.decrypt(encryptedEntry.getUrl()),encryptedEntry.getCategoryID(),encryptedEntry.getDbID(),encryptedEntry.getEntryID(),encryptedEntry.getTimestamp());
+            arrayListDecrypted.add(decryptedEntry);
+        }
+        this.entryList.setEntryObjectList(arrayListDecrypted);
+    }
+
+
+    /**Entry-Objekt zur Liste hinzufügen
+     *
+     * @param entry
+     */
     public void addEntryToList(Entry entry) {
         entryList.addEntry(entry);
     }
+
+
+    public void newEntry(String title, String username, String password, String description, String url, int categoryID) throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        Entry newEntry = new Entry(title, username, password, description, url, categoryID);
+        entryList.addEntry(newEntry);
+        Entry newEntryEncrypted = new Entry(encryptionService.encrypt(title), encryptionService.encrypt(username), encryptionService.encrypt(password), encryptionService.encrypt(description), encryptionService.encrypt(url), categoryID);
+        dbService.insertEntry(newEntryEncrypted);
+    }
+
+
 
     /*public void addEntryToList(String title, String username, String password, String repeatPassword) {
         if (equalsPassword(password, repeatPassword)) {
@@ -83,9 +123,6 @@ public class ModelMain {
         }
         System.out.println("eintrag konnte nicht gelöscht werden");
     }
-
-
-
 
 
 }

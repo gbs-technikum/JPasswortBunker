@@ -21,7 +21,8 @@ public final class TestklasseWagenhuber {
 
 
         System.out.println("____________Daten verschlüsselt:____________________");
-        byte[] verschlüsselt = encryptionService.encrypt("wagenhuber");
+        String verschlüsselt = encryptionService.encrypt("wagenhuber");
+        //byte[] verschlüsselt = encryptionService.encrypt("wagenhuber");
         System.out.println(verschlüsselt);
 
 
@@ -58,29 +59,17 @@ public final class TestklasseWagenhuber {
 
         System.out.println("_______________TEST-DB_________________");
 
-        ArrayList<Entry> entryList;
+
         DBService dbService = new DBService();
-        System.out.println("Read all Entries");
-        entryList = dbService.readAllEntries();
-        for (Entry entry : entryList) {
-            System.out.println(entry);
-        }
-        System.out.println("Read single Entries");
-        Entry entry;
-        entry = dbService.readSingleEntry(2);
-        System.out.println(entry);
-
-
-
 
         System.out.println("Insert new Entry");
-        Entry PeterEnis = new Entry("InsertDBEintragTest2", "Peter Lang", "zukurz");
+        Entry PeterEnis = new Entry("DB-Test-Eintrag", "Tom Hanks", "hollywood", "Forest Gump", "www.movie.com",8);
         System.out.println(PeterEnis);
         System.out.println(dbService.getNextDbId());
 
-
-
         dbService.insertEntry(PeterEnis);
+
+
         System.out.println("Close-DB");
         dbService.close();
 

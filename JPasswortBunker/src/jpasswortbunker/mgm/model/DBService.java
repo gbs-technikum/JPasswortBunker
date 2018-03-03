@@ -68,7 +68,7 @@ public class DBService {
 
 
     public void insertEntry(Entry entry) throws SQLException {
-        String sql = "insert into Entrys (Entry_ID, Title, Username, Password, timestamp) values('" + entry.getEntryID() + "','" + entry.getTitle()+"','"+entry.getUsername()+"','"+entry.getPassword()+"','"+entry.getTimestamp()+"');";
+        String sql = "insert into Entrys (Entry_ID, Title, Username, Password, URL, Description, Categorie_ID, timestamp) values('" + entry.getEntryID() + "','" + entry.getTitle()+"','"+entry.getUsername()+"','"+entry.getPassword()+"','"+entry.getUrl()+"','"+entry.getDescription()+"','"+entry.getCategoryID()+"','"+entry.getTimestamp()+"');";
         this.statement.execute(sql);
     }
 
