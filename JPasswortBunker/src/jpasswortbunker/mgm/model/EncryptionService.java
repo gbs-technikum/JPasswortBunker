@@ -56,9 +56,10 @@ public class EncryptionService {
     }
 
 
-
-
     public String decrypt(String verschluesselteDatenByteArray) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+        if (verschluesselteDatenByteArray == null) {
+            return null;
+        }
         byte[] array = Base64.decodeBase64(verschluesselteDatenByteArray);
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
         byte[] entschluesselteDatenByteArray = cipher.doFinal(array);

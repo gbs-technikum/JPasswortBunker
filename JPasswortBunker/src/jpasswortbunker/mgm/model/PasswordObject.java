@@ -65,8 +65,16 @@ public class PasswordObject {
         return saltPasswordHashForPasswortStore;
     }
 
-    public Boolean checkPassword(String password) throws UnsupportedEncodingException {
-        if (createSaltPasswordHashForPasswortStore(createSaltyPassword(password)).equals(this.saltPasswordHashForPasswortStore)) {
+    public void setSaltPasswordHashForEncryption(String saltPasswordHashForEncryption) {
+        this.saltPasswordHashForEncryption = saltPasswordHashForEncryption;
+    }
+
+    public void setSaltPasswordHashForPasswortStore(String saltPasswordHashForPasswortStore) {
+        this.saltPasswordHashForPasswortStore = saltPasswordHashForPasswortStore;
+    }
+
+    public Boolean checkPassword(String passwordHashFromDB) throws UnsupportedEncodingException {
+        if (passwordHashFromDB.equals(this.saltPasswordHashForPasswortStore)) {
             return true;
         }
         return false;

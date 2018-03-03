@@ -21,7 +21,7 @@ public final class TestklasseWagenhuber {
 
 
         System.out.println("____________Daten verschlüsselt:____________________");
-        String verschlüsselt = encryptionService.encrypt("wagenhuber");
+        String verschlüsselt = encryptionService.encrypt("wagenhuber1234567890?");
         //byte[] verschlüsselt = encryptionService.encrypt("wagenhuber");
         System.out.println(verschlüsselt);
 
@@ -62,12 +62,17 @@ public final class TestklasseWagenhuber {
 
         DBService dbService = new DBService();
 
-        System.out.println("Insert new Entry");
+        String masterPasswordFromDB = dbService.getMasterPasswordFromDB();
+        System.out.println(masterPasswordFromDB);
+
+
+
+        /*System.out.println("Insert new Entry");
         Entry PeterEnis = new Entry("DB-Test-Eintrag", "Tom Hanks", "hollywood", "Forest Gump", "www.movie.com",8);
         System.out.println(PeterEnis);
         System.out.println(dbService.getNextDbId());
 
-        dbService.insertEntry(PeterEnis);
+        dbService.insertEntry(PeterEnis);*/
 
 
         System.out.println("Close-DB");

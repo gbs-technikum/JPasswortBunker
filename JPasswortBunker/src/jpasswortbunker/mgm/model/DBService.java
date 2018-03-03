@@ -22,7 +22,6 @@ public class DBService {
     }
 
 
-
     public ArrayList<Entry> readEntries(String sql) throws SQLException {
 
         ResultSet resultSet = this.statement.executeQuery(sql);
@@ -44,6 +43,8 @@ public class DBService {
             entryArrayList.add(entry);
 
         }
+        resultSet.close();
+        statement.close();
         return (ArrayList<Entry>) entryArrayList;
     }
 
@@ -53,7 +54,7 @@ public class DBService {
         Entry entry = null;
         ArrayList<Entry> entryArrayList = readEntries(sql);
         Iterator<Entry> iterator = entryArrayList.iterator();
-        if(iterator.hasNext()){
+        if (iterator.hasNext()) {
             entry = iterator.next();
         }
         return entry;
@@ -66,10 +67,10 @@ public class DBService {
         return entryArrayList;
     }
 
-
     public void insertEntry(Entry entry) throws SQLException {
-        String sql = "insert into Entrys (Entry_ID, Title, Username, Password, URL, Description, Categorie_ID, timestamp) values('" + entry.getEntryID() + "','" + entry.getTitle()+"','"+entry.getUsername()+"','"+entry.getPassword()+"','"+entry.getUrl()+"','"+entry.getDescription()+"','"+entry.getCategoryID()+"','"+entry.getTimestamp()+"');";
+        String sql = "insert into Entrys (Entry_ID, Title, Username, Password, URL, Description, Categorie_ID, timestamp) values('" + entry.getEntryID() + "','" + entry.getTitle() + "','" + entry.getUsername() + "','" + entry.getPassword() + "','" + entry.getUrl() + "','" + entry.getDescription() + "','" + entry.getCategoryID() + "','" + entry.getTimestamp() + "');";
         this.statement.execute(sql);
+        statement.close();
     }
 
 
@@ -81,13 +82,47 @@ public class DBService {
     }
 
     public int getNextDbId() throws SQLException {
-        String sql = "select count(*) from Entrys;";
+        String sql = "SELECT MAX(DB_ID) FROM Entrys;";
         ResultSet resultSet = this.statement.executeQuery(sql);
         int amountEntries = -1;
         if (resultSet.next()) {
             amountEntries = resultSet.getInt(1);
         }
+        resultSet.close();
+        statement.close();
         return ++amountEntries;
     }
 
+
+    public String getMasterPasswordFromDB() throws SQLException {
+        String sql = "select password from Masterkey where id = 1;";
+        ResultSet resultSet = this.statement.executeQuery(sql);
+        String password = "";
+        if (resultSet.next()) {
+            password = resultSet.getString(1);
+        }
+        resultSet.close();
+        statement.close();
+        return password;
+    }
+
+
+    public void setMasterPasswordToDB(String password) throws SQLException {
+        String sql = "update Masterkey set password = '" + password + "' where id = 1";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+
+    public void insertEntryInRecycleBin(Entry entry) throws SQLException {
+        String sql = "insert into Recycle_Bin (Entry_ID, Title, Username, Password, URL, Description, Categorie_ID, timestamp) values('" + entry.getEntryID() + "','" + entry.getTitle() + "','" + entry.getUsername() + "','" + entry.getPassword() + "','" + entry.getUrl() + "','" + entry.getDescription() + "','" + entry.getCategoryID() + "','" + entry.getTimestamp() + "');";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+    public void reEnryptEntry(String title, String username, String password, String description, String url, UUID entryID) throws SQLException {
+        String sql = "update Entrys set Title = '" + title + "' where DB_ID = '" + entryID.toString() + "'";
+        this.statement.execute(sql);
+        statement.close();
+    }
 }

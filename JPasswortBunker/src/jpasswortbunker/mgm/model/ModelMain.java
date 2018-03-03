@@ -12,31 +12,78 @@ import java.util.UUID;
 
 public class ModelMain {
 
-    private PasswordObject masterPassword;
+    private PasswordObject masterPasswordObject;
     private EntryList entryList;
     private EncryptionService encryptionService;
     private DBService dbService;
 
 
-    public ModelMain() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException {
-        PasswordObject.getInstance().setPassword("test");
+    public ModelMain(String userInputForMasterPassword) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
+        this.dbService = new DBService();
+        this.masterPasswordObject = PasswordObject.getInstance();
+        initMasterPassword(userInputForMasterPassword);
         this.entryList = new EntryList();
         this.encryptionService = new EncryptionService();
-        this.dbService = new DBService();
     }
 
-    /**ArrayList aus Klasse EntryList zurückgeben
-     *
-     * @return
+
+    /**Zugriff via View
+     * Masterpasswort wird entgegengenommen und weitergereicht an PasswordObject
+     */
+    public void initMasterPassword(String password) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, SQLException, IllegalBlockSizeException {
+        this.masterPasswordObject.setPassword(password);
+    }
+
+    /**Zugriff via View
+     * Das zuvor entgegengenommen Passwort des Benutzers wird nun über den DatenbankService mit dem Passwort in der DB abgelichen
+     */
+    public boolean checkIfMasterPasswordIsCorrect() throws UnsupportedEncodingException, SQLException {
+        return masterPasswordObject.checkPassword(getSaltPasswordHashForPasswortStoreFromDb());
+
+    }
+
+    /**Zugriff via View
+     * Ein zuvor verwendetes Masterpasswort wird durch ein neues Ersetzt.
+     * Hierbei werden alle Einträge mit dem neuen Passwort entschlüsselt und neu verschlüsselt.
+     */
+    //Achtung Methode zum neuverschlüsseln aller Datensätze fehlt!!
+    public void renewMasterPassword(String password) throws InvalidKeyException, BadPaddingException, SQLException, IllegalBlockSizeException, UnsupportedEncodingException {
+        setSaltPasswordHashForPasswortStoreInDb(password);
+        initMasterPassword(password);
+
+        ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
+
+        for (Entry entry : arrayList) {
+            dbService.reEnryptEntry(entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getDescription(), entry.getUrl(), entry.getEntryID());
+        }
+    }
+
+
+    /**Kein Zugriff via View
+     * Abrufen des Masterpasswort-Hash-Wertes aus der Datenbank
+     */
+    private String getSaltPasswordHashForPasswortStoreFromDb() throws SQLException, UnsupportedEncodingException {
+        String masterPasswordFromDB = dbService.getMasterPasswordFromDB();
+        return masterPasswordFromDB;
+    }
+
+    /**Kein Zugriff via View
+     * Masterpasswort-Hash-Wert in Datenbank setzen bzw. überschreiben
+     */
+    private void setSaltPasswordHashForPasswortStoreInDb(String password) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, SQLException {
+        dbService.setMasterPasswordToDB(this.masterPasswordObject.getSaltPasswordHashForPasswortStore());
+    }
+
+    /**Zugriff via View
+     * ArrayList aus Klasse EntryList zurückgeben
      */
     public ArrayList<Entry> getEntryList() {
         ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
         return arrayList;
     }
 
-    /**Objekt aus Datenbank holen und in Liste schreiben
-     *
-     * @throws SQLException
+    /**Zugriff via View
+     * Einträge aus Datenbank holen und in Entry-Liste schreiben
      */
     public void FillEntryListFromDb() throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         ArrayList<Entry> arrayListEncrypted;
@@ -44,22 +91,24 @@ public class ModelMain {
         ArrayList<Entry> arrayListDecrypted = new ArrayList<>();
 
         for (Entry encryptedEntry : arrayListEncrypted) {
-            Entry decryptedEntry = new Entry(encryptionService.decrypt(encryptedEntry.getTitle()),encryptionService.decrypt(encryptedEntry.getUsername()),encryptionService.decrypt(encryptedEntry.getPassword()),encryptionService.decrypt(encryptedEntry.getDescription()),encryptionService.decrypt(encryptedEntry.getUrl()),encryptedEntry.getCategoryID(),encryptedEntry.getDbID(),encryptedEntry.getEntryID(),encryptedEntry.getTimestamp());
+            Entry decryptedEntry = new Entry(encryptionService.decrypt(encryptedEntry.getTitle()), encryptionService.decrypt(encryptedEntry.getUsername()), encryptionService.decrypt(encryptedEntry.getPassword()), encryptionService.decrypt(encryptedEntry.getDescription()), encryptionService.decrypt(encryptedEntry.getUrl()), encryptedEntry.getCategoryID(), encryptedEntry.getDbID(), encryptedEntry.getEntryID(), encryptedEntry.getTimestamp());
             arrayListDecrypted.add(decryptedEntry);
         }
         this.entryList.setEntryObjectList(arrayListDecrypted);
     }
 
 
-    /**Entry-Objekt zur Liste hinzufügen
-     *
-     * @param entry
+    /**Kein Zugriff via View
+     * Entry-Objekt zur Liste hinzufügen
      */
-    public void addEntryToList(Entry entry) {
+    private void addEntryToList(Entry entry) {
         entryList.addEntry(entry);
     }
 
 
+    /**Zugriff via View
+     * Neuen Eintrag erstelen
+     */
     public void newEntry(String title, String username, String password, String description, String url, int categoryID) throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         Entry newEntry = new Entry(title, username, password, description, url, categoryID);
         entryList.addEntry(newEntry);
@@ -67,36 +116,18 @@ public class ModelMain {
         dbService.insertEntry(newEntryEncrypted);
     }
 
-
-
-    /*public void addEntryToList(String title, String username, String password, String repeatPassword) {
-        if (equalsPassword(password, repeatPassword)) {
-            entryList.addEntry(new Entry(title, username, password));
-        }
+    /**Zugriff via View
+     * Bestehenden Datensatz ändern
+     */
+    public void updateEntry(Entry newerEntry) throws SQLException {
+        Entry olderEntry = this.entryList.getEntry(newerEntry.getEntryID());
+        dbService.insertEntryInRecycleBin(olderEntry);
+        olderEntry = newerEntry;
     }
 
 
-    public void addEntryToList(String title, String username, String password, String repeatPassword, String description, String url) {
-        if (equalsPassword(password, repeatPassword)) {
-            entryList.addEntry(new Entry(title, username, password, description, url));
-        }
-    }
 
-    public void addEntryToList(String title, String username, String password, String repeatPassword, String description, String url, int categoryID) {
-        if (equalsPassword(password, repeatPassword)) {
-            entryList.addEntry(new Entry(title, username, password, description, url, categoryID));
-        }
-    }*/
 
-    //überprüfung ob die eingegebene Passwörter übereinstimmen
-    //Wird für Entry's und Masterpasswort verwendet
-    private boolean equalsPassword(String password, String repeatPassword) {
-        if (password.equals(repeatPassword)) {
-            return true;
-        }
-        System.out.println("Passwörter stimmen nicht überein, Entry wurde nicht erstellt");
-        return false;
-    }
     //##############################################################################################
 
     //Einträge aus Liste entferen
@@ -123,6 +154,7 @@ public class ModelMain {
         }
         System.out.println("eintrag konnte nicht gelöscht werden");
     }
+
 
 
 }
