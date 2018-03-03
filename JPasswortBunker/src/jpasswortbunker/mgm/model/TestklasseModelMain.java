@@ -26,7 +26,7 @@ public class TestklasseModelMain {
 
 
         //Neuen Eintrag erstellen
-        modelMain.newEntry("Microsoft", "gates@microsoft.com", "redmond", "bla bla bla", "www.microsoft.com", 7);
+        modelMain.newEntry("Google", "gates@microsoft.com", "redmond", "bla bla bla", "www.microsoft.com", 7);
 
 
         //EntryList holen und alle Entries auf der Console ausgeben

@@ -9,9 +9,12 @@ import java.util.UUID;
 public class DBService {
 
 
-    private static final String URL = "jdbc:sqlite:C:\\Users\\guenther\\IdeaProjects\\JPasswortBunker\\jPasswordBunker.db";
-    //Pfad DB im Ressource Folder:
+    //private static final String URL = "jdbc:sqlite:C:\\Users\\guenther\\IdeaProjects\\JPasswortBunker\\jPasswordBunker.db";
     //private static final String URL = "jdbc:sqlite:ressources/passwordbunker.db";
+
+    //Pfad zu aktueller Testdatenbank im Projektordner
+    private static final String URL = "jdbc:sqlite:jPasswordBunker.db";
+
     private Connection connection;
     private Statement statement;
 
