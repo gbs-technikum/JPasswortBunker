@@ -64,7 +64,7 @@ public class MainInterfaceController {
 
     //Methode wird bei Controlleraufruf ausgeführt
     public void initialize() throws IOException {
-        //checkSetMasterpassword();
+        checkSetMasterpassword();
         stageMainInterfaceController = Testklasse.getPrimaryStage();
     }
 
@@ -79,19 +79,19 @@ public class MainInterfaceController {
     //Methode überprüft ob ein MasterPasswort gesetzt ist
     //Ja -> Login
     //Nein -> SetMasterPassword
-//    private void checkSetMasterpassword() throws IOException {
-//        if (presenter.checkSetMasterpassword()) {
-//            System.out.println("gesetzt");
-//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
-//            Parent parent = fxmlLoader.load();
-//            LoginScreenController setMasterPasswordController = fxmlLoader.<LoginScreenController>getController();
-//            setMasterPasswordController.setPresenter(presenter);
-//            this.stageLogin = new Stage();
-//            stageLogin.setTitle("SetMasterPassword");
-//            stageLogin.setScene(new Scene(parent, 500, 400));
-//            stageLogin.setAlwaysOnTop(true);
-//            stageLogin.show();
-//        } else {
+    private void checkSetMasterpassword() throws IOException {
+        if (presenter.checkSetMasterpassword()) {
+            System.out.println("gesetzt");
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
+            Parent parent = fxmlLoader.load();
+            LoginScreenController loginScreenController = fxmlLoader.<LoginScreenController>getController();
+            loginScreenController.setPresenter(presenter);
+            this.stageLogin = new Stage();
+            stageLogin.setTitle("SetMasterPassword");
+            stageLogin.setScene(new Scene(parent, 500, 400));
+            stageLogin.setAlwaysOnTop(true);
+            stageLogin.show();
+        } else {
 //            System.out.println("nicht gesetzt");
 //            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SetMasterPassword.fxml"));
 //            Parent parent = fxmlLoader.load();
@@ -102,8 +102,18 @@ public class MainInterfaceController {
 //            stageSetMasterPassword.setScene(new Scene(parent, 500, 400));
 //            stageSetMasterPassword.setAlwaysOnTop(true);
 //            stageSetMasterPassword.show();
-//        }
-//    }
+            System.out.println("Nicht gesetzt");
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SetMasterPassword.fxml"));
+            Parent parent = fxmlLoader.load();
+            SetMasterPasswordController loginScreenController = fxmlLoader.<SetMasterPasswordController>getController();
+            loginScreenController.setPresenter(presenter);
+            this.stageLogin = new Stage();
+            stageLogin.setTitle("SetMasterPassword");
+            stageLogin.setScene(new Scene(parent, 500, 400));
+            stageLogin.setAlwaysOnTop(true);
+            stageLogin.show();
+        }
+    }
 
     public void mainTest() {
 

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.Kopp.MainInterfaceController">
+<AnchorPane fx:id="mainAnchorPane" prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainInterfaceController">
    <children>
       <AnchorPane id="topBar" layoutX="200.0" layoutY="25.0" prefHeight="70.0" prefWidth="700.0" stylesheets="@style/default_style.css">
          <children>

@@ -56,15 +56,9 @@ public final class PresenterMain {
     }
 
 
-//    public boolean checkSetMasterpassword() {
-//        if (model.checkSetMasterpassword()) {
-//
-//            return true;
-//        } else {
-//
-//            return false;
-//        }
-//    }
+    public boolean checkSetMasterpassword() {
+        return false;
+    }
 
 
     public boolean checkIfMasterPasswordIsCorrect() throws UnsupportedEncodingException, SQLException {

@@ -57,8 +57,8 @@ public class LoginScreenController {
         return false;
     }
 
-//    public void setPresenter(Presenter presenter) {
-//        this.presenter = presenter;
-//    }
+    public void setPresenter(PresenterMain presenter) {
+        this.presenter = presenter;
+    }
 }
 
