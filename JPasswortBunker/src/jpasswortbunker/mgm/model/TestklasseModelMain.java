@@ -8,6 +8,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class TestklasseModelMain {
 
@@ -26,8 +27,11 @@ public class TestklasseModelMain {
 
 
         //Neuen Eintrag erstellen
-        modelMain.newEntry("Google", "gates@microsoft.com", "redmond", "bla bla bla", "www.microsoft.com", 7);
+        //modelMain.newEntry("PornHub", "marcel", "abc", "bla bla bla", "www.pornhub.com", 6);
 
+//ToDo Funktion funktioniert noch nicht!!
+        //Bestehenden Eintrag abändern
+        modelMain.updateEntry("9c7269fb-41ae-4d76-a761-c79ed16f65c9", "GayHub", "marcel", "abc", "www.gayhub.com", "bla bla bla", 9);
 
         //EntryList holen und alle Entries auf der Console ausgeben
         ArrayList<Entry> arrayList = modelMain.getEntryList();

@@ -8,6 +8,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 
 public class ModelMain {
@@ -27,14 +28,16 @@ public class ModelMain {
     }
 
 
-    /**Zugriff via View
+    /**
+     * Zugriff via View
      * Masterpasswort wird entgegengenommen und weitergereicht an PasswordObject
      */
     public void initMasterPassword(String password) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, SQLException, IllegalBlockSizeException {
         this.masterPasswordObject.setPassword(password);
     }
 
-    /**Zugriff via View
+    /**
+     * Zugriff via View
      * Das zuvor entgegengenommen Passwort des Benutzers wird nun über den DatenbankService mit dem Passwort in der DB abgelichen
      */
     public boolean checkIfMasterPasswordIsCorrect() throws UnsupportedEncodingException, SQLException {
@@ -42,7 +45,8 @@ public class ModelMain {
 
     }
 
-    /**Zugriff via View
+    /**
+     * Zugriff via View
      * Ein zuvor verwendetes Masterpasswort wird durch ein neues Ersetzt.
      * Hierbei werden alle Einträge mit dem neuen Passwort entschlüsselt und neu verschlüsselt.
      */
@@ -59,7 +63,8 @@ public class ModelMain {
     }
 
 
-    /**Kein Zugriff via View
+    /**
+     * Kein Zugriff via View
      * Abrufen des Masterpasswort-Hash-Wertes aus der Datenbank
      */
     private String getSaltPasswordHashForPasswortStoreFromDb() throws SQLException, UnsupportedEncodingException {
@@ -67,14 +72,16 @@ public class ModelMain {
         return masterPasswordFromDB;
     }
 
-    /**Kein Zugriff via View
+    /**
+     * Kein Zugriff via View
      * Masterpasswort-Hash-Wert in Datenbank setzen bzw. überschreiben
      */
     private void setSaltPasswordHashForPasswortStoreInDb(String password) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, SQLException {
         dbService.setMasterPasswordToDB(this.masterPasswordObject.getSaltPasswordHashForPasswortStore());
     }
 
-    /**Zugriff via View
+    /**
+     * Zugriff via View
      * ArrayList aus Klasse EntryList zurückgeben
      */
     public ArrayList<Entry> getEntryList() {
@@ -82,7 +89,8 @@ public class ModelMain {
         return arrayList;
     }
 
-    /**Zugriff via View
+    /**
+     * Zugriff via View
      * Einträge aus Datenbank holen und in Entry-Liste schreiben
      */
     public void FillEntryListFromDb() throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
@@ -98,7 +106,8 @@ public class ModelMain {
     }
 
 
-    /**Kein Zugriff via View
+    /**
+     * Kein Zugriff via View
      * Entry-Objekt zur Liste hinzufügen
      */
     private void addEntryToList(Entry entry) {
@@ -106,7 +115,8 @@ public class ModelMain {
     }
 
 
-    /**Zugriff via View
+    /**
+     * Zugriff via View
      * Neuen Eintrag erstelen
      */
     public void newEntry(String title, String username, String password, String description, String url, int categoryID) throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
@@ -116,16 +126,27 @@ public class ModelMain {
         dbService.insertEntry(newEntryEncrypted);
     }
 
-    /**Zugriff via View
+    /**
+     * Zugriff via View
      * Bestehenden Datensatz ändern
      */
-    public void updateEntry(Entry newerEntry) throws SQLException {
-        Entry olderEntry = this.entryList.getEntry(newerEntry.getEntryID());
-        dbService.insertEntryInRecycleBin(olderEntry);
-        olderEntry = newerEntry;
+    public boolean updateEntry(String entryID, String title, String username, String password, String url, String descripton, int categoryID) throws SQLException {
+        ArrayList<Entry> entryArrayList = new ArrayList<>();
+        for (Entry entry : entryArrayList) {
+            if (entry.getEntryIDasString() == entryID) {
+                dbService.insertEntryInRecycleBin(entry);
+                entry.setTitle(title);
+                entry.setUsername(username);
+                entry.setPassword(password);
+                entry.setUrl(url);
+                entry.setUrl(descripton);
+                entry.setCategoryID(categoryID);
+                entry.setTimestamp(System.currentTimeMillis() / 1000L);
+                return true;
+            }
+        }
+        return false;
     }
-
-
 
 
     //##############################################################################################
@@ -154,7 +175,6 @@ public class ModelMain {
         }
         System.out.println("eintrag konnte nicht gelöscht werden");
     }
-
 
 
 }

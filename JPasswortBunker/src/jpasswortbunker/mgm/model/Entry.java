@@ -71,10 +71,16 @@ public class Entry {
         }
 
         if (timestamp == 0) {
-            this.timestamp = System.currentTimeMillis() / 1000L;
+            this.timestamp = this.createTimeStamp();
         }
 
     }
+
+    public long createTimeStamp(){
+        long newTimestamp = System.currentTimeMillis() / 1000L;
+        return newTimestamp;
+    }
+
 
 
     public String getTitle() {
@@ -130,6 +136,10 @@ public class Entry {
         return entryID;
     }
 
+    public String getEntryIDasString(){
+        return this.entryID.toString();
+    }
+
     public void setEntryID(UUID entryID) {
         this.entryID = entryID;
     }
@@ -144,6 +154,10 @@ public class Entry {
 
     public long getTimestamp() {
         return timestamp;
+    }
+
+    public void setTimestamp(long timestamp){
+        this.timestamp = timestamp;
     }
 
     @Override
