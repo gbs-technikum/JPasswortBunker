@@ -36,7 +36,7 @@ public class EntryList {
         entryObjectList.add(entry);
     }
 
-    //Parameter Entry
+    //Parameter EntryProperty
     public Entry removeEntry(Entry entry) {
         entryObjectList.remove(entry);
         return entry;

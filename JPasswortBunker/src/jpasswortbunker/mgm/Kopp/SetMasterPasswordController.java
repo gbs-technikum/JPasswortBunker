@@ -1,5 +1,3 @@
-package jpasswortbunker.mgm.Kopp;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -60,6 +58,7 @@ public final class SetMasterPasswordController{
     public void test() {
         System.out.println("testMethode SetmasterPassword Controller");
     }
+
 
 //    public SetMasterPasswordController getController() {
 //        return this;

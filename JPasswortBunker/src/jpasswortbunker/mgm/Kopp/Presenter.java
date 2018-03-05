@@ -1,4 +1,4 @@
-package jpasswortbunker.mgm.Kopp;
+
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -72,7 +72,7 @@ public final class Presenter {
     public void writeToObservableList() {
         Iterator<Entry> iterator = model.getEntryList().iterator();
         while (iterator.hasNext()) {
-            entrys.add(iterator.next());
+            entrys.add((Entry)iterator.next());
         }
     }
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="center" hgap="10" prefHeight="308.0" prefWidth="390.0" vgap="10" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.view.LoginScreenController">
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="14.0" minHeight="0.0" prefHeight="0.0" />
+        <RowConstraints maxHeight="313.0" minHeight="299.0" prefHeight="313.0" />
+    </rowConstraints>
+    <children>
+        <AnchorPane prefHeight="337.0" prefWidth="390.0" GridPane.rowIndex="1">
+            <children>
+                <Label layoutX="40.0" layoutY="185.0" text="Unlock Your Keypasss">
+                    <font>
+                        <Font size="14.0" />
+                    </font></Label>
+                <ImageView fitHeight="115.0" fitWidth="158.0" layoutX="116.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/logo.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="wrongPassword" layoutX="40.0" layoutY="264.0" textFill="RED" />
+            <JFXPasswordField fx:id="password_box" layoutX="40.0" layoutY="225.0" onAction="#btn_login" prefHeight="25.0" prefWidth="191.0" promptText="Password" />
+            <JFXButton layoutX="257.0" layoutY="225.0" onAction="#btn_login" style="-fx-background-color: orange;" text="Button">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </JFXButton>
+            </children>
+        </AnchorPane>
+    </children>
+</GridPane>

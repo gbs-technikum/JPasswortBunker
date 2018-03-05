@@ -180,7 +180,7 @@ public class MainInterfaceController implements Initializable {
                     Parent parentEditEntry = loader.getRoot();
                     Stage stageEditEntry = new Stage();
                     Scene sceneEditentry = new Scene(parentEditEntry, 400, 400);
-                    stageEditEntry.setTitle("Edit your Entry");
+                    stageEditEntry.setTitle("Edit your EntryProperty");
                     stageEditEntry.setScene(sceneEditentry);
                     stageEditEntry.show();
                 }

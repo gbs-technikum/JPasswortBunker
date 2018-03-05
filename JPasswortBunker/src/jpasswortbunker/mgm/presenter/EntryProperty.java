@@ -1,4 +1,4 @@
-
+package jpasswortbunker.mgm.presenter;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.IntegerProperty;
@@ -7,27 +7,25 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.Objects;
+import java.util.UUID;
 
-public class Entry extends RecursiveTreeObject<Entry> {
+public class EntryProperty extends RecursiveTreeObject<EntryProperty> {
 
-    private IntegerProperty dbID;
-    private IntegerProperty entryID;
-    private StringProperty title;
-    private StringProperty username;
-    private StringProperty password;
-    private StringProperty repeatPassword;
-    private StringProperty url;
-    private StringProperty description;
-    private IntegerProperty categorieID;
+    private IntegerProperty dbID, categoryID;
+    private UUID entryID;
+    private StringProperty title, username, password, url, description;
 
 
-    public Entry(String title, String username, String password, String url, String description, int categorieID) {
+
+    public EntryProperty(int dbID, UUID entryID, String title, String username, String password, String url, String description, int categorieID) {
+        this.dbID = new SimpleIntegerProperty(dbID);
+        this.entryID = entryID;
         this.title = new SimpleStringProperty(title);
         this.username = new SimpleStringProperty(username);
         this.password = new SimpleStringProperty(password);
         this.url = new SimpleStringProperty(url);
         this.description = new SimpleStringProperty(description);
-        this.categorieID = new SimpleIntegerProperty(categorieID);
+        this.categoryID = new SimpleIntegerProperty(categorieID);
     }
 
     public int getDbID() {
@@ -42,16 +40,24 @@ public class Entry extends RecursiveTreeObject<Entry> {
         this.dbID.set(dbID);
     }
 
-    public int getEntryID() {
-        return entryID.get();
+    public int getCategoryID() {
+        return categoryID.get();
     }
 
-    public IntegerProperty entryIDProperty() {
+    public IntegerProperty categoryIDProperty() {
+        return categoryID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.categoryID.set(categoryID);
+    }
+
+    public UUID getEntryID() {
         return entryID;
     }
 
-    public void setEntryID(int entryID) {
-        this.entryID.set(entryID);
+    public void setEntryID(UUID entryID) {
+        this.entryID = entryID;
     }
 
     public String getTitle() {
@@ -114,38 +120,27 @@ public class Entry extends RecursiveTreeObject<Entry> {
         this.description.set(description);
     }
 
-    public int getCategorieID() {
-        return categorieID.get();
-    }
-
-    public IntegerProperty categorieIDProperty() {
-        return categorieID;
-    }
-
-    public void setCategorieID(int categorieID) {
-        this.categorieID.set(categorieID);
-    }
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Entry entry = (Entry) o;
-        return Objects.equals(dbID, entry.dbID) &&
-                Objects.equals(entryID, entry.entryID) &&
-                Objects.equals(title, entry.title) &&
-                Objects.equals(username, entry.username) &&
-                Objects.equals(password, entry.password) &&
-                Objects.equals(url, entry.url) &&
-                Objects.equals(description, entry.description) &&
-                Objects.equals(categorieID, entry.categorieID);
+        EntryProperty entryProperty = (EntryProperty) o;
+        return Objects.equals(dbID, entryProperty.dbID) &&
+                Objects.equals(categoryID, entryProperty.categoryID) &&
+                Objects.equals(entryID, entryProperty.entryID) &&
+                Objects.equals(title, entryProperty.title) &&
+                Objects.equals(username, entryProperty.username) &&
+                Objects.equals(password, entryProperty.password) &&
+                Objects.equals(url, entryProperty.url) &&
+                Objects.equals(description, entryProperty.description);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(dbID, entryID, title, username, password, url, description, categorieID);
+        return Objects.hash(dbID, categoryID, entryID, title, username, password, url, description);
     }
 
     @Override
@@ -158,7 +153,7 @@ public class Entry extends RecursiveTreeObject<Entry> {
                 "\t password: " + password.getValue() +
                 "\t url: " + url.getValue() +
                 "\t description: " + description.getValue() +
-                "\t categorieID: " + categorieID.getValue() +
+                "\t categorieID: " + categoryID.getValue() +
                 '}';
     }
 }

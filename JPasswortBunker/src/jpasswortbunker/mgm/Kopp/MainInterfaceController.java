@@ -1,4 +1,3 @@
-package jpasswortbunker.mgm.Kopp;
 
 import com.jfoenix.controls.*;
 
