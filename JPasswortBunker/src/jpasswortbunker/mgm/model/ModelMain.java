@@ -131,9 +131,11 @@ public class ModelMain {
      * Bestehenden Datensatz ändern
      */
     public boolean updateEntry(String entryID, String title, String username, String password, String url, String descripton, int categoryID) throws SQLException {
-        ArrayList<Entry> entryArrayList = new ArrayList<>();
+        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
+        System.out.println("updateEntry aufgerufen");
         for (Entry entry : entryArrayList) {
             if (entry.getEntryIDasString() == entryID) {
+                System.out.println("Entry gefunden");
                 dbService.insertEntryInRecycleBin(entry);
                 entry.setTitle(title);
                 entry.setUsername(username);
@@ -146,6 +148,13 @@ public class ModelMain {
             }
         }
         return false;
+    }
+
+    public void soutEntryList() {
+        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
+        for (Entry entry : entryArrayList) {
+            System.out.println(entry);
+        }
     }
 
 
