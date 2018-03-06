@@ -85,7 +85,7 @@ public class DBService {
     }
 
     public int getNextDbId() throws SQLException {
-        String sql = "SELECT MAX(DB_ID) FROM Entrys;";
+        String sql = "select seq from sqlite_sequence where name='Entrys'";
         ResultSet resultSet = this.statement.executeQuery(sql);
         int amountEntries = -1;
         if (resultSet.next()) {
@@ -123,9 +123,47 @@ public class DBService {
         statement.close();
     }
 
+
+    public void updateEntry(Entry entry) throws SQLException {
+        String sqlUpdateTitle = "update Entrys set Title = '" + entry.getTitle() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+        String sqlUpdateUsername = "update Entrys set Username = '" + entry.getUsername() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+        String sqlUpdatePassword = "update Entrys set Password = '" + entry.getPassword() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+        String sqlUpdateUrl = "update Entrys set URL = '" + entry.getUrl() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+        String sqlUpdateDescription = "update Entrys set Description = '" + entry.getDescription() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+        String sqlUpdateCategory = "update Entrys set Categorie_ID = '" + entry.getCategoryID() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+        String sqlUpdateTimeStamp = "update Entrys set timestamp = '" + entry.getTimestamp() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+
+        this.statement.execute(sqlUpdateTitle);
+        this.statement.execute(sqlUpdateUsername);
+        this.statement.execute(sqlUpdatePassword);
+        this.statement.execute(sqlUpdateDescription);
+        this.statement.execute(sqlUpdateUrl);
+        this.statement.execute(sqlUpdateCategory);
+        this.statement.execute(sqlUpdateTimeStamp);
+
+        statement.close();
+    }
+
+
+    public void removeEntry(String entryID) throws SQLException {
+        String sql = "delete from Entrys where Entry_ID = '" + entryID + "'";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+
+    public void updateRecycleBinForRemovedEntrys(String entryID) throws SQLException {
+        String sql = "update Entrys set Categorie_ID = '-1' where Entry_ID = '" + entryID + "'";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
     public void reEnryptEntry(String title, String username, String password, String description, String url, UUID entryID) throws SQLException {
         String sql = "update Entrys set Title = '" + title + "' where DB_ID = '" + entryID.toString() + "'";
         this.statement.execute(sql);
         statement.close();
     }
+
+
+
 }

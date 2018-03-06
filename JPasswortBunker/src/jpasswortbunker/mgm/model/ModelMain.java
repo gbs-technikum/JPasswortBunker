@@ -122,33 +122,55 @@ public class ModelMain {
     public void newEntry(String title, String username, String password, String description, String url, int categoryID) throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         Entry newEntry = new Entry(title, username, password, description, url, categoryID);
         entryList.addEntry(newEntry);
-        Entry newEntryEncrypted = new Entry(encryptionService.encrypt(title), encryptionService.encrypt(username), encryptionService.encrypt(password), encryptionService.encrypt(description), encryptionService.encrypt(url), categoryID);
+        Entry newEntryEncrypted = createEncryptedEntry(newEntry);
+
         dbService.insertEntry(newEntryEncrypted);
     }
+
 
     /**
      * Zugriff via View
      * Bestehenden Datensatz ändern
      */
-    public boolean updateEntry(String entryID, String title, String username, String password, String url, String descripton, int categoryID) throws SQLException {
+    public boolean updateEntry(String entryID, String title, String username, String password, String url, String descripton, int categoryID) throws SQLException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
         ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
-        System.out.println("updateEntry aufgerufen");
         for (Entry entry : entryArrayList) {
-            if (entry.getEntryIDasString() == entryID) {
-                System.out.println("Entry gefunden");
-                dbService.insertEntryInRecycleBin(entry);
+            if (entry.getEntryIDasString().equals(entryID)) {
+                Entry encrypedEntryForRecycleBinTable = createEncryptedEntry(entry);
+                dbService.insertEntryInRecycleBin(encrypedEntryForRecycleBinTable);
                 entry.setTitle(title);
                 entry.setUsername(username);
                 entry.setPassword(password);
                 entry.setUrl(url);
-                entry.setUrl(descripton);
+                entry.setDescription(descripton);
                 entry.setCategoryID(categoryID);
                 entry.setTimestamp(System.currentTimeMillis() / 1000L);
+                Entry encrypedEntryForEntrysTable = createEncryptedEntry(entry);
+                dbService.updateEntry(encrypedEntryForEntrysTable);
                 return true;
             }
         }
+        System.out.println("EntryID nicht gefunden!");
         return false;
     }
+
+    /**
+     * Gibt die Datenfelder eines Entry in verschlüsselter Form zurück.
+     */
+    public Entry createEncryptedEntry(Entry entry) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, SQLException {
+        String title = entry.getTitle();
+        String username = entry.getUsername();
+        String password = entry.getPassword();
+        String description = entry.getDescription();
+        String url = entry.getUrl();
+        int categoryID = entry.getCategoryID();
+        int dbId = entry.getDbID();
+        UUID entryID = entry.getEntryID();
+        long timestamp = entry.getTimestamp();
+        Entry newEntryEncrypted = new Entry(encryptionService.encrypt(title), encryptionService.encrypt(username), encryptionService.encrypt(password), encryptionService.encrypt(description), encryptionService.encrypt(url), categoryID, dbId, entryID, timestamp);
+        return newEntryEncrypted;
+    }
+
 
     public void soutEntryList() {
         ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
@@ -157,33 +179,28 @@ public class ModelMain {
         }
     }
 
-
-    //##############################################################################################
-
-    //Einträge aus Liste entferen
-    public void removeEntryFromList(Entry entry) {
-        if (entryList.removeEntry(entry) != null) {
-            System.out.println("Eintrag wurde gelöscht");
-            return;
+    /**
+     * Löscht einen Entry aus der Liste und Datenbank. Zudem wird die Category_ID für Einträge im Recycle_Bin auf -1 gesetzt.
+     * Kategorie -1 bedeutet gelöscht in Entry-Tabelle
+     */
+    public boolean removeEntry(String entryIdAsString) throws SQLException {
+        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
+        Iterator<Entry> iterator = entryArrayList.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getEntryIDasString().equals(entryIdAsString)) {
+                iterator.remove();
+                dbService.removeEntry(entryIdAsString);
+                dbService.updateRecycleBinForRemovedEntrys(entryIdAsString);
+                System.out.println("##Status## Entry erfolgreich gelöscht!");
+                return true;
+            }
         }
-        System.out.println("eintrag konnte nicht gelöscht werden");
+        System.out.println("##Status## Entry konnte nicht gelöscht werden!");
+        return false;
     }
 
-    public void removeEntryFromList(UUID uuid) {
-        if (entryList.removeEntry(uuid) != null) {
-            System.out.println("Eintrag wurde gelöscht");
-            return;
-        }
-        System.out.println("eintrag konnte nicht gelöscht werden");
-    }
 
-    public void removeEntryFromList(String title) {
-        if (entryList.removeEntry(title) != null) {
-            System.out.println("Eintrag wurde gelöscht");
-            return;
-        }
-        System.out.println("eintrag konnte nicht gelöscht werden");
-    }
+
 
 
 }
