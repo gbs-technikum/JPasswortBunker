@@ -19,14 +19,20 @@ public class ModelMain {
     private DBService dbService;
 
 
-    public ModelMain(String userInputForMasterPassword) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
-        this.dbService = new DBService();
+    public ModelMain() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
         this.masterPasswordObject = PasswordObject.getInstance();
-        initMasterPassword(userInputForMasterPassword);
+        this.dbService = new DBService();
         this.entryList = new EntryList();
-        this.encryptionService = new EncryptionService();
+        //initMasterPassword(userInputForMasterPassword);
+        //this.encryptionService = new EncryptionService();
     }
 
+
+
+
+    public void initEncryptionService() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException {
+        this.encryptionService = new EncryptionService();
+    }
 
     /**
      * Zugriff via View

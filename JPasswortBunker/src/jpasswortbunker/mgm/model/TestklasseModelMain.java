@@ -14,36 +14,50 @@ public class TestklasseModelMain {
 
     public static void main(String[] args) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
 
-        //Instanz von ModelMain erstellen und Masterpasswort übergeben
-        ModelMain modelMain = new ModelMain("test");
+        //Beschreibung: Instanzierung von ModelMain
+        ModelMain modelMain = new ModelMain();
 
 
-        //Prüfen ob MasterPasswort richtig eingegeben wurde (Oben eingegebenes Passwort wird mit DB abgeglichen)
+        //Beschreibung: Masterpassword übergeben
+        modelMain.initMasterPassword("test");
+
+
+        //Beschreibung: Prüfen ob MasterPasswort richtig eingegeben wurde (Oben eingegebenes Passwort wird mit DB abgeglichen)
         System.out.println(modelMain.checkIfMasterPasswordIsCorrect());
 
 
-        //Einträge aus DB in EntryList laden (initial)
+        //Beschreibung: Instanzierung von EncryptionSerivce
+        modelMain.initEncryptionService();
+
+
+        //Beschreibung: Einträge aus Datenbank in EntryList laden (zur Initierung)
         modelMain.FillEntryListFromDb();
 
 
-        //Neuen Eintrag erstellen
-        modelMain.newEntry("PornHub", "marcel", "abc", "bla bla bla", "www.pornhub.com", 6);
+        //Beschreibung: ArrayList<Entry> mit allen Entry zurückgeben lassen
+        modelMain.getEntryList();
 
-        //Bestehenden Eintrag abändern
+
+        //Beschreibung: Neuen Eintrag erstellen (Wichtig: Leere Datenfelder müssen mit dem Wert 'null' übergeben werden)
+        //modelMain.newEntry("PornHub", "marcel", "abc", "bla bla bla", "www.pornhub.com", 6);
+        //modelMain.newEntry("Eintrag-ohne-Description2", "marcel", "abc", "null", "www.coolhub.com", 6);
+
+
+        //Beschreibung: Bestehenden Eintrag abändern (alle Datenfelder müssen übergeben werden)
         //modelMain.updateEntry("2e264826-6f2a-462a-a114-68c14da385fa", "GayHub3", "marcel", "abc", "www.gayhub.com", "bla bla bla", 9);
 
 
-        //Eintrag löschen
+        //Beschreibung: Eintrag löschen via EntryID
         //modelMain.removeEntry("ccd1efe1-dbd8-4ad3-8d5e-749a86c555b5");
 
 
+        //Beschreibung: Alle Entries in der EntryList auf der Console ausgeben
+        modelMain.soutEntryList();
 
-        //EntryList holen und alle Entries auf der Console ausgeben
-        ArrayList<Entry> arrayList = modelMain.getEntryList();
-        for (Entry entry : arrayList) {
-            System.out.println(entry);
-        }
+        //ToDo Methode zum Zurückgeben aller bereits gelöschten Entries aus dem Recycle_Bin fehlt
+        //modelMain.getRemovedEntries()
 
+        //ToDo Methode zum Abändern Masterpassword fehlt / bzw. funktioniert noch nicht
         //modelMain.renewMasterPassword("abc");
 
 
