@@ -24,7 +24,7 @@ public class Testklasse extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("MainInterface.fxml"));
         primaryStage.setTitle("jPasswordBunker");
         primaryStage.setScene(new Scene(root, 900, 625));
-        //primaryStage.show();
+        primaryStage.show();
     }
 
 

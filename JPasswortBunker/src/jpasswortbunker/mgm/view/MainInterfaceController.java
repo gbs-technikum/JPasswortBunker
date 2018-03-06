@@ -1,17 +1,22 @@
 package jpasswortbunker.mgm.view;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.*;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import jpasswortbunker.mgm.entry.Entry;
 import jpasswortbunker.mgm.presenter.EntryProperty;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
@@ -20,6 +25,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -27,7 +33,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 
-public class MainInterfaceController {
+public class MainInterfaceController implements Initializable {
 
     @FXML
     private Label labelTest;
@@ -60,6 +66,79 @@ public class MainInterfaceController {
     private PresenterMain presenter = new PresenterMain(this);
 
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        try {
+            presenter.writeToObservableList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        //Spalte Title
+        JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>("Title");
+        titleName.setPrefWidth(100);
+        titleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
+                return param.getValue().getValue().titleProperty();
+            }
+        });
+
+        //Spalte Username
+        JFXTreeTableColumn<EntryProperty, String> usernameCol = new JFXTreeTableColumn<>("Username");
+        usernameCol.setPrefWidth(100);
+        usernameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
+                return param.getValue().getValue().usernameProperty();
+            }
+        });
+
+        //Spalte Password
+        JFXTreeTableColumn<EntryProperty, String> passwordCol = new JFXTreeTableColumn<>("Password");
+        passwordCol.setPrefWidth(150);
+        passwordCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
+                return param.getValue().getValue().passwordProperty();
+            }
+        });
+
+        //Spalte URL
+        JFXTreeTableColumn<EntryProperty, String> urlCol = new JFXTreeTableColumn<>("URL");
+        urlCol.setPrefWidth(150);
+        urlCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
+                return param.getValue().getValue().urlProperty();
+            }
+        });
+
+        //Spalte Description
+        JFXTreeTableColumn<EntryProperty, String> desCol = new JFXTreeTableColumn<>("Description");
+        desCol.setPrefWidth(150);
+        desCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
+                return param.getValue().getValue().descriptionProperty();
+            }
+        });
+
+        //Inhalte werden in die Tabelle geschrieben
+        final TreeItem<EntryProperty> root = new RecursiveTreeItem<EntryProperty>(presenter.getEntryPropertiesList(), RecursiveTreeObject::getChildren);
+        treeView.getColumns().setAll(titleName, usernameCol, passwordCol, urlCol, desCol);
+        treeView.setRoot(root);
+        treeView.setShowRoot(false);
     }
 
     //Methode wird bei Controlleraufruf ausgeführt

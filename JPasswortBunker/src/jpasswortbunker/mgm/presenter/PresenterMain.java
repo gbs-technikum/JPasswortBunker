@@ -3,6 +3,7 @@ package jpasswortbunker.mgm.presenter;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import jpasswortbunker.mgm.model.Entry;
 import jpasswortbunker.mgm.model.ModelMain;
 import jpasswortbunker.mgm.view.MainInterfaceController;
 
@@ -14,6 +15,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public final class PresenterMain {
 
@@ -28,14 +31,17 @@ public final class PresenterMain {
 
     }
 
-
+    public ObservableList<EntryProperty> getEntryPropertiesList() {
+        return entryPropertiesList;
+    }
 
     public PresenterMain getPresenter() {
         return this;
     }
 
     //Schreibt die Liste der Arraylist aus Model in die Observable List im Presenter
-    public void writeToObservableList() {
+    public void writeToObservableList() throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
+        model.FillEntryListFromDb();
         for (jpasswortbunker.mgm.model.Entry entry : model.getEntryList()) {
             entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
                     entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
