@@ -66,19 +66,15 @@ public class MainInterfaceController {
     public void initialize() throws IOException {
         checkSetMasterpassword();
         stageMainInterfaceController = Testklasse.getPrimaryStage();
+        //stageMainInterfaceController.show();
     }
 
-    public static Stage getStageSetMasterPassword() {
-        return stageSetMasterPassword;
-    }
 
-    public static Stage getStageLogin() {
-        return stageLogin;
-    }
-
-    //Methode überprüft ob ein MasterPasswort gesetzt ist
-    //Ja -> Login
-    //Nein -> SetMasterPassword
+    /**Ruft Methode in Model auf um zu überprüfen, ob Masterpasswort gesetzt wurde
+     * Return Value:
+     * true -> LoginScreen
+     * false -> SetMasterPassword
+     */
     private void checkSetMasterpassword() throws IOException {
         if (presenter.checkSetMasterpassword()) {
             System.out.println("gesetzt");
@@ -87,21 +83,11 @@ public class MainInterfaceController {
             LoginScreenController loginScreenController = fxmlLoader.<LoginScreenController>getController();
             loginScreenController.setPresenter(presenter);
             this.stageLogin = new Stage();
-            stageLogin.setTitle("SetMasterPassword");
+            stageLogin.setTitle("LoginScreen");
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
             stageLogin.show();
         } else {
-//            System.out.println("nicht gesetzt");
-//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SetMasterPassword.fxml"));
-//            Parent parent = fxmlLoader.load();
-//            SetMasterPasswordController setMasterPasswordController = fxmlLoader.<SetMasterPasswordController>getController();
-//            setMasterPasswordController.setPresenter(presenter);
-//            this.stageSetMasterPassword = new Stage();
-//            stageSetMasterPassword.setTitle("SetMasterPassword");
-//            stageSetMasterPassword.setScene(new Scene(parent, 500, 400));
-//            stageSetMasterPassword.setAlwaysOnTop(true);
-//            stageSetMasterPassword.show();
             System.out.println("Nicht gesetzt");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SetMasterPassword.fxml"));
             Parent parent = fxmlLoader.load();

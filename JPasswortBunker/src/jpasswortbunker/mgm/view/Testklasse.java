@@ -22,9 +22,9 @@ public class Testklasse extends Application {
     public void start(Stage primaryStage) throws Exception{
         setPrimaryStage(primaryStage);
         Parent root = FXMLLoader.load(getClass().getResource("MainInterface.fxml"));
-        primaryStage.setTitle("loginScreen2");
+        primaryStage.setTitle("jPasswordBunker");
         primaryStage.setScene(new Scene(root, 900, 625));
-        primaryStage.show();
+        //primaryStage.show();
     }
 
 

@@ -21,84 +21,16 @@ public final class SetMasterPasswordController{
 
     private PresenterMain presenter;
 
-
-    public void initialize() throws IOException {
-        System.out.println("Methode initialize");
-
-    }
-
-
-
     public void setPresenter(PresenterMain presenter) {
         this.presenter = presenter;
     }
 
-    public String getPassword_box() {
-        return password_box.getText();
-    }
-
-    public String getRepeatPassword_box() {
-        return repeatPassword_box.getText();
-    }
-
     public void btn_setMasterPassword(ActionEvent actionEvent) {
         System.out.println("Button gedrückt");
-        //presenter.test();
-//        presenter.setMasterpassword();
-//        if (presenter.setMasterpassword()) {
-//            System.out.println("ja");
-//        } else {
-//            System.out.println("nein");
-//        }
-        //presenter.setMasterpassword(password_box.getText(), repeatPassword_box.getText());
-
     }
-
 
     public void test() {
         System.out.println("testMethode SetmasterPassword Controller");
     }
 
-
-//    public SetMasterPasswordController getController() {
-//        return this;
-//    }
-
-
-    //    public void correctMasterKey(ActionEvent actionEvent) throws IOException {
-//        if (equalsPassword(password_box.getText())) {
-//            System.out.println("Passwort erfolgreich");
-//            equalsPasswordwithList();
-//        } else {
-//            l_MasterKeyWrong.setText("Passwords not equals!");
-//        }
-//    }
-//
-//    private boolean equalsPasswordwithList() throws IOException {
-//        String url = String.valueOf(this.getClass().getResource("/images/passwordliste.txt" ));
-//
-//        System.out.println(url);
-//        File file = new File("/images/passwordliste.txt");
-//
-//        BufferedReader br = null;
-//        br = new BufferedReader(new FileReader(file));
-//        String zeile = null;
-//        while ((zeile = br.readLine()) != null) {
-//            System.out.println("Gelesene Zeile " + zeile);
-//
-//        }
-//
-//
-//
-//        return true;
-//
-//    }
-//
-//
-//    private boolean equalsPassword(String password) {
-//        if (password.equals(repeatPassword_box.getText())) {
-//            return true;
-//        }
-//        return false;
-//    }
 }

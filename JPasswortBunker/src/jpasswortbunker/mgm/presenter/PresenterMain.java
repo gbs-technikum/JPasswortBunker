@@ -18,29 +18,16 @@ import java.sql.SQLException;
 public final class PresenterMain {
 
     private MainInterfaceController controller;
-    //private SetMasterPasswordController controllerSetMasterPassword;
     private ModelMain model;
-    private StringProperty stringProperty;
     public ObservableList<EntryProperty> entryPropertiesList = FXCollections.observableArrayList();
 
 
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
         model = new ModelMain("test");
-        initStringProperty();
-    }
-
-
-    public void initStringProperty() {
-
 
     }
 
-//    public void updateGui() {
-//        controller.updateGui();
-//    }
-
-    //######################################################################################################
 
 
     public PresenterMain getPresenter() {
@@ -57,7 +44,8 @@ public final class PresenterMain {
 
 
     public boolean checkSetMasterpassword() {
-        return false;
+        return true;
+        // TODO: 06.03.2018 Methode von Model aufrufen
     }
 
 
