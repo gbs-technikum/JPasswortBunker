@@ -1,5 +1,7 @@
 package jpasswortbunker.mgm.model;
 
+import jpasswortbunker.mgm.presenter.PresenterMain;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -8,7 +10,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.UUID;
 
 public class ModelMain {
@@ -17,6 +18,7 @@ public class ModelMain {
     private EntryList entryList;
     private EncryptionService encryptionService;
     private DBService dbService;
+    private PresenterMain presenter;
 
 
     public ModelMain() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
@@ -36,6 +38,14 @@ public class ModelMain {
 
     /**
      * Zugriff via View
+    /**Zugriff via Presenter
+     * Presenter wird an Model übergeben
+     */
+    public void setPresenter(PresenterMain presenter) {
+        this.presenter = presenter;
+    }
+
+    /**Zugriff via View
      * Masterpasswort wird entgegengenommen und weitergereicht an PasswordObject
      */
     public void initMasterPassword(String password) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, SQLException, IllegalBlockSizeException {

@@ -1,18 +1,12 @@
-
+package jpasswortbunker.mgm.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.stage.Stage;
+import jpasswortbunker.mgm.presenter.PresenterMain;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 
 public class LoginScreenController {
@@ -26,7 +20,7 @@ public class LoginScreenController {
     @FXML
     private Label wrongPassword;
 
-    private Presenter presenter;
+    private PresenterMain presenter;
 
     //EventHandling von Login Button
     public void btn_login(ActionEvent actionEvent) throws IOException {
@@ -63,9 +57,8 @@ public class LoginScreenController {
         return false;
     }
 
-    public void setPresenter(Presenter presenter) {
-        this.presenter = presenter;
-    }
-
+//    public void setPresenter(Presenter presenter) {
+//        this.presenter = presenter;
+//    }
 }
 

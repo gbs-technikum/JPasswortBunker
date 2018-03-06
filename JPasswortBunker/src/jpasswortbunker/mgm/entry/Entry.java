@@ -148,7 +148,7 @@ public class Entry extends RecursiveTreeObject<Entry> {
 
     @Override
     public String toString() {
-        return "Entry " +
+        return "EntryProperty " +
                 "\t dbID: " + dbID +
                 "\t entryID: " + entryID +
                 "\t title: " + title.getValue() +

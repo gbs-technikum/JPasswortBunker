@@ -67,8 +67,8 @@ public final class TestklasseWagenhuber {
 
 
 
-        /*System.out.println("Insert new Entry");
-        Entry PeterEnis = new Entry("DB-Test-Eintrag", "Tom Hanks", "hollywood", "Forest Gump", "www.movie.com",8);
+        /*System.out.println("Insert new EntryProperty");
+        EntryProperty PeterEnis = new EntryProperty("DB-Test-Eintrag", "Tom Hanks", "hollywood", "Forest Gump", "www.movie.com",8);
         System.out.println(PeterEnis);
         System.out.println(dbService.getNextDbId());
 

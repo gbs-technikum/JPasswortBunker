@@ -1,4 +1,3 @@
-package jpasswortbunker.mgm.Kopp;
 
 
 import java.util.ArrayList;
@@ -7,12 +6,12 @@ import java.util.Iterator;
 public final class Model {
 
     private String text;
-    private jpasswortbunker.mgm.Kopp.Presenter presenter;
-    private ArrayList<jpasswortbunker.mgm.Kopp.Entry> entryList;
+    private Presenter presenter;
+    private ArrayList<Entry> entryList;
     private String masterpassword = "dddde";
 
 
-    public Model(jpasswortbunker.mgm.Kopp.Presenter presenter) {
+    public Model(Presenter presenter) {
         this.presenter = presenter;
         this.entryList = new ArrayList<>();
     }
@@ -61,7 +60,7 @@ public final class Model {
     }
 
     //Gibt komplette Liste zurück
-    public ArrayList<jpasswortbunker.mgm.Kopp.Entry> getEntryList() {
+    public ArrayList<Entry> getEntryList() {
         return entryList;
     }
 
@@ -71,8 +70,8 @@ public final class Model {
     }
 
     //Gibt Eintrag anhand der EntryID zurück
-    public jpasswortbunker.mgm.Kopp.Entry getEntryByEntryID(int id) {
-        Iterator<jpasswortbunker.mgm.Kopp.Entry> entryListIterator= entryList.iterator();
+    public Entry getEntryByEntryID(int id) {
+        Iterator<Entry> entryListIterator= entryList.iterator();
         while (entryListIterator.hasNext()) {
             if (entryListIterator.next().getEntryID() == id) {
                 return entryListIterator.next();
@@ -82,8 +81,8 @@ public final class Model {
     }
 
     //Gibt Eintrag anhand von Titel zurück
-    public jpasswortbunker.mgm.Kopp.Entry getEntry(String title) {
-        Iterator<jpasswortbunker.mgm.Kopp.Entry> entryListIterator= entryList.iterator();
+    public Entry getEntry(String title) {
+        Iterator<Entry> entryListIterator= entryList.iterator();
         while (entryListIterator.hasNext()) {
             if (entryListIterator.next().getTitle().equals(title)) {
                 return entryListIterator.next();
@@ -93,21 +92,21 @@ public final class Model {
     }
 
     //Eintrag zur Liste hinzufügen
-    public void addEntry(jpasswortbunker.mgm.Kopp.Entry entry) {
+    public void addEntry(Entry entry) {
         entryList.add(entry);
     }
 
     public void addEntry(String title, String username, String password, String repeatPassword, String url, String description, int categorieID) {
-        entryList.add(new jpasswortbunker.mgm.Kopp.Entry(title, username, password, url, description, categorieID));
+        entryList.add(new Entry(title, username, password, url, description, categorieID));
     }
 
     //Testeinträge
     public void testEintraege() {
-        entryList.add(new jpasswortbunker.mgm.Kopp.Entry("Netflix", "meinName", "dasPasswort", "www.netflix.com", "kaka", 1));
-        entryList.add(new jpasswortbunker.mgm.Kopp.Entry("maxdome", "meinName", "dasPasswort", "www.netflix.com", "kaka", 1));
-        entryList.add(new jpasswortbunker.mgm.Kopp.Entry("Youtube", "meinName", "dasPasswort", "www.netflix.com", "kaka", 1));
-        entryList.add(new jpasswortbunker.mgm.Kopp.Entry("Facebook", "meinName", "dasPasswort", "www.netflix.com", "kaka", 3));
-        entryList.add(new jpasswortbunker.mgm.Kopp.Entry("Bitcoin", "meinName", "dasPasswort", "www.netflix.com", "kaka", 2));
+        entryList.add(new Entry("Netflix", "meinName", "dasPasswort", "www.netflix.com", "kaka", 1));
+        entryList.add(new Entry("maxdome", "meinName", "dasPasswort", "www.netflix.com", "kaka", 1));
+        entryList.add(new Entry("Youtube", "meinName", "dasPasswort", "www.netflix.com", "kaka", 1));
+        entryList.add(new Entry("Facebook", "meinName", "dasPasswort", "www.netflix.com", "kaka", 3));
+        entryList.add(new Entry("Bitcoin", "meinName", "dasPasswort", "www.netflix.com", "kaka", 2));
     }
 
     public void test() {
