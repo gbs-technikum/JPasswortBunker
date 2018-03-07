@@ -59,6 +59,18 @@ public final class PresenterMain {
         return model.checkIfMasterPasswordIsCorrect();
     }
 
+    public void newEntry(String title, String username, String password, String description, String url, int categoryID) throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
+        model.newEntry(title, username, password, description, url, categoryID);
+        /**
+         * Parameter werden an Model übergeben und Entry in Model erstellt
+         * Den eben erstellten Eintrag wieder holen und diesen in die ObservableList schreiben
+         */
+        Entry entry = model.getEntryList().get(model.getEntryList().size() - 1);
+        entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
+                entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
+        controller.fillTreeView();
+    }
+
 
     public void test() {
         System.out.println("testMethode Presenter");

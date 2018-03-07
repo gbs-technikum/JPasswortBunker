@@ -61,7 +61,7 @@ public class MainInterfaceController implements Initializable {
     @FXML
     private AnchorPane mainAnchorPane;
 
-    private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin;
+    private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin, stageNewEntry;
 
     private PresenterMain presenter = new PresenterMain(this);
 
@@ -70,6 +70,11 @@ public class MainInterfaceController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        fillTreeView();
+    }
+
+    public void fillTreeView() {
+        //ToDo Methoden aufruf muss wo anders eingebaut werden, sollte erst aufgerufen werden wenn Passwort richtig
         try {
             presenter.writeToObservableList();
         } catch (SQLException e) {
@@ -83,6 +88,7 @@ public class MainInterfaceController implements Initializable {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+
 
         //Spalte Title
         JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>("Title");
@@ -141,6 +147,8 @@ public class MainInterfaceController implements Initializable {
         treeView.setShowRoot(false);
     }
 
+
+
     //Methode wird bei Controlleraufruf ausgeführt
     public void initialize() throws IOException {
         checkSetMasterpassword();
@@ -180,9 +188,20 @@ public class MainInterfaceController implements Initializable {
         }
     }
 
-    public void mainTest() {
-
-
+    /**
+     *Button erstellt neues Fenster um einen neuen Eintrag zu erstellen
+     */
+    public void btn_newEntry() throws IOException {
+        System.out.println("Neuer Eintrag");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewEntry.fxml"));
+        Parent parent = fxmlLoader.load();
+        NewEntryController newEntryController = fxmlLoader.<NewEntryController>getController();
+        newEntryController.setPresenter(presenter);
+        this.stageNewEntry = new Stage();
+        stageNewEntry.setTitle("New Entry");
+        stageNewEntry.setScene(new Scene(parent, 400, 400));
+        stageNewEntry.setAlwaysOnTop(true);
+        stageNewEntry.show();
     }
 
 
