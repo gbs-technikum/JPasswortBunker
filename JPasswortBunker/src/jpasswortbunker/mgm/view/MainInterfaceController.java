@@ -41,7 +41,7 @@ public class MainInterfaceController {
     private ImageView btn_logo;
 
     @FXML
-    private AnchorPane pane_entrys, pane_settings;
+    private AnchorPane pane_entrys, pane_settings, pane_recycle;
 
     @FXML
     private TableColumn columnID;

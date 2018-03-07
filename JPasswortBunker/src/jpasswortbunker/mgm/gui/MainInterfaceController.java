@@ -48,7 +48,7 @@ public class MainInterfaceController implements Initializable {
     private ImageView btn_logo;
 
     @FXML
-    private AnchorPane pane_entrys, pane_settings;
+    private AnchorPane pane_entrys, pane_settings, pane_bin;
 
     @FXML
     private TableColumn columnID;
@@ -279,19 +279,19 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
-//    //Button Mülleimer
-//    public void Btn_recycle(ActionEvent actionEvent) {
-//        pane_settings.setVisible(false);
-//        pane_entrys.setVisible(true);
-//        textField_Search.clear();
-//        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
-//            @Override
-//            public boolean test(TreeItem<Entry> entryTreeItem) {
-//                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(4);
-//                return flag;
-//            }
-//        });
-//    }
+    //Button Mülleimer
+    public void btn_recycle(ActionEvent actionEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+            @Override
+            public boolean test(TreeItem<Entry> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(4);
+                return flag;
+            }
+        });
+    }
 
 
     //Button für die Einstellungen
@@ -302,38 +302,23 @@ public class MainInterfaceController implements Initializable {
     }
 
 
-    //Button für neuen Eintrag, startet eine neue Scene
-    public void btn_newEntry() {
-        Stage stageNewEntry = new Stage();
-        Parent parentNewEntry = null;
-        try {
-            parentNewEntry = FXMLLoader.load(getClass().getResource("NewEntry.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Scene scene2 = new Scene(parentNewEntry, 400, 400);
-        stageNewEntry.setTitle("zweites Fenster");
-        stageNewEntry.setScene(scene2);
-        stageNewEntry.setAlwaysOnTop(true);
-        stageNewEntry.show();
-    }
+//    //Button für neuen Eintrag, startet eine neue Scene
+//    public void btn_newEntry() {
+//        Stage stageNewEntry = new Stage();
+//        Parent parentNewEntry = null;
+//        try {
+//            parentNewEntry = FXMLLoader.load(getClass().getResource("NewEntry.fxml"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Scene scene2 = new Scene(parentNewEntry, 400, 400);
+//        stageNewEntry.setTitle("zweites Fenster");
+//        stageNewEntry.setScene(scene2);
+//        stageNewEntry.setAlwaysOnTop(true);
+//        stageNewEntry.show();
+//    }
 
-    //Button für den Mülleimer, neues Fenster geht auf
-    public void btn_recycle() {
-        Stage stageRecycle = new Stage();
-        Parent parentRecycle = null;
-        try {
-            parentRecycle = FXMLLoader.load(getClass().getResource("RecycleBin.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Scene scene3 = new Scene(parentRecycle, 600, 600);
-        stageRecycle.setTitle("Recyclebin");
-        stageRecycle.setScene(scene3);
-        stageRecycle.setAlwaysOnTop(true);
-        stageRecycle.show();
-    }
-
+    //
 
 
 
