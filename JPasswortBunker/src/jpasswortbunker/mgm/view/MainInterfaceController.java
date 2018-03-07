@@ -71,9 +71,6 @@ public class MainInterfaceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fillTreeView();
-    }
-
-    public void fillTreeView() {
         //ToDo Methoden aufruf muss wo anders eingebaut werden, sollte erst aufgerufen werden wenn Passwort richtig
         try {
             presenter.writeToObservableList();
@@ -88,7 +85,9 @@ public class MainInterfaceController implements Initializable {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
 
+    public void fillTreeView() {
 
         //Spalte Title
         JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>("Title");
