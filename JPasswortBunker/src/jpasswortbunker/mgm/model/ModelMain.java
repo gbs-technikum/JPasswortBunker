@@ -77,16 +77,23 @@ public class ModelMain {
      * Ein zuvor verwendetes Masterpasswort wird durch ein neues Ersetzt.
      * Hierbei werden alle Einträge mit dem neuen Passwort entschlüsselt und neu verschlüsselt.
      */
-    //Achtung Methode zum neuverschlüsseln aller Datensätze fehlt!!
     public void renewMasterPassword(String password) throws InvalidKeyException, BadPaddingException, SQLException, IllegalBlockSizeException, UnsupportedEncodingException {
-        setSaltPasswordHashForPasswortStoreInDb(password);
         initMasterPassword(password);
 
-        ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
+        ArrayList<Entry> arrayListEntryTable = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
+        ArrayList<Entry> arrayListRecycleBinTable = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
 
-        for (Entry entry : arrayList) {
-            dbService.reEnryptEntry(entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getDescription(), entry.getUrl(), entry.getEntryID());
+
+        for (Entry entry : arrayListEntryTable) {
+            Entry encrypedEntryForEntrysTable = createEncryptedEntry(entry);
+            dbService.reEncryptTable(encrypedEntryForEntrysTable, "Entry");
         }
+
+        for (Entry entry : arrayListRecycleBinTable) {
+            Entry encrypedEntryForEntrysTable = createEncryptedEntry(entry);
+            dbService.reEncryptTable(encrypedEntryForEntrysTable, "Receycle_Bin");
+        }
+
     }
 
 
@@ -229,6 +236,13 @@ public class ModelMain {
         System.out.println("EntryID nicht gefunden!");
         return false;
     }
+
+
+
+
+
+
+
 
 
     /**

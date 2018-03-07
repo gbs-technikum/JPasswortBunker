@@ -59,7 +59,7 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Eintrag löschen via EntryID
-        modelMain.removeEntry("382d44bb-eb25-4a09-8c03-5c43b2d71979");
+        //modelMain.removeEntry("382d44bb-eb25-4a09-8c03-5c43b2d71979");
 
 
 
