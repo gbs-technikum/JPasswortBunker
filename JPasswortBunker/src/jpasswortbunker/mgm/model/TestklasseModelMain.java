@@ -32,8 +32,17 @@ public class TestklasseModelMain {
         modelMain.FillEntryListFromDb();
         modelMain.FillEntryListFromRecycleBin();
 
-        //Beschreibung: ArrayList<Entry> mit allen Entry zurückgeben lassen
+
+        //Beschreibung: ArrayList<Entry> mit allen Entrys aus Tabelle Entry zurückgeben lassen
         modelMain.getEntryListEntrysTable();
+
+
+        //Beschreibung: ArrayList<Entry> mit allen Entrys aus Tabelle Recycle_Bin zurückgeben lassen
+        modelMain.getEntryListRecycleBinTable();
+
+
+        //Beschreibung: ArrayList<Entry> mit allen Entrys aus Tabelle Recycle_Bin mit Kategorie -1 (Status gelöscht) zurückgeben lassen
+        modelMain.getEntryListRecycleBinTableRemoved();
 
 
         //Beschreibung: Neuen Eintrag erstellen (Wichtig: Leere Datenfelder müssen mit dem Wert 'null' übergeben werden)
@@ -50,14 +59,24 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Alle Entries in der EntryList (Tabelle Entrys) auf der Console ausgeben
+        System.out.println("\n");
+        System.out.println("###############Ausgabe alle Entries aus Entry-Table###################");
         modelMain.soutEntryList();
 
+
+        //Beschreibung: Alle Entries in der EntryList (Quelle Tabelle Recycle_Bin) auf der Console ausgeben
+        System.out.println("\n");
+        System.out.println("###############Ausgabe alle Entries aus Recycle_Bin###################");
+        modelMain.soutEntryListRecycleBin();
+
+
         //Beschreibung: Alle Entries in der EntryList (Quelle Tabelle Recycle_Bin) mit Kategorie -1 (gelöscht) auf der Console ausgeben
-        modelMain.soutRemovedEntryList();
+        System.out.println("\n");
+        System.out.println("###############Ausgabe alle Entries aus Recycle_Bin mit Status gelöscht###################");
+        modelMain.soutEntryListRecycleBinRemoved();
 
 
-        //ToDo Methode zum Zurückgeben aller bereits gelöschten Entries aus dem Recycle_Bin fehlt
-        //modelMain.getRemovedEntries()
+
 
 
         //ToDo Methode zum Zurückgeben der Backup-Einträge zu einer Eintry-ID aus Recycle_Bin fehlt

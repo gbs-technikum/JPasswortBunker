@@ -97,12 +97,38 @@ public class ModelMain {
 
     /**
      * Zugriff via View
-     * ArrayList aus Klasse EntryList zurückgeben
+     * ArrayList mit allen Entries aus Tabelle Entry zurückgeben
      */
     public ArrayList<Entry> getEntryListEntrysTable() {
         ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
         return arrayList;
     }
+
+
+    /**
+     * Zugriff via View
+     * ArrayList mit allen Entries aus Tabelle Recycle_Bin zurückgeben
+     */
+    public ArrayList<Entry> getEntryListRecycleBinTable() {
+        ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
+        return arrayList;
+    }
+
+
+    /**
+     * Gibt eine ArrayList mit den Entrys der Kategorie -1 aus der Tabelle Recycle_Bin zurück
+     */
+    public ArrayList<Entry> getEntryListRecycleBinTableRemoved(){
+        ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
+        ArrayList<Entry> returnList = new ArrayList<>();
+        for (Entry entry : arrayList) {
+            if (entry.getCategoryID() == -1) {
+                returnList.add(entry);
+            }
+        }
+        return returnList;
+    }
+
 
     /**
      * Zugriff via View
@@ -122,7 +148,7 @@ public class ModelMain {
      */
     public void FillEntryListFromRecycleBin() throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         ArrayList<Entry> arrayListEncrypted;
-        arrayListEncrypted = dbService.readAllRemovedEntries();
+        arrayListEncrypted = dbService.readAllEntriesFromRecycleBin();
         ArrayList<Entry> arrayListDecrypted = decryptEntryList(arrayListEncrypted);
         this.entryListRecycleBinTable.setEntryObjectList(arrayListDecrypted);
     }
@@ -206,20 +232,37 @@ public class ModelMain {
         return newEntryEncrypted;
     }
 
-
-    public void soutEntryList() {
+    /** Kein Zugriff via View
+     * Ausgabe alle Entries aus Tabelle Entry auf Console
+     */
+    protected void soutEntryList() {
         ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
         for (Entry entry : entryArrayList) {
             System.out.println(entry);
         }
     }
 
-    public void soutRemovedEntryList() throws SQLException {
-        ArrayList<Entry> removedEntryArrayList = getAllRemovedEntries();
+    /** Kein Zugriff via View
+     * Ausgabe alle Entries aus Tabelle Recycle_Bin auf Console
+     */
+    protected void soutEntryListRecycleBin() throws SQLException {
+        ArrayList<Entry> entryArrayListRecycleBin = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
+        for (Entry entry : entryArrayListRecycleBin) {
+            System.out.println(entry);
+        }
+    }
+
+
+    /** Kein Zugriff via View
+     * Ausgabe alle Entries aus Tabelle Recycle_Bin mit Kategorie -1 (Status gelöscht) auf Console
+     */
+    protected void soutEntryListRecycleBinRemoved() throws SQLException {
+        ArrayList<Entry> removedEntryArrayList = getEntryListRecycleBinTableRemoved();
         for (Entry entry : removedEntryArrayList) {
             System.out.println(entry);
         }
     }
+
 
 
     /**
@@ -243,12 +286,6 @@ public class ModelMain {
     }
 
 
-    /**
-     * Gibt eine ArrayList mit den Entrys der Kategorie -1 aus der Tabelle Recycle_Bin zurück
-     */
-    public ArrayList<Entry> getAllRemovedEntries() throws SQLException {
-        ArrayList<Entry> removedEntriesList = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
-        return removedEntriesList;
-    }
+
 
 }

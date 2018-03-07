@@ -32,8 +32,9 @@ public class DBService {
     }
 
 
-    public ArrayList<Entry> readAllRemovedEntries() throws SQLException {
-        String sql = "SELECT * FROM Recycle_Bin where Categorie_ID = '-1'";
+    public ArrayList<Entry> readAllEntriesFromRecycleBin() throws SQLException {
+        //String sql = "SELECT * FROM Recycle_Bin where Categorie_ID = '-1'";
+        String sql = "SELECT * FROM Recycle_Bin";
         ArrayList<Entry> entryArrayList = readEntries(sql);
         return entryArrayList;
     }
