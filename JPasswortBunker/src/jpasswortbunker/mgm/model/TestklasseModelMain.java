@@ -61,14 +61,14 @@ public class TestklasseModelMain {
         //Beschreibung: Eintrag löschen via EntryID
         //modelMain.removeEntry("382d44bb-eb25-4a09-8c03-5c43b2d71979");
 
-        //Masterpassword neu setzen
-        modelMain.renewMasterPassword("neuesPasswort2");
-        modelMain.FillEntryListFromDb();
-        modelMain.FillEntryListFromRecycleBin();
+
+        //Masterpassword neu setzen (alle bestehenden Einträge werden neu verschlüsselt)
+        //modelMain.renewMasterPassword("neuesPasswort");
 
 
         //#######################Testausgabe auf Console################################
         //==============================================================================
+
 
         //Beschreibung: Alle Entries in der EntryList (Tabelle Entrys) auf der Console ausgeben
         System.out.println("\n");
@@ -92,10 +92,6 @@ public class TestklasseModelMain {
         System.out.println("\n");
         System.out.println("###############Ausgabe alle Entries aus Recycle_Bin für übergebene entryID ausgaben###################");
         modelMain.soutEntryListRecycleBinForEntryID("2e264826-6f2a-462a-a114-68c14da385fa");
-
-
-        //ToDo Methode zum Abändern Masterpassword fehlt / bzw. funktioniert noch nicht
-        //modelMain.renewMasterPassword("abc");
 
 
     }

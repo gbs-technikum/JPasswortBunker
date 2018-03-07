@@ -71,18 +71,17 @@ public class ModelMain {
     }
 
 
-    //ToDo Güni Wagenhuber: Methoden zum Ersetzen des Masterpasswortes und neuverschlüsselung aller Einträge
     /**
      * Zugriff via View
      * Ein zuvor verwendetes Masterpasswort wird durch ein neues Ersetzt.
      * Hierbei werden alle Einträge mit dem neuen Passwort entschlüsselt und neu verschlüsselt.
      */
-    public void renewMasterPassword(String password) throws InvalidKeyException, BadPaddingException, SQLException, IllegalBlockSizeException, UnsupportedEncodingException {
+    public void renewMasterPassword(String password) throws InvalidKeyException, BadPaddingException, SQLException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException {
         initMasterPassword(password);
-
         ArrayList<Entry> arrayListEntryTable = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
         ArrayList<Entry> arrayListRecycleBinTable = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
 
+        this.encryptionService.initComponents();
 
         for (Entry entry : arrayListEntryTable) {
             Entry encrypedEntry = createEncryptedEntry(entry);
@@ -136,7 +135,8 @@ public class ModelMain {
     }
 
 
-    /**Zugriff via View
+    /**
+     * Zugriff via View
      * Gibt eine ArrayList mit den Entrys der Kategorie -1 aus der Tabelle Recycle_Bin zurück
      */
     public ArrayList<Entry> getEntryListRecycleBinTableRemoved() {
@@ -238,13 +238,6 @@ public class ModelMain {
     }
 
 
-
-
-
-
-
-
-
     /**
      * Gibt die Datenfelder eines Entry in verschlüsselter Form zurück.
      */
@@ -279,7 +272,8 @@ public class ModelMain {
     }
 
 
-    /**Zugriff via View
+    /**
+     * Zugriff via View
      * Löscht einen Entry aus der Liste und Datenbank. Zudem wird die Category_ID für Einträge im Recycle_Bin auf -1 gesetzt.
      * Kategorie -1 bedeutet gelöscht in Entry-Tabelle
      */

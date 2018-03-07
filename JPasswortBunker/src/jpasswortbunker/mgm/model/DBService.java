@@ -192,12 +192,7 @@ public class DBService {
     }
 
 
-    //To Delete
-    /*public void reEnryptEntry(String title, String username, String password, String description, String url, UUID entryID) throws SQLException {
-        String sql = "update Entrys set Title = '" + title + "' where DB_ID = '" + entryID.toString() + "'";
-        this.statement.execute(sql);
-        statement.close();
-    }*/
+
 
 
 

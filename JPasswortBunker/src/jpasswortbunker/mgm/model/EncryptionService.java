@@ -35,14 +35,19 @@ public class EncryptionService {
      */
 
     public EncryptionService() throws UnsupportedEncodingException, NoSuchPaddingException, NoSuchAlgorithmException {
+        /*this.password = PasswordObject.getInstance().getSaltPasswordHashForEncryption();
+        this.keyByteArray = password.getBytes("UTF-8");
+        this.secretKeySpec = new SecretKeySpec(keyByteArray, "AES");
+        this.cipher = Cipher.getInstance("AES");*/
+        initComponents();
+    }
+
+    protected void initComponents() throws UnsupportedEncodingException, NoSuchPaddingException, NoSuchAlgorithmException {
         this.password = PasswordObject.getInstance().getSaltPasswordHashForEncryption();
         this.keyByteArray = password.getBytes("UTF-8");
-        //ByteArray händisch auf die benötigten 32 Byte anpassen:
-        //this.keyByteArray = Arrays.copyOf(keyByteArray, 32);
         this.secretKeySpec = new SecretKeySpec(keyByteArray, "AES");
         this.cipher = Cipher.getInstance("AES");
     }
-
 
 
     public String encrypt(String geheimeDaten) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
