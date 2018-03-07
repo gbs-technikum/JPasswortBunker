@@ -197,7 +197,7 @@ public class ModelMain {
     }
 
     /**
-     * Löscht einen Entry aus der Liste und Datenbank. Zudem wird die Category_ID für Einträge im Recycle_Bin auf -1 gesetzt.
+     * Löscht einen Entry aus der Liste und Datenbank. Zudem wird die Category_ID für Einträge im RecycleController auf -1 gesetzt.
      * Kategorie -1 bedeutet gelöscht in Entry-Tabelle
      */
     public boolean removeEntry(String entryIdAsString) throws SQLException {

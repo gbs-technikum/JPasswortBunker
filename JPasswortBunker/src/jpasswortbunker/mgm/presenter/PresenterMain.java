@@ -26,7 +26,7 @@ public final class PresenterMain {
 
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
-        model = new ModelMain("test");
+        model = new ModelMain();
         initStringProperty();
     }
 

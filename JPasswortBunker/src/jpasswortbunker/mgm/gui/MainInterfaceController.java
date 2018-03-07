@@ -42,7 +42,7 @@ public class MainInterfaceController implements Initializable {
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle;
 
     @FXML
     private ImageView btn_logo;
@@ -61,7 +61,7 @@ public class MainInterfaceController implements Initializable {
 
     public ObservableList<Entry> entrys = FXCollections.observableArrayList();
 
-    //Spalten für Tabelle werden angelegt, kann für die Libery jfoenix nicht über Scenebuilder gemacht werden
+    //Spalten für Tabelle werden angelegt, kann für die Libary jFoenix nicht über Scenebuilder gemacht werden
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -279,6 +279,20 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
+//    //Button Mülleimer
+//    public void Btn_recycle(ActionEvent actionEvent) {
+//        pane_settings.setVisible(false);
+//        pane_entrys.setVisible(true);
+//        textField_Search.clear();
+//        treeView.setPredicate(new Predicate<TreeItem<Entry>>() {
+//            @Override
+//            public boolean test(TreeItem<Entry> entryTreeItem) {
+//                Boolean flag = entryTreeItem.getValue().categorieIDProperty().getValue().equals(4);
+//                return flag;
+//            }
+//        });
+//    }
+
 
     //Button für die Einstellungen
     public void btn_settings(ActionEvent actionEvent) {
@@ -303,6 +317,24 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setAlwaysOnTop(true);
         stageNewEntry.show();
     }
+
+    //Button für den Mülleimer, neues Fenster geht auf
+    public void btn_recycle() {
+        Stage stageRecycle = new Stage();
+        Parent parentRecycle = null;
+        try {
+            parentRecycle = FXMLLoader.load(getClass().getResource("RecycleBin.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene3 = new Scene(parentRecycle, 600, 600);
+        stageRecycle.setTitle("Recyclebin");
+        stageRecycle.setScene(scene3);
+        stageRecycle.setAlwaysOnTop(true);
+        stageRecycle.show();
+    }
+
+
 
 
 

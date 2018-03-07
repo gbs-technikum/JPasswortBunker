@@ -54,7 +54,7 @@ public class TestklasseModelMain {
         //Beschreibung: Alle Entries in der EntryList auf der Console ausgeben
         modelMain.soutEntryList();
 
-        //ToDo Methode zum Zurückgeben aller bereits gelöschten Entries aus dem Recycle_Bin fehlt
+        //ToDo Methode zum Zurückgeben aller bereits gelöschten Entries aus dem RecycleController fehlt
         //modelMain.getRemovedEntries()
 
         //ToDo Methode zum Abändern Masterpassword fehlt / bzw. funktioniert noch nicht
