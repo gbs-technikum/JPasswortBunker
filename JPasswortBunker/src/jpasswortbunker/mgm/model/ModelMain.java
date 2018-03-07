@@ -263,6 +263,32 @@ public class ModelMain {
         }
     }
 
+    /** Kein Zugriff via View
+     * Ausgabe alle Entries aus Tabelle Recycle_Bin für die übergebene entryID auf Console
+     */
+    protected void soutEntryListRecycleBinForEntryID(String entryID) throws SQLException {
+        ArrayList<Entry> removedEntryArrayList = getEntrysFromRecycleBinForEntryID(entryID);
+        for (Entry entry : removedEntryArrayList) {
+            System.out.println(entry);
+        }
+    }
+
+
+    /** Zugriff via View
+     * Rückgabe Entrys via EntryID aus Recycle_Bin
+     */
+    public ArrayList<Entry> getEntrysFromRecycleBinForEntryID(String entryID) throws SQLException {
+        ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
+        ArrayList<Entry> returnList = new ArrayList<>();
+        for (Entry entry : arrayList) {
+            if (entry.getEntryIDasString().equals(entryID)) {
+                returnList.add(entry);
+            }
+        }
+        return returnList;
+    }
+
+
 
 
     /**

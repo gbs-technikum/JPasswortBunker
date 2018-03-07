@@ -41,6 +41,10 @@ public class TestklasseModelMain {
         modelMain.getEntryListRecycleBinTable();
 
 
+        //Beschreibung: ArrayList<Entry> mit allen Entrys aus Tabelle Recycle_Bin zurückgeben lassen, die der übergebenen entryID entsprechen
+        modelMain.getEntrysFromRecycleBinForEntryID("2e264826-6f2a-462a-a114-68c14da385fa");
+
+
         //Beschreibung: ArrayList<Entry> mit allen Entrys aus Tabelle Recycle_Bin mit Kategorie -1 (Status gelöscht) zurückgeben lassen
         modelMain.getEntryListRecycleBinTableRemoved();
 
@@ -57,6 +61,12 @@ public class TestklasseModelMain {
         //Beschreibung: Eintrag löschen via EntryID
         //modelMain.removeEntry("0b362aa1-e515-4735-afbd-ddf0522e9a9c");
 
+
+
+
+
+        //#######################Testausgabe auf Console################################
+        //==============================================================================
 
         //Beschreibung: Alle Entries in der EntryList (Tabelle Entrys) auf der Console ausgeben
         System.out.println("\n");
@@ -76,11 +86,10 @@ public class TestklasseModelMain {
         modelMain.soutEntryListRecycleBinRemoved();
 
 
-
-
-
-        //ToDo Methode zum Zurückgeben der Backup-Einträge zu einer Eintry-ID aus Recycle_Bin fehlt
-        //modelMain.
+        //Beschreibung: Alle Entries in der EntryList (Quelle Tabelle Recycle_Bin) mit Kategorie -1 (gelöscht) auf der Console ausgeben
+        System.out.println("\n");
+        System.out.println("###############Ausgabe alle Entries aus Recycle_Bin für übergebene entryID ausgaben###################");
+        modelMain.soutEntryListRecycleBinForEntryID("2e264826-6f2a-462a-a114-68c14da385fa");
 
 
         //ToDo Methode zum Abändern Masterpassword fehlt / bzw. funktioniert noch nicht
