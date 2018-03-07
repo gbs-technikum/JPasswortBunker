@@ -17,7 +17,7 @@
    <children>
       <AnchorPane id="topBar" layoutX="200.0" layoutY="25.0" prefHeight="70.0" prefWidth="700.0" stylesheets="@style/default_style.css">
          <children>
-            <JFXTextField fx:id="textField_Search" focusColor="WHITE" layoutX="184.0" layoutY="12.0" prefHeight="41.0" prefWidth="297.0" promptText="    Search...." style="-fx-prompt-text-fill: white; -fx-text-inner-color: white; -fx-background-color: #0c50b5;" unFocusColor="#d3cece">
+            <JFXTextField fx:id="textField_Search" focusColor="WHITE" layoutX="184.0" layoutY="12.0" onKeyTyped="#searchFunction" prefHeight="41.0" prefWidth="297.0" promptText="    Search...." style="-fx-prompt-text-fill: white; -fx-text-inner-color: white; -fx-background-color: #0c50b5;" unFocusColor="#d3cece">
                <font>
                   <Font size="18.0" />
                </font>
@@ -36,7 +36,7 @@
       </AnchorPane>
       <AnchorPane id="sideBar" layoutY="25.0" prefHeight="600.0" prefWidth="200.0" stylesheets="@style/default_style.css">
          <children>
-            <JFXButton fx:id="btn_newEntry" layoutX="11.0" layoutY="101.0" prefHeight="49.0" prefWidth="178.0" text="   Finance" textFill="WHITE">
+            <JFXButton fx:id="btn_newEntry" layoutX="11.0" layoutY="101.0" onAction="#btn_finance" prefHeight="49.0" prefWidth="178.0" text="   Finance" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -48,7 +48,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_social" layoutX="11.0" layoutY="156.0" prefHeight="49.0" prefWidth="178.0" text="   Social" textFill="WHITE">
+            <JFXButton fx:id="btn_social" layoutX="11.0" layoutY="156.0" onAction="#btn_social" prefHeight="49.0" prefWidth="178.0" text="   Social" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -60,7 +60,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_email" layoutX="11.0" layoutY="212.0" prefHeight="49.0" prefWidth="178.0" text="   E-Mail" textFill="WHITE">
+            <JFXButton fx:id="btn_email" layoutX="11.0" layoutY="212.0" onAction="#btn_email" prefHeight="49.0" prefWidth="178.0" text="   E-Mail" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -72,7 +72,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_network" layoutX="11.0" layoutY="270.0" prefHeight="49.0" prefWidth="178.0" text="Network" textFill="WHITE">
+            <JFXButton fx:id="btn_network" layoutX="11.0" layoutY="270.0" onAction="#btn_network" prefHeight="49.0" prefWidth="178.0" text="Network" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -84,7 +84,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_settings" layoutX="11.0" layoutY="525.0" prefHeight="49.0" prefWidth="178.0" text="   Settings" textFill="WHITE">
+            <JFXButton fx:id="btn_settings" layoutX="11.0" layoutY="525.0" onAction="#btn_settings" prefHeight="49.0" prefWidth="178.0" text="   Settings" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -96,7 +96,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <ImageView fx:id="btn_logo" fitHeight="58.0" fitWidth="90.0" layoutX="56.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btn_logo" fitHeight="58.0" fitWidth="90.0" layoutX="56.0" layoutY="14.0" onMouseClicked="#btn_logo" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/logo.png" />
                </image>

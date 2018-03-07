@@ -2,7 +2,9 @@ package jpasswortbunker.mgm.view;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -31,6 +34,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 
 public class MainInterfaceController implements Initializable {
@@ -147,6 +151,24 @@ public class MainInterfaceController implements Initializable {
     }
 
 
+    //Suchfunktion in Suchleiste Suche nach: Title und Username
+    public void searchFunction() {
+        textField_Search.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+                    @Override
+                    public boolean test(TreeItem<EntryProperty> entryTreeItem) {
+                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase())||
+                                entryTreeItem.getValue().usernameProperty().getValue().toLowerCase().contains(newValue.toLowerCase());
+                        return flag;
+                    }
+                });
+            }
+        });
+    }
+
+
 
     //Methode wird bei Controlleraufruf ausgeführt
     public void initialize() throws IOException {
@@ -201,6 +223,85 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setScene(new Scene(parent, 400, 400));
         stageNewEntry.setAlwaysOnTop(true);
         stageNewEntry.show();
+    }
+
+    //Button Logo zeit alle Einträge an und setzt Suchfilter bzw Kategorie zurück
+    public void btn_logo(MouseEvent mouseEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+            @Override
+            public boolean test(TreeItem<EntryProperty> entryTreeItem) {
+                return true;
+            }
+        });
+    }
+
+    //Button Kategorie_Finanzen
+    public void btn_finance(ActionEvent actionEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+            @Override
+            public boolean test(TreeItem<EntryProperty> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(0);
+                return flag;
+            }
+        });
+    }
+
+    //Button Kategorie_Social
+    public void btn_social(ActionEvent actionEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+            @Override
+            public boolean test(TreeItem<EntryProperty> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(1);
+                return flag;
+            }
+        });
+    }
+
+
+    //Button Kategorie_E-Mail
+    public void btn_email(ActionEvent actionEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+            @Override
+            public boolean test(TreeItem<EntryProperty> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(2);
+                return flag;
+            }
+        });
+    }
+
+
+    //Button Kategorie_Netzwerk
+    public void btn_network(ActionEvent actionEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        textField_Search.clear();
+        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+            @Override
+            public boolean test(TreeItem<EntryProperty> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(3);
+                return flag;
+            }
+        });
+    }
+
+
+    //Button für die Einstellungen
+    public void btn_settings(ActionEvent actionEvent) {
+        pane_settings.setVisible(true);
+        pane_entrys.setVisible(false);
+        textField_Search.clear();
     }
 
 
