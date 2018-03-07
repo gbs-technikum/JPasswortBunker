@@ -57,7 +57,9 @@ public class MainInterfaceController {
 
     private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin;
 
-    private PresenterMain presenter = new PresenterMain(this);
+
+    //ToDo Temporär auskommentiert von Günther
+    //private PresenterMain presenter = new PresenterMain(this);
 
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
     }

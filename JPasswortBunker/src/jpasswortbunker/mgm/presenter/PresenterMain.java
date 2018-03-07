@@ -6,13 +6,7 @@ import javafx.collections.ObservableList;
 import jpasswortbunker.mgm.model.ModelMain;
 import jpasswortbunker.mgm.view.MainInterfaceController;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 public final class PresenterMain {
@@ -23,12 +17,12 @@ public final class PresenterMain {
     private StringProperty stringProperty;
     public ObservableList<EntryProperty> entryPropertiesList = FXCollections.observableArrayList();
 
-
-    public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
+//ToDo Temporär auskommentiert von Günther, damit sich TestklasseModelMain ausführen lässt
+    /*public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
         model = new ModelMain("test");
         initStringProperty();
-    }
+    }*/
 
 
     public void initStringProperty() {
@@ -49,7 +43,7 @@ public final class PresenterMain {
 
     //Schreibt die Liste der Arraylist aus Model in die Observable List im Presenter
     public void writeToObservableList() {
-        for (jpasswortbunker.mgm.model.Entry entry : model.getEntryList()) {
+        for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListEntrysTable()) {
             entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
                     entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
         }

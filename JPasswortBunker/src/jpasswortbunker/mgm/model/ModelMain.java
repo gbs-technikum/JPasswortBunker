@@ -1,7 +1,5 @@
 package jpasswortbunker.mgm.model;
 
-import jpasswortbunker.mgm.presenter.PresenterMain;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -16,21 +14,19 @@ import java.util.UUID;
 public class ModelMain {
 
     private PasswordObject masterPasswordObject;
-    private EntryList entryList;
+    private EntryList entryListEntrysTable;
+    private EntryList entryListRecycleBinTable;
     private EncryptionService encryptionService;
     private DBService dbService;
-    private PresenterMain presenter;
+    //private PresenterMain presenter;
 
 
     public ModelMain() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
         this.masterPasswordObject = PasswordObject.getInstance();
         this.dbService = new DBService();
-        this.entryList = new EntryList();
-        //initMasterPassword(userInputForMasterPassword);
-        //this.encryptionService = new EncryptionService();
+        this.entryListEntrysTable = new EntryList();
+        this.entryListRecycleBinTable = new EntryList();
     }
-
-
 
 
     public void initEncryptionService() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException {
@@ -39,14 +35,16 @@ public class ModelMain {
 
     /**
      * Zugriff via View
-    /**Zugriff via Presenter
+     /**Zugriff via Presenter
      * Presenter wird an Model übergeben
      */
-    public void setPresenter(PresenterMain presenter) {
+    /*public void setPresenter(PresenterMain presenter) {
         this.presenter = presenter;
     }
+*/
 
-    /**Zugriff via View
+    /**
+     * Zugriff via View
      * Masterpasswort wird entgegengenommen und weitergereicht an PasswordObject
      */
     public void initMasterPassword(String password) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, SQLException, IllegalBlockSizeException {
@@ -72,7 +70,7 @@ public class ModelMain {
         setSaltPasswordHashForPasswortStoreInDb(password);
         initMasterPassword(password);
 
-        ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
+        ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
 
         for (Entry entry : arrayList) {
             dbService.reEnryptEntry(entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getDescription(), entry.getUrl(), entry.getEntryID());
@@ -101,25 +99,45 @@ public class ModelMain {
      * Zugriff via View
      * ArrayList aus Klasse EntryList zurückgeben
      */
-    public ArrayList<Entry> getEntryList() {
-        ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
+    public ArrayList<Entry> getEntryListEntrysTable() {
+        ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
         return arrayList;
     }
 
     /**
      * Zugriff via View
-     * Einträge aus Datenbank holen und in Entry-Liste schreiben
+     * Einträge aus Datenbanktabelle Entry holen und in Entry-Liste schreiben
      */
     public void FillEntryListFromDb() throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         ArrayList<Entry> arrayListEncrypted;
         arrayListEncrypted = dbService.readAllEntries();
-        ArrayList<Entry> arrayListDecrypted = new ArrayList<>();
+        ArrayList<Entry> arrayListDecrypted = decryptEntryList(arrayListEncrypted);
+        this.entryListEntrysTable.setEntryObjectList(arrayListDecrypted);
+    }
 
+
+    /**
+     * Zugriff via View
+     * Einträge aus Datenbanktabelle Recycle_Bin holen und in Entry-Liste schreiben
+     */
+    public void FillEntryListFromRecycleBin() throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        ArrayList<Entry> arrayListEncrypted;
+        arrayListEncrypted = dbService.readAllRemovedEntries();
+        ArrayList<Entry> arrayListDecrypted = decryptEntryList(arrayListEncrypted);
+        this.entryListRecycleBinTable.setEntryObjectList(arrayListDecrypted);
+    }
+
+    /**
+     * Kein Zugriff via View
+     * Verschlüsselte Daten entschlüsseln und als Liste zurückgeben
+     */
+    private ArrayList<Entry> decryptEntryList(ArrayList<Entry> arrayListEncrypted) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, SQLException {
+        ArrayList<Entry> arrayListDecrypted = new ArrayList<>();
         for (Entry encryptedEntry : arrayListEncrypted) {
             Entry decryptedEntry = new Entry(encryptionService.decrypt(encryptedEntry.getTitle()), encryptionService.decrypt(encryptedEntry.getUsername()), encryptionService.decrypt(encryptedEntry.getPassword()), encryptionService.decrypt(encryptedEntry.getDescription()), encryptionService.decrypt(encryptedEntry.getUrl()), encryptedEntry.getCategoryID(), encryptedEntry.getDbID(), encryptedEntry.getEntryID(), encryptedEntry.getTimestamp());
             arrayListDecrypted.add(decryptedEntry);
         }
-        this.entryList.setEntryObjectList(arrayListDecrypted);
+        return arrayListDecrypted;
     }
 
 
@@ -128,7 +146,7 @@ public class ModelMain {
      * Entry-Objekt zur Liste hinzufügen
      */
     private void addEntryToList(Entry entry) {
-        entryList.addEntry(entry);
+        entryListEntrysTable.addEntry(entry);
     }
 
 
@@ -138,7 +156,7 @@ public class ModelMain {
      */
     public void newEntry(String title, String username, String password, String description, String url, int categoryID) throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         Entry newEntry = new Entry(title, username, password, description, url, categoryID);
-        entryList.addEntry(newEntry);
+        entryListEntrysTable.addEntry(newEntry);
         Entry newEntryEncrypted = createEncryptedEntry(newEntry);
 
         dbService.insertEntry(newEntryEncrypted);
@@ -150,7 +168,7 @@ public class ModelMain {
      * Bestehenden Datensatz ändern
      */
     public boolean updateEntry(String entryID, String title, String username, String password, String url, String descripton, int categoryID) throws SQLException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
-        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
+        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
         for (Entry entry : entryArrayList) {
             if (entry.getEntryIDasString().equals(entryID)) {
                 Entry encrypedEntryForRecycleBinTable = createEncryptedEntry(entry);
@@ -190,24 +208,32 @@ public class ModelMain {
 
 
     public void soutEntryList() {
-        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
+        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
         for (Entry entry : entryArrayList) {
             System.out.println(entry);
         }
     }
+
+    public void soutRemovedEntryList() throws SQLException {
+        ArrayList<Entry> removedEntryArrayList = getAllRemovedEntries();
+        for (Entry entry : removedEntryArrayList) {
+            System.out.println(entry);
+        }
+    }
+
 
     /**
      * Löscht einen Entry aus der Liste und Datenbank. Zudem wird die Category_ID für Einträge im Recycle_Bin auf -1 gesetzt.
      * Kategorie -1 bedeutet gelöscht in Entry-Tabelle
      */
     public boolean removeEntry(String entryIdAsString) throws SQLException {
-        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryList.getEntryObjectList();
+        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
         Iterator<Entry> iterator = entryArrayList.iterator();
         while (iterator.hasNext()) {
             if (iterator.next().getEntryIDasString().equals(entryIdAsString)) {
-                iterator.remove();
-                dbService.removeEntry(entryIdAsString);
                 dbService.updateRecycleBinForRemovedEntrys(entryIdAsString);
+                dbService.removeEntry(entryIdAsString);
+                iterator.remove();
                 System.out.println("##Status## Entry erfolgreich gelöscht!");
                 return true;
             }
@@ -217,7 +243,12 @@ public class ModelMain {
     }
 
 
-
-
+    /**
+     * Gibt eine ArrayList mit den Entrys der Kategorie -1 aus der Tabelle Recycle_Bin zurück
+     */
+    public ArrayList<Entry> getAllRemovedEntries() throws SQLException {
+        ArrayList<Entry> removedEntriesList = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
+        return removedEntriesList;
+    }
 
 }
