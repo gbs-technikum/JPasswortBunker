@@ -85,13 +85,13 @@ public class ModelMain {
 
 
         for (Entry entry : arrayListEntryTable) {
-            Entry encrypedEntryForEntrysTable = createEncryptedEntry(entry);
-            dbService.reEncryptTable(encrypedEntryForEntrysTable, "Entry");
+            Entry encrypedEntry = createEncryptedEntry(entry);
+            dbService.reEncryptTable(encrypedEntry, "Entrys");
         }
 
         for (Entry entry : arrayListRecycleBinTable) {
-            Entry encrypedEntryForEntrysTable = createEncryptedEntry(entry);
-            dbService.reEncryptTable(encrypedEntryForEntrysTable, "Receycle_Bin");
+            Entry encrypedEntry = createEncryptedEntry(entry);
+            dbService.reEncryptTable(encrypedEntry, "Recycle_Bin");
         }
 
     }

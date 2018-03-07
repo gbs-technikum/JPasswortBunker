@@ -61,8 +61,10 @@ public class TestklasseModelMain {
         //Beschreibung: Eintrag löschen via EntryID
         //modelMain.removeEntry("382d44bb-eb25-4a09-8c03-5c43b2d71979");
 
-
-
+        //Masterpassword neu setzen
+        modelMain.renewMasterPassword("neuesPasswort2");
+        modelMain.FillEntryListFromDb();
+        modelMain.FillEntryListFromRecycleBin();
 
 
         //#######################Testausgabe auf Console################################
