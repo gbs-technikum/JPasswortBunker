@@ -21,6 +21,10 @@ public class ModelMain {
     //private PresenterMain presenter;
 
 
+    /**
+     * Zugriff via View
+     * Konstruktor für Instanzierung von einem Teil der Datenfelder
+     */
     public ModelMain() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
         this.masterPasswordObject = PasswordObject.getInstance();
         this.dbService = new DBService();
@@ -28,11 +32,7 @@ public class ModelMain {
         this.entryListRecycleBinTable = new EntryList();
     }
 
-
-    public void initEncryptionService() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException {
-        this.encryptionService = new EncryptionService();
-    }
-
+//ToDo Michi Kopp: Instanzierung Presenter im Model
     /**
      * Zugriff via View
      /**Zugriff via Presenter
@@ -42,6 +42,16 @@ public class ModelMain {
         this.presenter = presenter;
     }
 */
+
+
+    /**
+     * Zugriff via View
+     * Instanzierung für Datenfeld encryptionService - Hierzu muss das Masterpasswort bereits übergeben worden sein
+     */
+    public void initEncryptionService() throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException {
+        this.encryptionService = new EncryptionService();
+    }
+
 
     /**
      * Zugriff via View
@@ -60,6 +70,8 @@ public class ModelMain {
 
     }
 
+
+    //ToDo Güni Wagenhuber: Methoden zum Ersetzen des Masterpasswortes und neuverschlüsselung aller Einträge
     /**
      * Zugriff via View
      * Ein zuvor verwendetes Masterpasswort wird durch ein neues Ersetzt.
@@ -87,6 +99,7 @@ public class ModelMain {
         return masterPasswordFromDB;
     }
 
+
     /**
      * Kein Zugriff via View
      * Masterpasswort-Hash-Wert in Datenbank setzen bzw. überschreiben
@@ -94,6 +107,7 @@ public class ModelMain {
     private void setSaltPasswordHashForPasswortStoreInDb(String password) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, SQLException {
         dbService.setMasterPasswordToDB(this.masterPasswordObject.getSaltPasswordHashForPasswortStore());
     }
+
 
     /**
      * Zugriff via View
@@ -115,10 +129,10 @@ public class ModelMain {
     }
 
 
-    /**
+    /**Zugriff via View
      * Gibt eine ArrayList mit den Entrys der Kategorie -1 aus der Tabelle Recycle_Bin zurück
      */
-    public ArrayList<Entry> getEntryListRecycleBinTableRemoved(){
+    public ArrayList<Entry> getEntryListRecycleBinTableRemoved() {
         ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
         ArrayList<Entry> returnList = new ArrayList<>();
         for (Entry entry : arrayList) {
@@ -152,6 +166,7 @@ public class ModelMain {
         ArrayList<Entry> arrayListDecrypted = decryptEntryList(arrayListEncrypted);
         this.entryListRecycleBinTable.setEntryObjectList(arrayListDecrypted);
     }
+
 
     /**
      * Kein Zugriff via View
@@ -215,6 +230,7 @@ public class ModelMain {
         return false;
     }
 
+
     /**
      * Gibt die Datenfelder eines Entry in verschlüsselter Form zurück.
      */
@@ -232,49 +248,9 @@ public class ModelMain {
         return newEntryEncrypted;
     }
 
-    /** Kein Zugriff via View
-     * Ausgabe alle Entries aus Tabelle Entry auf Console
-     */
-    protected void soutEntryList() {
-        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
-        for (Entry entry : entryArrayList) {
-            System.out.println(entry);
-        }
-    }
 
-    /** Kein Zugriff via View
-     * Ausgabe alle Entries aus Tabelle Recycle_Bin auf Console
-     */
-    protected void soutEntryListRecycleBin() throws SQLException {
-        ArrayList<Entry> entryArrayListRecycleBin = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
-        for (Entry entry : entryArrayListRecycleBin) {
-            System.out.println(entry);
-        }
-    }
-
-
-    /** Kein Zugriff via View
-     * Ausgabe alle Entries aus Tabelle Recycle_Bin mit Kategorie -1 (Status gelöscht) auf Console
-     */
-    protected void soutEntryListRecycleBinRemoved() throws SQLException {
-        ArrayList<Entry> removedEntryArrayList = getEntryListRecycleBinTableRemoved();
-        for (Entry entry : removedEntryArrayList) {
-            System.out.println(entry);
-        }
-    }
-
-    /** Kein Zugriff via View
-     * Ausgabe alle Entries aus Tabelle Recycle_Bin für die übergebene entryID auf Console
-     */
-    protected void soutEntryListRecycleBinForEntryID(String entryID) throws SQLException {
-        ArrayList<Entry> removedEntryArrayList = getEntrysFromRecycleBinForEntryID(entryID);
-        for (Entry entry : removedEntryArrayList) {
-            System.out.println(entry);
-        }
-    }
-
-
-    /** Zugriff via View
+    /**
+     * Zugriff via View
      * Rückgabe Entrys via EntryID aus Recycle_Bin
      */
     public ArrayList<Entry> getEntrysFromRecycleBinForEntryID(String entryID) throws SQLException {
@@ -289,18 +265,17 @@ public class ModelMain {
     }
 
 
-
-
-    /**
+    /**Zugriff via View
      * Löscht einen Entry aus der Liste und Datenbank. Zudem wird die Category_ID für Einträge im Recycle_Bin auf -1 gesetzt.
      * Kategorie -1 bedeutet gelöscht in Entry-Tabelle
      */
-    public boolean removeEntry(String entryIdAsString) throws SQLException {
+    public boolean removeEntry(String entryIdAsString) throws SQLException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
         ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
         Iterator<Entry> iterator = entryArrayList.iterator();
         while (iterator.hasNext()) {
             if (iterator.next().getEntryIDasString().equals(entryIdAsString)) {
                 dbService.updateRecycleBinForRemovedEntrys(entryIdAsString);
+                this.FillEntryListFromRecycleBin();
                 dbService.removeEntry(entryIdAsString);
                 iterator.remove();
                 System.out.println("##Status## Entry erfolgreich gelöscht!");
@@ -312,6 +287,54 @@ public class ModelMain {
     }
 
 
+    //#####Es folgen Methoden für Ausgabe auf Console######
+    //=====================================================
 
+    /**
+     * Kein Zugriff via View
+     * Ausgabe alle Entries aus Tabelle Entry auf Console
+     */
+    protected void soutEntryList() {
+        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
+        for (Entry entry : entryArrayList) {
+            System.out.println(entry);
+        }
+    }
+
+
+    /**
+     * Kein Zugriff via View
+     * Ausgabe alle Entries aus Tabelle Recycle_Bin auf Console
+     */
+    protected void soutEntryListRecycleBin() throws SQLException {
+        ArrayList<Entry> entryArrayListRecycleBin = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
+        for (Entry entry : entryArrayListRecycleBin) {
+            System.out.println(entry);
+        }
+    }
+
+
+    /**
+     * Kein Zugriff via View
+     * Ausgabe alle Entries aus Tabelle Recycle_Bin mit Kategorie -1 (Status gelöscht) auf Console
+     */
+    protected void soutEntryListRecycleBinRemoved() throws SQLException {
+        ArrayList<Entry> removedEntryArrayList = getEntryListRecycleBinTableRemoved();
+        for (Entry entry : removedEntryArrayList) {
+            System.out.println(entry);
+        }
+    }
+
+
+    /**
+     * Kein Zugriff via View
+     * Ausgabe alle Entries aus Tabelle Recycle_Bin für die übergebene entryID auf Console
+     */
+    protected void soutEntryListRecycleBinForEntryID(String entryID) throws SQLException {
+        ArrayList<Entry> removedEntryArrayList = getEntrysFromRecycleBinForEntryID(entryID);
+        for (Entry entry : removedEntryArrayList) {
+            System.out.println(entry);
+        }
+    }
 
 }
