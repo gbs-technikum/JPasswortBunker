@@ -20,7 +20,7 @@ public class TestklasseModelMain {
         modelMain.initMasterPassword("test");
 
 
-        //Beschreibung: Prüfen ob MasterPasswort richtig eingegeben wurde (Oben eingegebenes Passwort wird mit DB abgeglichen)
+        //Beschreibung: Prüfen ob richtigs MasterPasswort übergeben wurde (Oben eingegebenes Passwort wird mit DB abgeglichen)
         System.out.println(modelMain.checkIfMasterPasswordIsCorrect());
 
 
@@ -64,6 +64,19 @@ public class TestklasseModelMain {
 
         //Masterpassword neu setzen (alle bestehenden Einträge werden neu verschlüsselt)
         //modelMain.renewMasterPassword("neuesPasswort");
+
+
+        //ToDo Klasse zum wiederherstellen eines gelöschten BackupEintrages
+
+
+        //ToDo Methoden zum prüfen, ob MasterPassword in DB gesetzt ist
+
+
+        //ToDo Speicherort für Datenbank export prüfen
+
+
+        //Todo Max. drei Änderungen in Recycle_Bin schreiben
+
 
 
         //#######################Testausgabe auf Console################################
