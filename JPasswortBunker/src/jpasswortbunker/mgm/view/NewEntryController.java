@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import jpasswortbunker.mgm.entry.Entry;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
 import javax.crypto.BadPaddingException;

@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.stage.Stage;
-import jpasswortbunker.mgm.entry.Entry;
 import jpasswortbunker.mgm.presenter.EntryProperty;
 
 import java.net.URL;
