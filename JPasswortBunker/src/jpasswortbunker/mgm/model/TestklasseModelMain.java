@@ -78,6 +78,16 @@ public class TestklasseModelMain {
         //Todo Max. drei Änderungen in Recycle_Bin schreiben
 
 
+        //Todo Methoden zum Hinzufügen / Entfernen / Abfragen von Kategorien
+
+
+        //Todo Wert für Zwischenablage in DB speichern und abfragen
+
+
+        //Todo Funktion zum Generieren eines Zufallspasswortes mittels Random()
+
+
+
 
         //#######################Testausgabe auf Console################################
         //==============================================================================
