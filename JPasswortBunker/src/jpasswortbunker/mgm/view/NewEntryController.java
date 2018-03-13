@@ -55,8 +55,7 @@ public class NewEntryController{
                  * Ja -> Eintrag wird erstellt
                  */
                 comboBox.getValue().getText();
-                //ToDo ID muss noch ausgelesen werden aus ComboBox
-                presenter.newEntry(tfTitle.getText(), tfUsername.getText(), pf1.getText(), tfURL.getText(), taDescription.getText(),1);
+                presenter.newEntry(tfTitle.getText(), tfUsername.getText(), pf1.getText(), tfURL.getText(), taDescription.getText(),comboBox.getSelectionModel().getSelectedIndex());
                 Stage stage = (Stage) btn_save.getScene().getWindow();
                 stage.close();
                 System.out.println("neuer Eintrag angelegt");

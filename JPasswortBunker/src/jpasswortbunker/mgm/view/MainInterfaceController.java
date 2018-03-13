@@ -5,21 +5,20 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import jpasswortbunker.mgm.entry.Entry;
+
+import jpasswortbunker.mgm.view.EditEntryController;
 import jpasswortbunker.mgm.presenter.EntryProperty;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
@@ -66,6 +65,7 @@ public class MainInterfaceController implements Initializable {
     private AnchorPane mainAnchorPane;
 
     private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin, stageNewEntry;
+    private ContextMenu contextMenu = new ContextMenu();
 
     private PresenterMain presenter = new PresenterMain(this);
 
@@ -148,6 +148,24 @@ public class MainInterfaceController implements Initializable {
         treeView.getColumns().setAll(titleName, usernameCol, passwordCol, urlCol, desCol);
         treeView.setRoot(root);
         treeView.setShowRoot(false);
+        //ruft Methode auf und baut ContextMenu zusammen
+        buildContextMenu();
+
+
+
+        //Eventhandling für die Elemente
+        treeView.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent ee) {
+                if (ee.isPrimaryButtonDown() && ee.getClickCount() == 2) {
+
+                    editEntryScene();
+                }
+                if (ee.isSecondaryButtonDown()) {
+                    contextMenu.show(treeView, ee.getScreenX(), ee.getScreenY());
+                }
+            }
+        });
     }
 
 
@@ -302,6 +320,52 @@ public class MainInterfaceController implements Initializable {
         pane_settings.setVisible(true);
         pane_entrys.setVisible(false);
         textField_Search.clear();
+    }
+
+    /**
+     * private void buildContextMenu()
+     * Baut Context Menu zusammen
+     */
+    private void buildContextMenu() {
+        MenuItem item1 = new MenuItem("Delete");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Test menu 1");
+            }
+        });
+        contextMenu.getItems().add(item1);
+        MenuItem item2 = new MenuItem("Edit");
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                editEntryScene();
+            }
+        });
+        contextMenu.getItems().add(item2);
+    }
+
+    private void editEntryScene() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("EditEntry.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //übergibt an EditEntryController den ausgewählten Eintrag
+        EditEntryController editEntryController = loader.getController();
+        //Ausgewähltes Element treeView.getSelectionModel().getSelectedItem()
+        editEntryController.setEntry(treeView.getSelectionModel().getSelectedItem());
+
+
+        Parent parentEditEntry = loader.getRoot();
+        Stage stageEditEntry = new Stage();
+        Scene sceneEditentry = new Scene(parentEditEntry, 400, 400);
+        stageEditEntry.setTitle("Edit your EntryProperty");
+        stageEditEntry.setScene(sceneEditentry);
+        stageEditEntry.show();
     }
 
 
