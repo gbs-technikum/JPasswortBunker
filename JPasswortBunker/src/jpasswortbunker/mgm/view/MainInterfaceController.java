@@ -67,7 +67,9 @@ public class MainInterfaceController implements Initializable {
     private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin, stageNewEntry;
     private ContextMenu contextMenu = new ContextMenu();
 
-    private PresenterMain presenter = new PresenterMain(this);
+
+    //ToDo Temporär auskommentiert von Günther
+    //private PresenterMain presenter = new PresenterMain(this);
 
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
     }
