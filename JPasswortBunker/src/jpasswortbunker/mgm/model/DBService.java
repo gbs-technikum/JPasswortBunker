@@ -40,7 +40,6 @@ public class DBService {
     }
 
 
-
     public ArrayList<Entry> readEntries(String sql) throws SQLException {
 
         ResultSet resultSet = this.statement.executeQuery(sql);
@@ -75,6 +74,33 @@ public class DBService {
         Iterator<Entry> iterator = entryArrayList.iterator();
         if (iterator.hasNext()) {
             entry = iterator.next();
+        }
+        return entry;
+    }
+
+
+    public Entry readSingleEntryFromRecycleBin(String entryId, long timestamp) throws SQLException {
+        Entry entry = null;
+        String sql = "SELECT * FROM Recycle_Bin WHERE Entry_ID = '" + entryId + "' and timestamp = '" + timestamp + "'";
+        ResultSet resultSet = this.statement.executeQuery(sql);
+        entry = buildEntryFromDB(resultSet);
+        return entry;
+    }
+
+
+    public Entry buildEntryFromDB(ResultSet resultSet) throws SQLException {
+        Entry entry = null;
+        if (resultSet.next()) {
+            int db_id = resultSet.getInt(1);
+            UUID entry_id = UUID.fromString(resultSet.getString(2));
+            String title = resultSet.getString(3);
+            String username = resultSet.getString(4);
+            String password = resultSet.getString(5);
+            String url = resultSet.getString(6);
+            String description = resultSet.getString(7);
+            int categorie_id = resultSet.getInt(8);
+            long timestamp = resultSet.getLong(9);
+            entry = new Entry(title, username, password, description, url, categorie_id, db_id, entry_id, timestamp);
         }
         return entry;
     }
@@ -128,7 +154,6 @@ public class DBService {
     }
 
 
-
     public void setMasterPasswordToDB(String password) throws SQLException {
         String sql = "update Masterkey set password = '" + password + "' where id = 1";
         this.statement.execute(sql);
@@ -164,7 +189,6 @@ public class DBService {
     }
 
 
-
     public void reEncryptTable(Entry entry, String tableName) throws SQLException {
         String sqlUpdateTitle = "update " + tableName + " set Title = '" + entry.getTitle() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
         String sqlUpdateUsername = "update " + tableName + " set Username = '" + entry.getUsername() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
@@ -184,9 +208,6 @@ public class DBService {
     }
 
 
-
-
-
     public void removeEntry(String entryID) throws SQLException {
         String sql = "delete from Entrys where Entry_ID = '" + entryID + "'";
         this.statement.execute(sql);
@@ -199,7 +220,6 @@ public class DBService {
         this.statement.execute(sql);
         statement.close();
     }
-
 
 
     public int getTimePeriodForClipboardFromDB() throws SQLException {
@@ -246,6 +266,20 @@ public class DBService {
 
     public void removeCategory(int id) throws SQLException {
         String sql = "delete from Categorie where Categorie_id = " + id;
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+
+    public void resetIdInRecycleBinForRestoredEntry(String entryID, int categoryId) throws SQLException {
+        String sql = "update Recycle_Bin set Categorie_ID = '" + categoryId + "' where Entry_ID = '" + entryID + "'";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+
+    public void deleteEntrytoAvoidDuplicate(String entryId) throws SQLException {
+        String sql = "delete from Entrys where Entry_ID = '" + entryId + "'";
         this.statement.execute(sql);
         statement.close();
     }

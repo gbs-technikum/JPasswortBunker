@@ -351,8 +351,7 @@ public class ModelMain {
     }
 
 
-
-    public String createPassword(){
+    public String createPassword() {
         final String allowedChars = "0123456789abcdefghijklmnopqrstuvwABCDEFGHIJKLMNOP!§$%&?*+#";
         int length = 30;
         SecureRandom random = new SecureRandom();
@@ -397,6 +396,23 @@ public class ModelMain {
             }
         }
         dbService.removeCategory(id);
+        return true;
+    }
+
+
+    public boolean restoreEntryFromRecycleBin(String entryId, long timestamp) throws SQLException {
+        Entry entry = dbService.readSingleEntryFromRecycleBin(entryId, timestamp);
+        if (entry == null) {
+            return false;
+        }
+
+        if (entry.getCategoryID() == -1) {
+            entry.setCategoryID(0);
+        } else {
+            dbService.deleteEntrytoAvoidDuplicate(entry.getEntryIDasString());
+        }
+        dbService.insertEntry(entry);
+        dbService.resetIdInRecycleBinForRestoredEntry(entry.getEntryIDasString(), entry.getCategoryID());
         return true;
     }
 

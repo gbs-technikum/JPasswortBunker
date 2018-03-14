@@ -65,16 +65,20 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Neuen Eintrag erstellen (Wichtig: Leere Datenfelder müssen mit dem Wert 'null' übergeben werden)
-        //modelMain.newEntry("DeleteTest2", "marcelP", "abc", "bla bla bla", "www.geilhub.com", 2);
+        //modelMain.newEntry("DeleteTestRestore4", "marcelP", "abc", "bla bla bla", "www.geilhub.com", 2);
         //modelMain.newEntry("Eintrag-ohne-Description2", "marcel", "abc", "null", "www.coolhub.com", 6);
 
 
         //Beschreibung: Bestehenden Eintrag abändern (alle Datenfelder müssen übergeben werden)
-        //modelMain.updateEntry("382d44bb-eb25-4a09-8c03-5c43b2d71979", "DeleteTestgeaendert", "marcel", "abc", "www.gayhub.com", "bla bla bla", 9);
+        //modelMain.updateEntry("8bcde5bf-f1be-4fd5-9bf7-64aeefbed7ec", "DeleteTestRestore4update2", "marcel", "abc", "www.gayhub.com", "bla bla bla", 9);
 
 
         //Beschreibung: Eintrag löschen via EntryID
-        //modelMain.removeEntry("382d44bb-eb25-4a09-8c03-5c43b2d71979");
+        //modelMain.removeEntry("8bcde5bf-f1be-4fd5-9bf7-64aeefbed7ec");
+
+
+        //Beschreibung: Eintrag von Papierkorb wiederherstellen anhand von entryID und Timestamp
+        //modelMain.restoreEntryFromRecycleBin("1d382a53-23d7-460f-bf63-dbaf2aaf4468", 1521021055);
 
 
         //Beschreibung: Masterpassword neu setzen (alle bestehenden Einträge werden neu verschlüsselt)
@@ -92,8 +96,6 @@ public class TestklasseModelMain {
         //Beschreibung: Bestehende Kategorie löschen - liefert "False" zurück, sofern noch Entries mit dieser Kategorie verknüpft sind
         //modelMain.removeCategoryFromDB(10);
 
-
-        //ToDo Klasse zum wiederherstellen eines gelöschten BackupEintrages
 
 
         //ToDo Speicherort für Datenbank export prüfen
@@ -120,15 +122,15 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Alle Entries in der EntryList (Quelle Tabelle Recycle_Bin) mit Kategorie -1 (gelöscht) auf der Console ausgeben
-        System.out.println("\n");
+        /*System.out.println("\n");
         System.out.println("###############Ausgabe alle Entries aus Recycle_Bin mit Status gelöscht###################");
-        modelMain.soutEntryListRecycleBinRemoved();
+        modelMain.soutEntryListRecycleBinRemoved();*/
 
 
         //Beschreibung: Alle Entries in der EntryList (Quelle Tabelle Recycle_Bin) mit Kategorie -1 (gelöscht) auf der Console ausgeben
-        System.out.println("\n");
+        /*System.out.println("\n");
         System.out.println("###############Ausgabe alle Entries aus Recycle_Bin für übergebene entryID ausgaben###################");
-        modelMain.soutEntryListRecycleBinForEntryID("2e264826-6f2a-462a-a114-68c14da385fa");
+        modelMain.soutEntryListRecycleBinForEntryID("2e264826-6f2a-462a-a114-68c14da385fa");*/
 
 
     }
