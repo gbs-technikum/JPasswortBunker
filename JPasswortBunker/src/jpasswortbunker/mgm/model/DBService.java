@@ -25,6 +25,22 @@ public class DBService {
     }
 
 
+    public ArrayList<Entry> readAllEntries() throws SQLException {
+        String sql = "SELECT * FROM Entrys";
+        ArrayList<Entry> entryArrayList = readEntries(sql);
+        return entryArrayList;
+    }
+
+
+    public ArrayList<Entry> readAllEntriesFromRecycleBin() throws SQLException {
+        //String sql = "SELECT * FROM Recycle_Bin where Categorie_ID = '-1'";
+        String sql = "SELECT * FROM Recycle_Bin";
+        ArrayList<Entry> entryArrayList = readEntries(sql);
+        return entryArrayList;
+    }
+
+
+
     public ArrayList<Entry> readEntries(String sql) throws SQLException {
 
         ResultSet resultSet = this.statement.executeQuery(sql);
@@ -63,12 +79,6 @@ public class DBService {
         return entry;
     }
 
-
-    public ArrayList<Entry> readAllEntries() throws SQLException {
-        String sql = "SELECT * FROM Entrys";
-        ArrayList<Entry> entryArrayList = readEntries(sql);
-        return entryArrayList;
-    }
 
     public void insertEntry(Entry entry) throws SQLException {
         String sql = "insert into Entrys (Entry_ID, Title, Username, Password, URL, Description, Categorie_ID, timestamp) values('" + entry.getEntryID() + "','" + entry.getTitle() + "','" + entry.getUsername() + "','" + entry.getPassword() + "','" + entry.getUrl() + "','" + entry.getDescription() + "','" + entry.getCategoryID() + "','" + entry.getTimestamp() + "');";
@@ -145,6 +155,29 @@ public class DBService {
     }
 
 
+
+    public void reEncryptTable(Entry entry, String tableName) throws SQLException {
+        String sqlUpdateTitle = "update " + tableName + " set Title = '" + entry.getTitle() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+        String sqlUpdateUsername = "update " + tableName + " set Username = '" + entry.getUsername() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+        String sqlUpdatePassword = "update " + tableName + " set Password = '" + entry.getPassword() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+        String sqlUpdateUrl = "update " + tableName + " set URL = '" + entry.getUrl() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+        String sqlUpdateDescription = "update " + tableName + " set Description = '" + entry.getDescription() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+        String sqlUpdateCategory = "update " + tableName + " set Categorie_ID = '" + entry.getCategoryID() + "' where Entry_ID = '" + entry.getEntryIDasString() + "'";
+
+        this.statement.execute(sqlUpdateTitle);
+        this.statement.execute(sqlUpdateUsername);
+        this.statement.execute(sqlUpdatePassword);
+        this.statement.execute(sqlUpdateDescription);
+        this.statement.execute(sqlUpdateUrl);
+        this.statement.execute(sqlUpdateCategory);
+
+        statement.close();
+    }
+
+
+
+
+
     public void removeEntry(String entryID) throws SQLException {
         String sql = "delete from Entrys where Entry_ID = '" + entryID + "'";
         this.statement.execute(sql);
@@ -153,16 +186,14 @@ public class DBService {
 
 
     public void updateRecycleBinForRemovedEntrys(String entryID) throws SQLException {
-        String sql = "update Entrys set Categorie_ID = '-1' where Entry_ID = '" + entryID + "'";
+        String sql = "update Recycle_Bin set Categorie_ID = '-1' where Entry_ID = '" + entryID + "'";
         this.statement.execute(sql);
         statement.close();
     }
 
-    public void reEnryptEntry(String title, String username, String password, String description, String url, UUID entryID) throws SQLException {
-        String sql = "update Entrys set Title = '" + title + "' where DB_ID = '" + entryID.toString() + "'";
-        this.statement.execute(sql);
-        statement.close();
-    }
+
+
+
 
 
 
