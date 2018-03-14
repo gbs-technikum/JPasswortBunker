@@ -15,6 +15,11 @@
 
 <AnchorPane fx:id="mainAnchorPane" prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.view.MainInterfaceController">
    <children>
+      <AnchorPane fx:id="pane_recycle" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
+         <children>
+            <JFXTreeTableView fx:id="tableView_recylce" prefHeight="530.0" prefWidth="700.0" />
+         </children>
+      </AnchorPane>
       <AnchorPane id="topBar" layoutX="200.0" layoutY="25.0" prefHeight="70.0" prefWidth="700.0" stylesheets="@style/default_style.css">
          <children>
             <JFXTextField fx:id="textField_Search" focusColor="WHITE" layoutX="184.0" layoutY="12.0" onKeyTyped="#searchFunction" prefHeight="41.0" prefWidth="297.0" promptText="    Search...." style="-fx-prompt-text-fill: white; -fx-text-inner-color: white; -fx-background-color: #0c50b5;" unFocusColor="#d3cece">
@@ -101,6 +106,18 @@
                   <Image url="@images/logo.png" />
                </image>
             </ImageView>
+            <JFXButton layoutX="-3.0" layoutY="447.0" onAction="#btn_recycle" prefHeight="70.0" prefWidth="203.0" text="Recycle_Bin" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="48.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/recycle.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </JFXButton>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="pane_settings" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
