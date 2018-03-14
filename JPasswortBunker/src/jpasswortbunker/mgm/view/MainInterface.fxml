@@ -101,6 +101,18 @@
                   <Image url="@images/logo.png" />
                </image>
             </ImageView>
+            <JFXButton layoutX="-3.0" layoutY="447.0" onAction="#btn_recycle" prefHeight="70.0" prefWidth="203.0" text="Recycle_Bin" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="48.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/recycle.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </JFXButton>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="pane_settings" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
@@ -139,6 +151,11 @@
       <AnchorPane fx:id="pane_entrys" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
             <JFXTreeTableView fx:id="treeView" prefHeight="530.0" prefWidth="700.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="pane_recycle" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
+         <children>
+            <JFXTreeTableView fx:id="treeView2" prefHeight="530.0" prefWidth="700.0" />
          </children>
       </AnchorPane>
    </children>
