@@ -67,7 +67,7 @@ public class MainInterfaceController implements Initializable {
     private AnchorPane mainAnchorPane;
 
     private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin, stageNewEntry;
-    private ContextMenu contextMenu = new ContextMenu();
+    private ContextMenu contextMenu;
 
 
 
@@ -99,7 +99,7 @@ public class MainInterfaceController implements Initializable {
 
         //Spalte Title
         JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>("Title");
-        titleName.setPrefWidth(100);
+        titleName.setPrefWidth(120);
         titleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -109,7 +109,7 @@ public class MainInterfaceController implements Initializable {
 
         //Spalte Username
         JFXTreeTableColumn<EntryProperty, String> usernameCol = new JFXTreeTableColumn<>("Username");
-        usernameCol.setPrefWidth(100);
+        usernameCol.setPrefWidth(200);
         usernameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -117,19 +117,9 @@ public class MainInterfaceController implements Initializable {
             }
         });
 
-        //Spalte Password
-        JFXTreeTableColumn<EntryProperty, String> passwordCol = new JFXTreeTableColumn<>("Password");
-        passwordCol.setPrefWidth(150);
-        passwordCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
-                return param.getValue().getValue().passwordProperty();
-            }
-        });
-
         //Spalte URL
         JFXTreeTableColumn<EntryProperty, String> urlCol = new JFXTreeTableColumn<>("URL");
-        urlCol.setPrefWidth(150);
+        urlCol.setPrefWidth(190);
         urlCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -139,7 +129,7 @@ public class MainInterfaceController implements Initializable {
 
         //Spalte Description
         JFXTreeTableColumn<EntryProperty, String> desCol = new JFXTreeTableColumn<>("Description");
-        desCol.setPrefWidth(150);
+        desCol.setPrefWidth(180);
         desCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -149,7 +139,7 @@ public class MainInterfaceController implements Initializable {
 
         //Inhalte werden in die Tabelle geschrieben
         final TreeItem<EntryProperty> root = new RecursiveTreeItem<EntryProperty>(presenter.getEntryPropertiesList(), RecursiveTreeObject::getChildren);
-        treeView.getColumns().setAll(titleName, usernameCol, passwordCol, urlCol, desCol);
+        treeView.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
         treeView.setRoot(root);
         treeView.setShowRoot(false);
         //ruft Methode auf und baut ContextMenu zusammen
@@ -331,6 +321,9 @@ public class MainInterfaceController implements Initializable {
      * Baut Context Menu zusammen
      */
     private void buildContextMenu() {
+        //ToDo eventuell noch mal anpassen wenn Zeit
+        contextMenu = null;
+        contextMenu = new ContextMenu();
         MenuItem item1 = new MenuItem("Delete");
         item1.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -345,7 +338,20 @@ public class MainInterfaceController implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
                     // ... user chose OK
-                    System.out.println("ok");
+                    try {
+                        presenter.removeEntry(treeView.getSelectionModel().getSelectedItem().getValue());
+                        System.out.println();
+                    } catch (IllegalBlockSizeException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (BadPaddingException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     // ... user chose CANCEL or closed the dialog
                     System.out.println("abgebrochen");

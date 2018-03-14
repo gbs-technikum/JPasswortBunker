@@ -3,6 +3,7 @@ package jpasswortbunker.mgm.presenter;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TreeItem;
 import jpasswortbunker.mgm.model.Entry;
 import jpasswortbunker.mgm.model.ModelMain;
 import jpasswortbunker.mgm.view.MainInterfaceController;
@@ -73,8 +74,10 @@ public final class PresenterMain {
     }
 
 
-    public void deleteEntry(UUID uuid) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
-        model.removeEntry(uuid.toString());
+    public void removeEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        model.removeEntry(entry.getEntryID().toString());
+        entryPropertiesList.remove(entry);
+        controller.fillTreeView();
     }
 
 
