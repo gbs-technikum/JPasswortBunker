@@ -56,7 +56,12 @@ public class MainInterfaceController implements Initializable {
 
 
     @FXML
-    private JFXTreeTableView<EntryProperty> treeView, treeView2;
+    private JFXTreeTableView<EntryProperty> treeView;
+
+    @FXML
+    private JFXTreeTableView<EntryProperty> tableView_recylce;
+
+
 
     @FXML
     private JFXTextField textField_Search;
@@ -77,6 +82,7 @@ public class MainInterfaceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fillTreeView();
+        fillRecycleTable();
         //ToDo Methoden aufruf muss wo anders eingebaut werden, sollte erst aufgerufen werden wenn Passwort richtig
         try {
             presenter.writeToObservableList();
@@ -93,7 +99,7 @@ public class MainInterfaceController implements Initializable {
         }
     }
 
-    public void fillTreeView() {
+       public void fillTreeView() {
 
         //Spalte Title
         JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>("Title");
@@ -400,6 +406,93 @@ public class MainInterfaceController implements Initializable {
         stageEditEntry.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
     }
 
+
+
+    //TODO: 14.03.2018 Liste richtig laden in den Mülleimer
+    public void fillRecycleTable() {
+
+        //Spalte Title
+        JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>("Title");
+        titleName.setPrefWidth(100);
+        titleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
+                return param.getValue().getValue().titleProperty();
+            }
+        });
+
+        //Spalte Username
+        JFXTreeTableColumn<EntryProperty, String> usernameCol = new JFXTreeTableColumn<>("Username");
+        usernameCol.setPrefWidth(100);
+        usernameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
+                return param.getValue().getValue().usernameProperty();
+            }
+        });
+
+        //Spalte URL
+        JFXTreeTableColumn<EntryProperty, String> urlCol = new JFXTreeTableColumn<>("URL");
+        urlCol.setPrefWidth(150);
+        urlCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
+                return param.getValue().getValue().urlProperty();
+            }
+        });
+
+        //Spalte Description
+        JFXTreeTableColumn<EntryProperty, String> desCol = new JFXTreeTableColumn<>("Description");
+        desCol.setPrefWidth(150);
+        desCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
+                return param.getValue().getValue().descriptionProperty();
+            }
+        });
+
+        //Inhalte werden in die Tabelle geschrieben
+        final TreeItem<EntryProperty> root1 = new RecursiveTreeItem<EntryProperty>(presenter.getEntryPropertiesListRecycle(), RecursiveTreeObject::getChildren);
+        tableView_recylce.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
+        tableView_recylce.setRoot(root1);
+        tableView_recylce.setShowRoot(false);
+        //ruft Methode auf und baut ContextMenu zusammen
+        buildContextMenu();
+
+
+
+        //Eventhandling für die Elemente
+        tableView_recylce.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent ee) {
+                if (ee.isPrimaryButtonDown() && ee.getClickCount() == 2) {
+
+                    editEntryScene();
+                }
+                if (ee.isSecondaryButtonDown()) {
+                    contextMenu.show(treeView, ee.getScreenX(), ee.getScreenY());
+                }
+            }
+        });
+    }
+
+
+    //Suchfunktion in Suchleiste Suche nach: Title und Username
+    public void searchFunction1() {
+        textField_Search.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                tableView_recylce.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+                    @Override
+                    public boolean test(TreeItem<EntryProperty> entryTreeItem) {
+                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase())||
+                                entryTreeItem.getValue().usernameProperty().getValue().toLowerCase().contains(newValue.toLowerCase());
+                        return flag;
+                    }
+                });
+            }
+        });
+    }
 
 
 
