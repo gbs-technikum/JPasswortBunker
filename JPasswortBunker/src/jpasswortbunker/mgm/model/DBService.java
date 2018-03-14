@@ -222,4 +222,26 @@ public class DBService {
     }
 
 
+    public ArrayList<String> getCategoryListFromDB() throws SQLException {
+        String sql = "select * from Categorie";
+        ResultSet resultSet = this.statement.executeQuery(sql);
+        ArrayList<String> categoryList = new ArrayList<>();
+        String categoryName;
+        while (resultSet.next()) {
+            categoryName = resultSet.getString(2);
+            categoryList.add(categoryName);
+        }
+        resultSet.close();
+        statement.close();
+        return categoryList;
+    }
+
+
+    public void addNewCategory(String name) throws SQLException {
+        String sql = "insert into Categorie (Categorie_Name) VALUES ('" + name + "')";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+
 }

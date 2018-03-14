@@ -8,10 +8,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class ModelMain {
 
@@ -373,6 +370,22 @@ public class ModelMain {
 
     public void setTimePeriodForClipboardToDB(int timePeriodinSeconds) throws SQLException {
         dbService.setTimePeriodForClipboardToDB(timePeriodinSeconds);
+    }
+
+
+    public List getCategoryListFromDB() throws SQLException {
+        return dbService.getCategoryListFromDB();
+    }
+
+    public boolean addNewCategoriyToDB(String name) throws SQLException {
+        List<String> checkList = getCategoryListFromDB();
+        for (String s : checkList) {
+            if (s.equals(name)) {
+                return false;
+            }
+        }
+        dbService.addNewCategory(name);
+        return true;
     }
 
 

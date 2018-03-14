@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class TestklasseModelMain {
 
@@ -76,8 +77,18 @@ public class TestklasseModelMain {
         //modelMain.removeEntry("382d44bb-eb25-4a09-8c03-5c43b2d71979");
 
 
-        //Masterpassword neu setzen (alle bestehenden Einträge werden neu verschlüsselt)
+        //Beschreibung: Masterpassword neu setzen (alle bestehenden Einträge werden neu verschlüsselt)
         //modelMain.renewMasterPassword("neuesPasswort");
+
+
+        //Beschreibung: Alle Kategorien holen
+        System.out.println("Alle Kategorien ausgeben:");
+        System.out.println(modelMain.addNewCategoriyToDB("Testeintrag aus Testklasse2"));
+        List<String> kategorieliste = modelMain.getCategoryListFromDB();
+        for (String s : kategorieliste) {
+            System.out.println(s);
+        }
+
 
 
         //ToDo Klasse zum wiederherstellen eines gelöschten BackupEintrages
