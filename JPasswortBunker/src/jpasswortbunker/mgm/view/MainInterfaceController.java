@@ -316,6 +316,13 @@ public class MainInterfaceController implements Initializable {
         textField_Search.clear();
     }
 
+
+    public void btn_newMasterPassword() {
+        System.out.println("Buttontest: change Master Password");
+        ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(presenter);
+
+    }
+
     /**
      * private void buildContextMenu()
      * Baut Context Menu zusammen
@@ -329,7 +336,6 @@ public class MainInterfaceController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Test menu 1");
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Dialog");
                 alert.setHeaderText("Delete Confirmation");
@@ -354,7 +360,7 @@ public class MainInterfaceController implements Initializable {
                     }
                 } else {
                     // ... user chose CANCEL or closed the dialog
-                    System.out.println("abgebrochen");
+
                 }
             }
         });
