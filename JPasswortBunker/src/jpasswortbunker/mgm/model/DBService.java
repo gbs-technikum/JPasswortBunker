@@ -120,6 +120,15 @@ public class DBService {
     }
 
 
+    public boolean checkIfMasterPasswordExistsInDB() throws SQLException {
+        if (getMasterPasswordFromDB().equals("")) {
+            return false;
+        }
+        return true;
+    }
+
+
+
     public void setMasterPasswordToDB(String password) throws SQLException {
         String sql = "update Masterkey set password = '" + password + "' where id = 1";
         this.statement.execute(sql);

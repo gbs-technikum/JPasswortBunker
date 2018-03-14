@@ -6,9 +6,11 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.UUID;
 
 public class ModelMain {
@@ -60,6 +62,12 @@ public class ModelMain {
     public void initMasterPassword(String password) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, SQLException, IllegalBlockSizeException {
         this.masterPasswordObject.setPassword(password);
     }
+
+
+    public boolean checkIfMasterPasswortExistsInDB() throws SQLException {
+        return dbService.checkIfMasterPasswordExistsInDB();
+    }
+
 
     /**
      * Zugriff via View
@@ -344,5 +352,19 @@ public class ModelMain {
             System.out.println(entry);
         }
     }
+
+
+
+    public String createPassword(){
+        final String allowedChars = "0123456789abcdefghijklmnopqrstuvwABCDEFGHIJKLMNOP!§$%&?*+#";
+        int length = 30;
+        SecureRandom random = new SecureRandom();
+        StringBuilder pass = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            pass.append(allowedChars.charAt(random.nextInt(allowedChars.length())));
+        }
+        return pass.toString();
+    }
+
 
 }

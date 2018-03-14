@@ -16,6 +16,15 @@ public class TestklasseModelMain {
         ModelMain modelMain = new ModelMain();
 
 
+
+        //Beschreibung: Prüfen ob in Datenbank bereits ein MasterPasswort existiert
+        modelMain.checkIfMasterPasswortExistsInDB();
+
+
+        //Beschreibung: Zufallspasswort erzeugen
+        //modelMain.createPassword();
+
+
         //Beschreibung: Masterpassword übergeben
         modelMain.initMasterPassword("test");
 
@@ -69,9 +78,6 @@ public class TestklasseModelMain {
         //ToDo Klasse zum wiederherstellen eines gelöschten BackupEintrages
 
 
-        //ToDo Methoden zum prüfen, ob MasterPassword in DB gesetzt ist
-
-
         //ToDo Speicherort für Datenbank export prüfen
 
 
@@ -82,9 +88,6 @@ public class TestklasseModelMain {
 
 
         //Todo Wert für Zwischenablage in DB speichern und abfragen
-
-
-        //Todo Funktion zum Generieren eines Zufallspasswortes mittels Random()
 
 
 
