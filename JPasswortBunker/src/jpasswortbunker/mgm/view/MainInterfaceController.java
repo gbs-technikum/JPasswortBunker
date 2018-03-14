@@ -381,6 +381,7 @@ public class MainInterfaceController implements Initializable {
         EditEntryController editEntryController = loader.getController();
         //Ausgewähltes Element treeView.getSelectionModel().getSelectedItem()
         editEntryController.setEntry(treeView.getSelectionModel().getSelectedItem());
+        editEntryController.setPresenter(presenter);
 
 
         Parent parentEditEntry = loader.getRoot();

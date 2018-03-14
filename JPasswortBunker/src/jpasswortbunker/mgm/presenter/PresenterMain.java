@@ -80,6 +80,12 @@ public final class PresenterMain {
         controller.fillTreeView();
     }
 
+    public void updateEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        model.updateEntry(entry.getEntryID().toString(), entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getPassword(), entry.getDescription(), entry.getCategoryID());
+        controller.fillTreeView();
+
+    }
+
 
     public void test() {
         System.out.println("testMethode Presenter");
