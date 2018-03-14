@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -32,9 +33,10 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
-
+//http://code.makery.ch/blog/javafx-dialogs-official/ -> ConfirmDialog
 
 public class MainInterfaceController implements Initializable {
 
@@ -68,8 +70,8 @@ public class MainInterfaceController implements Initializable {
     private ContextMenu contextMenu = new ContextMenu();
 
 
-    //ToDo Temporär auskommentiert von Günther
-    //private PresenterMain presenter = new PresenterMain(this);
+
+    private PresenterMain presenter = new PresenterMain(this);
 
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
     }
@@ -335,6 +337,19 @@ public class MainInterfaceController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Test menu 1");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Delete Confirmation");
+                alert.setContentText("Are you realy sure, that you want delete the Entry ");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    // ... user chose OK
+                    System.out.println("ok");
+                } else {
+                    // ... user chose CANCEL or closed the dialog
+                    System.out.println("abgebrochen");
+                }
             }
         });
         contextMenu.getItems().add(item1);
@@ -368,6 +383,7 @@ public class MainInterfaceController implements Initializable {
         stageEditEntry.setTitle("Edit your EntryProperty");
         stageEditEntry.setScene(sceneEditentry);
         stageEditEntry.show();
+        stageEditEntry.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
     }
 
 

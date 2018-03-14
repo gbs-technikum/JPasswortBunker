@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import jpasswortbunker.mgm.presenter.EntryProperty;
 
@@ -42,7 +43,14 @@ public class EditEntryController implements Initializable {
         comboBox.getItems().add(new Label("Kategorie2"));
         comboBox.getItems().add(new Label("Kategorie3"));
         comboBox.setPromptText("Select categorie");
+        passwordField1.disableAnimationProperty();
+        passwordField1.isVisible();
+        System.out.println(passwordField1.getText());
+    }
 
+    public void btn_eyeIcon(MouseEvent mouseEvent) {
+        System.out.println("Test Auge");
+        System.out.println(passwordField1.getText());
     }
 
 

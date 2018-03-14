@@ -27,8 +27,9 @@ public final class PresenterMain {
 
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
-        model = new ModelMain("test");
-
+        model = new ModelMain();
+        model.initMasterPassword("test");
+        model.initEncryptionService();
     }
 
     public ObservableList<EntryProperty> getEntryPropertiesList() {
@@ -42,7 +43,7 @@ public final class PresenterMain {
     //Schreibt die Liste der Arraylist aus Model in die Observable List im Presenter
     public void writeToObservableList() throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
         model.FillEntryListFromDb();
-        for (jpasswortbunker.mgm.model.Entry entry : model.getEntryList()) {
+        for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListEntrysTable()) {
             entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
                     entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
         }
@@ -65,10 +66,15 @@ public final class PresenterMain {
          * Parameter werden an Model übergeben und Entry in Model erstellt
          * Den eben erstellten Eintrag wieder holen und diesen in die ObservableList schreiben
          */
-        Entry entry = model.getEntryList().get(model.getEntryList().size() - 1);
+        Entry entry = model.getEntryListEntrysTable().get(model.getEntryListEntrysTable().size() - 1);
         entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
                 entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
         controller.fillTreeView();
+    }
+
+
+    public void deleteEntry(UUID uuid) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        model.removeEntry(uuid.toString());
     }
 
 
