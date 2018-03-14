@@ -81,14 +81,16 @@ public class TestklasseModelMain {
         //modelMain.renewMasterPassword("neuesPasswort");
 
 
-        //Beschreibung: Alle Kategorien holen
-        System.out.println("Alle Kategorien ausgeben:");
-        System.out.println(modelMain.addNewCategoriyToDB("Testeintrag aus Testklasse2"));
-        List<String> kategorieliste = modelMain.getCategoryListFromDB();
-        for (String s : kategorieliste) {
-            System.out.println(s);
-        }
+        //Beschreibung: Alle Kategorien als ArrayList holen (Positionsnummer = Kategorienummer | Position 0 = Uncategorized
+        //modelMain.getCategoryListFromDB();
 
+
+        //Beschreibung: Neue Kategorie hinzufügen - liefert "False" zurück, sofern der übergebene Name bereits existiert
+        //System.out.println(modelMain.addNewCategoryToDB("NeuerCategorieName"));
+
+
+        //Beschreibung: Bestehende Kategorie löschen - liefert "False" zurück, sofern noch Entries mit dieser Kategorie verknüpft sind
+        //modelMain.removeCategoryFromDB(10);
 
 
         //ToDo Klasse zum wiederherstellen eines gelöschten BackupEintrages
@@ -98,10 +100,6 @@ public class TestklasseModelMain {
 
 
         //Todo Max. drei Änderungen in Recycle_Bin schreiben
-
-
-        //Todo Methoden zum Hinzufügen / Entfernen / Abfragen von Kategorien
-
 
 
 

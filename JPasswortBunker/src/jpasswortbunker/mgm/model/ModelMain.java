@@ -377,7 +377,7 @@ public class ModelMain {
         return dbService.getCategoryListFromDB();
     }
 
-    public boolean addNewCategoriyToDB(String name) throws SQLException {
+    public boolean addNewCategoryToDB(String name) throws SQLException {
         List<String> checkList = getCategoryListFromDB();
         for (String s : checkList) {
             if (s.equals(name)) {
@@ -385,6 +385,18 @@ public class ModelMain {
             }
         }
         dbService.addNewCategory(name);
+        return true;
+    }
+
+
+    public boolean removeCategoryFromDB(int id) throws SQLException {
+        List<Entry> checkList = entryListEntrysTable.getEntryObjectList();
+        for (Entry entry : checkList) {
+            if (entry.getCategoryID() == id) {
+                return false;
+            }
+        }
+        dbService.removeCategory(id);
         return true;
     }
 

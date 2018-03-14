@@ -244,4 +244,9 @@ public class DBService {
     }
 
 
+    public void removeCategory(int id) throws SQLException {
+        String sql = "delete from Categorie where Categorie_id = " + id;
+        this.statement.execute(sql);
+        statement.close();
+    }
 }
