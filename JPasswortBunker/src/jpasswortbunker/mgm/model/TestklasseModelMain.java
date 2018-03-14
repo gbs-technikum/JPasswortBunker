@@ -12,9 +12,9 @@ public class TestklasseModelMain {
 
     public static void main(String[] args) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
 
+
         //Beschreibung: Instanzierung von ModelMain
         ModelMain modelMain = new ModelMain();
-
 
 
         //Beschreibung: Prüfen ob in Datenbank bereits ein MasterPasswort existiert
@@ -31,6 +31,11 @@ public class TestklasseModelMain {
 
         //Beschreibung: Prüfen ob richtigs MasterPasswort übergeben wurde (Oben eingegebenes Passwort wird mit DB abgeglichen)
         System.out.println(modelMain.checkIfMasterPasswordIsCorrect());
+
+
+        //Beschreibung: Zeitspanne in Sekunden für Zwischenablage aus DB abfragen bzw. Wert setzen (Defaultwert = 60)
+        modelMain.getTimePeriodForClipboardFromDB();
+        //modelMain.setTimePeriodForClipboardToDB(60);
 
 
         //Beschreibung: Instanzierung von EncryptionSerivce
@@ -85,9 +90,6 @@ public class TestklasseModelMain {
 
 
         //Todo Methoden zum Hinzufügen / Entfernen / Abfragen von Kategorien
-
-
-        //Todo Wert für Zwischenablage in DB speichern und abfragen
 
 
 

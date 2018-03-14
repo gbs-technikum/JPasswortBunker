@@ -202,8 +202,24 @@ public class DBService {
 
 
 
+    public int getTimePeriodForClipboardFromDB() throws SQLException {
+        String sql = "select Cache_Time from System where id=1";
+        ResultSet resultSet = this.statement.executeQuery(sql);
+        int cacheTime = -1;
+        if (resultSet.next()) {
+            cacheTime = resultSet.getInt(1);
+        }
+        resultSet.close();
+        statement.close();
+        return cacheTime;
+    }
 
 
+    public void setTimePeriodForClipboardToDB(int timePeriodinSeconds) throws SQLException {
+        String sql = "update System set Cache_Time = '" + timePeriodinSeconds + "' where id = 1";
+        this.statement.execute(sql);
+        statement.close();
+    }
 
 
 }

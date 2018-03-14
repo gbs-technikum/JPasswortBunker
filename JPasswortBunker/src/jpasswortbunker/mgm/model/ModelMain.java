@@ -367,4 +367,13 @@ public class ModelMain {
     }
 
 
+    public int getTimePeriodForClipboardFromDB() throws SQLException {
+        return dbService.getTimePeriodForClipboardFromDB();
+    }
+
+    public void setTimePeriodForClipboardToDB(int timePeriodinSeconds) throws SQLException {
+        dbService.setTimePeriodForClipboardToDB(timePeriodinSeconds);
+    }
+
+
 }
