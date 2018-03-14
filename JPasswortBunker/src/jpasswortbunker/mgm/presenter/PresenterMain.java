@@ -24,6 +24,7 @@ public final class PresenterMain {
     private MainInterfaceController controller;
     private ModelMain model;
     public ObservableList<EntryProperty> entryPropertiesList = FXCollections.observableArrayList();
+    public ObservableList<EntryProperty> entryPropertiesListRecycle = FXCollections.observableArrayList();
 
 
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
@@ -35,6 +36,10 @@ public final class PresenterMain {
 
     public ObservableList<EntryProperty> getEntryPropertiesList() {
         return entryPropertiesList;
+    }
+
+    public ObservableList<EntryProperty> getEntryPropertiesListRecycle() {
+        return entryPropertiesListRecycle;
     }
 
     public PresenterMain getPresenter() {
@@ -49,6 +54,16 @@ public final class PresenterMain {
                     entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
         }
     }
+    //TODO: 14.03.2018  anpassen für das Schreiben in den Mülleimer
+    //Schreibt die Liste der Arraylist aus Model in die Observable List im Presenter
+    public void writeToObservableListrecycle() throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
+        model.FillEntryListFromRecycleBin();
+        for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListRecycleBinTable()) {
+            entryPropertiesListRecycle.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
+                    entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
+        }
+    }
+
 
 
     public boolean checkSetMasterpassword() {
@@ -84,6 +99,7 @@ public final class PresenterMain {
         model.updateEntry(entry.getEntryID().toString(), entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getPassword(), entry.getDescription(), entry.getCategoryID());
         controller.fillTreeView();
     }
+
 
 
     public void test() {
