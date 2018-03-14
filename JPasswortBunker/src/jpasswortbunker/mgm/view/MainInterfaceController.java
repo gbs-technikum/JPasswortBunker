@@ -46,19 +46,17 @@ public class MainInterfaceController implements Initializable {
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle;
 
     @FXML
     private ImageView btn_logo;
 
     @FXML
-    private AnchorPane pane_entrys, pane_settings;
+    private AnchorPane pane_entrys, pane_settings,  pane_recycle;
+
 
     @FXML
-    private TableColumn columnID;
-
-    @FXML
-    private JFXTreeTableView<EntryProperty> treeView;
+    private JFXTreeTableView<EntryProperty> treeView, treeView2;
 
     @FXML
     private JFXTextField textField_Search;
@@ -247,10 +245,12 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.show();
     }
 
+
     //Button Logo zeit alle Einträge an und setzt Suchfilter bzw Kategorie zurück
     public void btn_logo(MouseEvent mouseEvent) {
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
+        pane_recycle.setVisible(false);
         textField_Search.clear();
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
@@ -264,6 +264,7 @@ public class MainInterfaceController implements Initializable {
     public void btn_finance(ActionEvent actionEvent) {
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
+        pane_recycle.setVisible(false);
         textField_Search.clear();
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
@@ -278,6 +279,7 @@ public class MainInterfaceController implements Initializable {
     public void btn_social(ActionEvent actionEvent) {
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
+        pane_recycle.setVisible(false);
         textField_Search.clear();
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
@@ -293,6 +295,7 @@ public class MainInterfaceController implements Initializable {
     public void btn_email(ActionEvent actionEvent) {
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
+        pane_recycle.setVisible(false);
         textField_Search.clear();
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
@@ -308,6 +311,7 @@ public class MainInterfaceController implements Initializable {
     public void btn_network(ActionEvent actionEvent) {
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
+        pane_recycle.setVisible(false);
         textField_Search.clear();
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
@@ -319,13 +323,23 @@ public class MainInterfaceController implements Initializable {
     }
 
 
+    //Button für den Müll
+    public void btn_recycle(ActionEvent actionEvent) {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(false);
+        pane_recycle.setVisible(true);
+        textField_Search.clear();
+
+    }
+
+
     //Button für die Einstellungen
     public void btn_settings(ActionEvent actionEvent) {
         pane_settings.setVisible(true);
         pane_entrys.setVisible(false);
+        pane_recycle.setVisible(false);
         textField_Search.clear();
     }
-
     /**
      * private void buildContextMenu()
      * Baut Context Menu zusammen
