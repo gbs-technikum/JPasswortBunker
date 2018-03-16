@@ -81,22 +81,22 @@ public class MainInterfaceController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fillTreeView();
-        fillRecycleTable();
-        //ToDo Methoden aufruf muss wo anders eingebaut werden, sollte erst aufgerufen werden wenn Passwort richtig
         try {
-            presenter.writeToObservableList();
+            //Ruft Methode auf und ruft jeweiliges Fenster auf
+            checkIfMasterPasswortExistsInDB();
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
+        //bekommt die Stage der Main methode
+        stageMainInterfaceController = Testklasse.getPrimaryStage();
+    }
+
+    public void updateView() {
+        stageMainInterfaceController.show();
+        fillTreeView();
+        fillRecycleTable();
     }
 
        public void fillTreeView() {
@@ -184,23 +184,13 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
-
-
-    //Methode wird bei Controlleraufruf ausgeführt
-    public void initialize() throws IOException {
-        checkSetMasterpassword();
-        stageMainInterfaceController = Testklasse.getPrimaryStage();
-        //stageMainInterfaceController.show();
-    }
-
-
     /**Ruft Methode in Model auf um zu überprüfen, ob Masterpasswort gesetzt wurde
      * Return Value:
      * true -> LoginScreen
      * false -> SetMasterPassword
      */
-    private void checkSetMasterpassword() throws IOException {
-        if (presenter.checkSetMasterpassword()) {
+    private void checkIfMasterPasswortExistsInDB() throws IOException, SQLException {
+        if (presenter.checkIfMasterPasswortExistsInDB()) {
             System.out.println("gesetzt");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
             Parent parent = fxmlLoader.load();

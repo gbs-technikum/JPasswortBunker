@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.InvalidKeyException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class EditEntryController {
@@ -45,17 +46,16 @@ public class EditEntryController {
     private PresenterMain presenter;
 
     @FXML
-    public void initialize() {
-        comboBox.getItems().add(new Label("Finance"));
-        comboBox.getItems().add(new Label("Social"));
-        comboBox.getItems().add(new Label("E-Mail"));
-        comboBox.getItems().add(new Label("Settings"));
-        comboBox.setPromptText("Select categorie");
+    public void initialize() throws SQLException {
+       // fillComboBox();
+        System.out.println("test111");
+
     }
 
     public void btn_eyeIcon(MouseEvent mouseEvent) {
         System.out.println("Test Auge");
-        System.out.println(passwordField1.getText());
+        //System.out.println(passwordField1.getText());
+        //presenter.getCategoryListFromDB();
     }
 
 
@@ -127,6 +127,16 @@ public class EditEntryController {
         }
         labelErrorMessage.setText("Password not Equals");
         return false;
+    }
+
+    private void fillComboBox() throws SQLException {
+        System.out.println("test");
+        //System.out.println("test------: " + presenter.getCategoryListFromDB().size());
+        //ArrayList<String> categoryList = (ArrayList<String>) presenter.getCategoryListFromDB();
+        //for (String categoryName: categoryList) {
+        //    comboBox.getItems().add(new Label(categoryName));
+        //}
+        comboBox.setPromptText("Select categorie");
     }
 
 
