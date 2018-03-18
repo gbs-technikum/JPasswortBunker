@@ -98,6 +98,7 @@ public class ModelMain {
             dbService.reEncryptTable(encrypedEntry, "Recycle_Bin");
         }
 
+        this.dbService.setMasterPasswordToDB(password);
     }
 
 
