@@ -47,17 +47,8 @@ public class EditEntryController {
 
     @FXML
     public void initialize() throws SQLException {
-       // fillComboBox();
-        System.out.println("test111");
 
     }
-
-    public void btn_eyeIcon(MouseEvent mouseEvent) {
-        System.out.println("Test Auge");
-        //System.out.println(passwordField1.getText());
-        //presenter.getCategoryListFromDB();
-    }
-
 
     public void btn_save(ActionEvent actionEvent) throws IllegalBlockSizeException, SQLException, InvalidKeyException, BadPaddingException, UnsupportedEncodingException {
 
@@ -66,6 +57,15 @@ public class EditEntryController {
             stage.close();
         }
     }
+
+    public void btn_eyeIcon(MouseEvent mouseEvent){
+        System.out.println("Test Auge");
+    }
+
+    public void btn_copyPasswordToClipboard(MouseEvent mouseEvent) {
+        System.out.println("test: btn_copyPasswordToClipboard");
+    }
+
 
     //Übergebenes Element wird in die jeweiligen Felder geschrieben
     public void setEntry(TreeItem<EntryProperty> selectedEntry) {
@@ -77,7 +77,6 @@ public class EditEntryController {
         passwordField2.setText(entryProperty.getPassword());
         textFieldURL.setText(entryProperty.getUrl());
         textAreaDescription.setText(entryProperty.getDescription());
-        comboBox.getSelectionModel().select(entryProperty.getCategoryID());
     }
 
     //Ändert den bestehenden Eintrag
@@ -101,7 +100,8 @@ public class EditEntryController {
                 entryProperty.getPassword().equals(passwordField1.getText()) &&
                 entryProperty.getPassword().equals(passwordField2.getText()) &&
                 entryProperty.getUrl().equals(textFieldURL.getText()) &&
-                entryProperty.getDescription().equals(textAreaDescription.getText()) && entryProperty.getCategoryID() == comboBox.getSelectionModel().getSelectedIndex() ) {
+                entryProperty.getDescription().equals(textAreaDescription.getText()) &&
+                entryProperty.getCategoryID() == (comboBox.getSelectionModel().getSelectedIndex()+1) ) {
         } else {
             if (equalsPassword()) {
                 this.entryProperty.setTitle(textFieldTitle.getText());
@@ -109,15 +109,13 @@ public class EditEntryController {
                 this.entryProperty.setPassword(passwordField1.getText());
                 this.entryProperty.setUrl(textFieldURL.getText());
                 this.entryProperty.setDescription(textAreaDescription.getText());
-                this.entryProperty.setCategoryID(comboBox.getSelectionModel().getSelectedIndex());
+                this.entryProperty.setCategoryID((comboBox.getSelectionModel().getSelectedIndex()+1));
                 presenter.updateEntry(entryProperty);
 
             } else {
                 return false;
             }
         }
-
-
         return true;
     }
 
@@ -129,21 +127,22 @@ public class EditEntryController {
         return false;
     }
 
-    private void fillComboBox() throws SQLException {
+    public void fillComboBox() throws SQLException {
         System.out.println("test");
-        //System.out.println("test------: " + presenter.getCategoryListFromDB().size());
-        //ArrayList<String> categoryList = (ArrayList<String>) presenter.getCategoryListFromDB();
-        //for (String categoryName: categoryList) {
-        //    comboBox.getItems().add(new Label(categoryName));
-        //}
+        ArrayList<String> categoryList = (ArrayList<String>) presenter.getCategoryListFromDB();
+        for (int i = 1; i < categoryList.size(); i++) {
+            comboBox.getItems().add(new Label(categoryList.get(i)));
+        }
         comboBox.setPromptText("Select categorie");
+        comboBox.getSelectionModel().select(entryProperty.getCategoryID()-1);
     }
 
 
 
-    public void setPresenter(PresenterMain presenter) {
+    public void setPresenter(PresenterMain presenter) throws SQLException {
         this.presenter = presenter;
     }
+
 
 }
 

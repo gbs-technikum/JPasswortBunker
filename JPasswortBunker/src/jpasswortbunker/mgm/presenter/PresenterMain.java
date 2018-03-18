@@ -119,14 +119,14 @@ public final class PresenterMain {
         controller.updateView();
     }
 
-    public void getCategoryListFromDB() throws SQLException {
-        System.out.println(model.getCategoryListFromDB().size() + "-------------");
-        //return model.getCategoryListFromDB();
+    public List getCategoryListFromDB() throws SQLException {
+        //System.out.println(model.getCategoryListFromDB().size() + "-------------");
+        return model.getCategoryListFromDB();
     }
 
-
-
-
+    public String createPassword() {
+        return model.createPassword();
+    }
 
 
 
