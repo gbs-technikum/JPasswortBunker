@@ -13,8 +13,8 @@ public class DBService {
 
     //Pfad zu aktueller Testdatenbank im Projektordner
     //private static final String URL = "jdbc:sqlite:jPasswortBunker.db";
-    private static final String URL = "jdbc:sqlite::resource:jPasswortBunker.db";
-    //private static final String URL = "jdbc:sqlite::jPasswortBunker.db";
+    //private static final String URL = "jdbc:sqlite::resource:jPasswortBunker.db";
+    private static final String URL = "jdbc:sqlite::jPasswortBunker.db";
 
 
     private Connection connection;

@@ -68,7 +68,7 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Neuen Eintrag erstellen (Wichtig: Leere Datenfelder müssen mit dem Wert 'null' übergeben werden)
-        modelMain.newEntry("EintragInLocalFolderDB", "marcelP", "abc", "bla bla bla", "www.geilhub.com", 2);
+        modelMain.newEntry("TestFinal", "marcelP", "abc", "bla bla bla", "www.geilhub.com", 2);
         //modelMain.newEntry("Eintrag-ohne-Description2", "marcel", "abc", "null", "www.coolhub.com", 6);
 
 
