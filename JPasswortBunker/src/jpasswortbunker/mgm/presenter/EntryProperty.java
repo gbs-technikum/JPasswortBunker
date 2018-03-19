@@ -28,6 +28,17 @@ public class EntryProperty extends RecursiveTreeObject<EntryProperty> {
         this.categoryID = new SimpleIntegerProperty(categorieID);
     }
 
+    public EntryProperty(EntryProperty entryProperty) {
+        this.dbID = new SimpleIntegerProperty(entryProperty.getDbID());
+        this.entryID = entryProperty.getEntryID();
+        this.title = new SimpleStringProperty(entryProperty.getTitle());
+        this.username = new SimpleStringProperty(entryProperty.getUsername());
+        this.password = new SimpleStringProperty(entryProperty.getPassword());
+        this.url = new SimpleStringProperty(entryProperty.getUrl());
+        this.description = new SimpleStringProperty(entryProperty.getDescription());
+        this.categoryID = new SimpleIntegerProperty(entryProperty.getCategoryID());
+    }
+
     public int getDbID() {
         return dbID.get();
     }

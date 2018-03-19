@@ -58,14 +58,11 @@ public class MainInterfaceController implements Initializable {
     @FXML
     private AnchorPane pane_entrys, pane_settings,  pane_recycle;
 
-
     @FXML
     private JFXTreeTableView<EntryProperty> treeView;
 
     @FXML
     private JFXTreeTableView<EntryProperty> tableView_recylce;
-
-
 
     @FXML
     private JFXTextField textField_Search;
@@ -74,7 +71,7 @@ public class MainInterfaceController implements Initializable {
     private AnchorPane mainAnchorPane;
 
     private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin, stageNewEntry;
-    private ContextMenu contextMenu = new ContextMenu();
+    private ContextMenu contextMenu;
 
 
 
@@ -85,29 +82,29 @@ public class MainInterfaceController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fillTreeView();
-        fillRecycleTable();
-        //ToDo Methoden aufruf muss wo anders eingebaut werden, sollte erst aufgerufen werden wenn Passwort richtig
         try {
-            presenter.writeToObservableList();
+            //Ruft Methode auf und ruft jeweiliges Fenster auf
+            checkIfMasterPasswortExistsInDB();
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
+        //bekommt die Stage der Main methode
+        stageMainInterfaceController = Testklasse.getPrimaryStage();
+    }
+
+    public void updateView() {
+        stageMainInterfaceController.show();
+        fillTreeView();
+        fillRecycleTable();
     }
 
        public void fillTreeView() {
 
         //Spalte Title
         JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>("Title");
-        titleName.setPrefWidth(100);
+        titleName.setPrefWidth(120);
         titleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -117,7 +114,7 @@ public class MainInterfaceController implements Initializable {
 
         //Spalte Username
         JFXTreeTableColumn<EntryProperty, String> usernameCol = new JFXTreeTableColumn<>("Username");
-        usernameCol.setPrefWidth(100);
+        usernameCol.setPrefWidth(200);
         usernameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -125,19 +122,9 @@ public class MainInterfaceController implements Initializable {
             }
         });
 
-        //Spalte Password
-        JFXTreeTableColumn<EntryProperty, String> passwordCol = new JFXTreeTableColumn<>("Password");
-        passwordCol.setPrefWidth(150);
-        passwordCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
-                return param.getValue().getValue().passwordProperty();
-            }
-        });
-
         //Spalte URL
         JFXTreeTableColumn<EntryProperty, String> urlCol = new JFXTreeTableColumn<>("URL");
-        urlCol.setPrefWidth(150);
+        urlCol.setPrefWidth(190);
         urlCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -147,7 +134,7 @@ public class MainInterfaceController implements Initializable {
 
         //Spalte Description
         JFXTreeTableColumn<EntryProperty, String> desCol = new JFXTreeTableColumn<>("Description");
-        desCol.setPrefWidth(150);
+        desCol.setPrefWidth(180);
         desCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -157,7 +144,7 @@ public class MainInterfaceController implements Initializable {
 
         //Inhalte werden in die Tabelle geschrieben
         final TreeItem<EntryProperty> root = new RecursiveTreeItem<EntryProperty>(presenter.getEntryPropertiesList(), RecursiveTreeObject::getChildren);
-        treeView.getColumns().setAll(titleName, usernameCol, passwordCol, urlCol, desCol);
+        treeView.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
         treeView.setRoot(root);
         treeView.setShowRoot(false);
         //ruft Methode auf und baut ContextMenu zusammen
@@ -171,7 +158,11 @@ public class MainInterfaceController implements Initializable {
             public void handle(MouseEvent ee) {
                 if (ee.isPrimaryButtonDown() && ee.getClickCount() == 2) {
 
-                    editEntryScene();
+                    try {
+                        editEntryScene();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (ee.isSecondaryButtonDown()) {
                     contextMenu.show(treeView, ee.getScreenX(), ee.getScreenY());
@@ -198,23 +189,13 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
-
-
-    //Methode wird bei Controlleraufruf ausgeführt
-    public void initialize() throws IOException {
-        checkSetMasterpassword();
-        stageMainInterfaceController = Testklasse.getPrimaryStage();
-        //stageMainInterfaceController.show();
-    }
-
-
     /**Ruft Methode in Model auf um zu überprüfen, ob Masterpasswort gesetzt wurde
      * Return Value:
      * true -> LoginScreen
      * false -> SetMasterPassword
      */
-    private void checkSetMasterpassword() throws IOException {
-        if (presenter.checkSetMasterpassword()) {
+    private void checkIfMasterPasswortExistsInDB() throws IOException, SQLException {
+        if (presenter.checkIfMasterPasswortExistsInDB()) {
             System.out.println("gesetzt");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
             Parent parent = fxmlLoader.load();
@@ -242,12 +223,12 @@ public class MainInterfaceController implements Initializable {
     /**
      *Button erstellt neues Fenster um einen neuen Eintrag zu erstellen
      */
-    public void btn_newEntry() throws IOException {
-        System.out.println("Neuer Eintrag");
+    public void btn_newEntry() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewEntry.fxml"));
         Parent parent = fxmlLoader.load();
         NewEntryController newEntryController = fxmlLoader.<NewEntryController>getController();
         newEntryController.setPresenter(presenter);
+        newEntryController.fillComboBox();
         this.stageNewEntry = new Stage();
         stageNewEntry.setTitle("New Entry");
         stageNewEntry.setScene(new Scene(parent, 400, 400));
@@ -255,7 +236,7 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.show();
     }
 
-
+    //Todo Sotierfunktion funktioniert nicht richtig, 1-2 mal ja, danach werden einfach alle Einträge angezeigt
     //Button Logo zeit alle Einträge an und setzt Suchfilter bzw Kategorie zurück
     public void btn_logo(MouseEvent mouseEvent) {
         pane_settings.setVisible(false);
@@ -272,6 +253,7 @@ public class MainInterfaceController implements Initializable {
 
     //Button Kategorie_Finanzen
     public void btn_finance(ActionEvent actionEvent) {
+        updateView();
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
@@ -279,7 +261,7 @@ public class MainInterfaceController implements Initializable {
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
-                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(0);
+                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(1);
                 return flag;
             }
         });
@@ -294,7 +276,7 @@ public class MainInterfaceController implements Initializable {
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
-                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(1);
+                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(2);
                 return flag;
             }
         });
@@ -310,7 +292,7 @@ public class MainInterfaceController implements Initializable {
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
-                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(2);
+                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(3);
                 return flag;
             }
         });
@@ -326,7 +308,7 @@ public class MainInterfaceController implements Initializable {
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
-                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(3);
+                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(4);
                 return flag;
             }
         });
@@ -350,17 +332,25 @@ public class MainInterfaceController implements Initializable {
         pane_recycle.setVisible(false);
         textField_Search.clear();
     }
+
+
+    public void btn_newMasterPassword() {
+        ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(presenter);
+    }
+
     /**
      * private void buildContextMenu()
      * Baut Context Menu zusammen
      */
     private void buildContextMenu() {
+        //ToDo eventuell noch mal anpassen wenn Zeit
+        contextMenu = null;
+        contextMenu = new ContextMenu();
         MenuItem item1 = new MenuItem("Delete");
         item1.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Test menu 1");
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Dialog");
                 alert.setHeaderText("Delete Confirmation");
@@ -369,10 +359,22 @@ public class MainInterfaceController implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
                     // ... user chose OK
-                    System.out.println("ok");
+                    try {
+                        presenter.removeEntry(treeView.getSelectionModel().getSelectedItem().getValue());
+                    } catch (IllegalBlockSizeException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (BadPaddingException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     // ... user chose CANCEL or closed the dialog
-                    System.out.println("abgebrochen");
+
                 }
             }
         });
@@ -382,13 +384,27 @@ public class MainInterfaceController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                editEntryScene();
+                try {
+                    editEntryScene();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         });
         contextMenu.getItems().add(item2);
+        MenuItem item3 = new MenuItem("Copy Password");
+        item3.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                //Todo Funktion einbauen bzw. Methodenaufruf
+                System.out.println("test: Copy Password");
+            }
+        });
+        contextMenu.getItems().add(item3);
     }
 
-    private void editEntryScene() {
+    private void editEntryScene() throws SQLException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("EditEntry.fxml"));
         try {
             loader.load();
@@ -399,6 +415,8 @@ public class MainInterfaceController implements Initializable {
         EditEntryController editEntryController = loader.getController();
         //Ausgewähltes Element treeView.getSelectionModel().getSelectedItem()
         editEntryController.setEntry(treeView.getSelectionModel().getSelectedItem());
+        editEntryController.setPresenter(presenter);
+        editEntryController.fillComboBox();
 
 
         Parent parentEditEntry = loader.getRoot();
@@ -471,7 +489,11 @@ public class MainInterfaceController implements Initializable {
             public void handle(MouseEvent ee) {
                 if (ee.isPrimaryButtonDown() && ee.getClickCount() == 2) {
 
-                    editEntryScene();
+                    try {
+                        editEntryScene();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (ee.isSecondaryButtonDown()) {
                     contextMenu.show(treeView, ee.getScreenX(), ee.getScreenY());

@@ -3,6 +3,7 @@ package jpasswortbunker.mgm.presenter;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TreeItem;
 import jpasswortbunker.mgm.model.Entry;
 import jpasswortbunker.mgm.model.ModelMain;
 import jpasswortbunker.mgm.view.MainInterfaceController;
@@ -16,6 +17,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public final class PresenterMain {
@@ -29,8 +31,8 @@ public final class PresenterMain {
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
         model = new ModelMain();
-        model.initMasterPassword("test");
-        model.initEncryptionService();
+        //model.initMasterPassword("test");
+        //model.initEncryptionService();
     }
 
     public ObservableList<EntryProperty> getEntryPropertiesList() {
@@ -63,16 +65,31 @@ public final class PresenterMain {
         }
     }
 
+    public void renewMasterPassword(String password) throws BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
+        model.renewMasterPassword(password);
+        controller.fillTreeView();
+    }
 
-
-    public boolean checkSetMasterpassword() {
-        return true;
-        // TODO: 06.03.2018 Methode von Model aufrufen
+    public void initMasterPassword(String password) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        model.initMasterPassword(password);
     }
 
 
-    public boolean checkIfMasterPasswordIsCorrect() throws UnsupportedEncodingException, SQLException {
-        return model.checkIfMasterPasswordIsCorrect();
+    public boolean checkIfMasterPasswordIsCorrect() throws UnsupportedEncodingException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
+        if (model.checkIfMasterPasswordIsCorrect()) {
+            model.initEncryptionService();
+            writeToObservableList();
+            //Todo Fehler mit den Recycle Einträgen, wirft eine Exception nach MasterPasswort Änderung
+            //Könnte ein Problem mit der Verschlüsselung oder Datenbank sein
+            writeToObservableListrecycle();
+            controller.updateView();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkIfMasterPasswortExistsInDB() throws SQLException {
+        return model.checkIfMasterPasswortExistsInDB();
     }
 
     public void newEntry(String title, String username, String password, String description, String url, int categoryID) throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
@@ -84,12 +101,31 @@ public final class PresenterMain {
         Entry entry = model.getEntryListEntrysTable().get(model.getEntryListEntrysTable().size() - 1);
         entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
                 entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
+        controller.updateView();
+    }
+
+    public void removeEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        model.removeEntry(entry.getEntryID().toString());
+        entryPropertiesList.remove(entry);
         controller.fillTreeView();
     }
 
+    public void updateEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        model.updateEntry(entry.getEntryID().toString(), entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getPassword(), entry.getDescription(), entry.getCategoryID());
+        controller.fillTreeView();
+    }
 
-    public void deleteEntry(UUID uuid) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
-        model.removeEntry(uuid.toString());
+    public void updateView() {
+        controller.updateView();
+    }
+
+    public List getCategoryListFromDB() throws SQLException {
+        //System.out.println(model.getCategoryListFromDB().size() + "-------------");
+        return model.getCategoryListFromDB();
+    }
+
+    public String createPassword() {
+        return model.createPassword();
     }
 
 

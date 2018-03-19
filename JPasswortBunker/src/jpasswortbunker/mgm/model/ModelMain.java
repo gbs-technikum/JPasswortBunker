@@ -6,10 +6,9 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.UUID;
+import java.util.*;
 
 public class ModelMain {
 
@@ -61,6 +60,12 @@ public class ModelMain {
         this.masterPasswordObject.setPassword(password);
     }
 
+
+    public boolean checkIfMasterPasswortExistsInDB() throws SQLException {
+        return dbService.checkIfMasterPasswordExistsInDB();
+    }
+
+
     /**
      * Zugriff via View
      * Das zuvor entgegengenommen Passwort des Benutzers wird nun über den DatenbankService mit dem Passwort in der DB abgelichen
@@ -93,6 +98,7 @@ public class ModelMain {
             dbService.reEncryptTable(encrypedEntry, "Recycle_Bin");
         }
 
+        this.dbService.setMasterPasswordToDB(PasswordObject.getInstance().getSaltPasswordHashForPasswortStore());
     }
 
 
@@ -344,5 +350,72 @@ public class ModelMain {
             System.out.println(entry);
         }
     }
+
+
+    public String createPassword() {
+        final String allowedChars = "0123456789abcdefghijklmnopqrstuvwABCDEFGHIJKLMNOP!§$%&?*+#";
+        int length = 30;
+        SecureRandom random = new SecureRandom();
+        StringBuilder pass = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            pass.append(allowedChars.charAt(random.nextInt(allowedChars.length())));
+        }
+        return pass.toString();
+    }
+
+
+    public int getTimePeriodForClipboardFromDB() throws SQLException {
+        return dbService.getTimePeriodForClipboardFromDB();
+    }
+
+    public void setTimePeriodForClipboardToDB(int timePeriodinSeconds) throws SQLException {
+        dbService.setTimePeriodForClipboardToDB(timePeriodinSeconds);
+    }
+
+
+    public List getCategoryListFromDB() throws SQLException {
+        return dbService.getCategoryListFromDB();
+    }
+
+    public boolean addNewCategoryToDB(String name) throws SQLException {
+        List<String> checkList = getCategoryListFromDB();
+        for (String s : checkList) {
+            if (s.equals(name)) {
+                return false;
+            }
+        }
+        dbService.addNewCategory(name);
+        return true;
+    }
+
+
+    public boolean removeCategoryFromDB(int id) throws SQLException {
+        List<Entry> checkList = entryListEntrysTable.getEntryObjectList();
+        for (Entry entry : checkList) {
+            if (entry.getCategoryID() == id) {
+                return false;
+            }
+        }
+        dbService.removeCategory(id);
+        return true;
+    }
+
+
+    public boolean restoreEntryFromRecycleBin(String entryId, long timestamp) throws SQLException {
+        Entry entry = dbService.readSingleEntryFromRecycleBin(entryId, timestamp);
+        if (entry == null) {
+            return false;
+        }
+
+        if (entry.getCategoryID() == -1) {
+            entry.setCategoryID(0);
+        } else {
+            dbService.deleteEntrytoAvoidDuplicate(entry.getEntryIDasString());
+        }
+        dbService.insertEntry(entry);
+        dbService.resetIdInRecycleBinForRestoredEntry(entry.getEntryIDasString(), entry.getCategoryID());
+        return true;
+    }
+
 
 }
