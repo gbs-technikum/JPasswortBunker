@@ -14,7 +14,7 @@ public class TestklasseModelMain {
     public static void main(String[] args) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
 
 
-
+        System.out.println(System.getProperty("user.dir"));
 
         //Beschreibung: Instanzierung von ModelMain
         ModelMain modelMain = new ModelMain();
@@ -68,7 +68,7 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Neuen Eintrag erstellen (Wichtig: Leere Datenfelder müssen mit dem Wert 'null' übergeben werden)
-        modelMain.newEntry("TestFinal", "marcelP", "abc", "bla bla bla", "www.geilhub.com", 2);
+        modelMain.newEntry("TestAdHoc2", "marcelP", "abc", "bla bla bla", "www.geilhub.com", 2);
         //modelMain.newEntry("Eintrag-ohne-Description2", "marcel", "abc", "null", "www.coolhub.com", 6);
 
 
