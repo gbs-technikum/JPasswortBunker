@@ -10,18 +10,26 @@ public class DBService {
 
 
     //private static final String URL = "jdbc:sqlite:C:\\Users\\guenther\\IdeaProjects\\JPasswortBunker\\jPasswordBunker.db";
-    //private static final String URL = "jdbc:sqlite:ressources/passwordbunker.db";
 
     //Pfad zu aktueller Testdatenbank im Projektordner
-    private static final String URL = "jdbc:sqlite:jPasswordBunker.db";
+    //private static final String URL = "jdbc:sqlite:jPasswortBunker.db";
+    private static final String URL = "jdbc:sqlite::resource:jPasswortBunker.db";
+    //private static final String URL = "jdbc:sqlite::jPasswortBunker.db";
+
 
     private Connection connection;
     private Statement statement;
 
 
     public DBService() throws SQLException {
+        //Java-Property Temp-Verzeichnis für Sqlite setzen, damit DB in aktuellen Verzeichnis entpackt wird
+        System.setProperty("java.io.tmpdir", System.getProperty("user.dir"));
+        //System.setProperty("org.sqlite.tmpdir", System.getProperty("user.dir"));
+
         this.connection = DriverManager.getConnection(URL);
         this.statement = connection.createStatement();
+
+
     }
 
 
