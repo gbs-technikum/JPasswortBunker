@@ -31,6 +31,7 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Prüfen ob richtigs MasterPasswort übergeben wurde (Oben eingegebenes Passwort wird mit DB abgeglichen)
+        System.out.print("Check ob MasterPassword in DB mit Eingabe übereinstimmt: ");
         System.out.println(modelMain.checkIfMasterPasswordIsCorrect());
 
 
@@ -82,7 +83,9 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Masterpassword neu setzen (alle bestehenden Einträge werden neu verschlüsselt)
-        //modelMain.renewMasterPassword("neuesPasswort");
+        /*modelMain.renewMasterPassword("test");
+        modelMain.getEntryListEntrysTable();
+        modelMain.getEntryListRecycleBinTable();*/
 
 
         //Beschreibung: Alle Kategorien als ArrayList holen (Positionsnummer = Kategorienummer | Position 0 = Uncategorized

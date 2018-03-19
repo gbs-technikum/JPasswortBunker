@@ -98,7 +98,7 @@ public class ModelMain {
             dbService.reEncryptTable(encrypedEntry, "Recycle_Bin");
         }
 
-        this.dbService.setMasterPasswordToDB(password);
+        this.dbService.setMasterPasswordToDB(PasswordObject.getInstance().getSaltPasswordHashForPasswortStore());
     }
 
 

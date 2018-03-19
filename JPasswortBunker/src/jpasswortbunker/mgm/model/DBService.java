@@ -154,10 +154,14 @@ public class DBService {
     }
 
 
-    public void setMasterPasswordToDB(String password) throws SQLException {
+    public boolean setMasterPasswordToDB(String password) throws SQLException {
         String sql = "update Masterkey set password = '" + password + "' where id = 1";
-        this.statement.execute(sql);
+        if (this.statement.execute(sql)) {
+            statement.close();
+            return true;
+        }
         statement.close();
+        return false;
     }
 
 
