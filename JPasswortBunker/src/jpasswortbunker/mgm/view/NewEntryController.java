@@ -5,8 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
@@ -20,13 +18,13 @@ import java.util.ArrayList;
 public class NewEntryController{
 
     @FXML
-    private JFXTextField tfTitle, tfUsername, tfURL;
+    private JFXTextField textFieldTitle, textFieldUsername, textFieldURL, textFieldPassword1, textFieldPassword2;
 
     @FXML
-    private JFXPasswordField pf1, pf2;
+    private JFXPasswordField passwordField1, passwordField2;
 
     @FXML
-    private JFXTextArea taDescription;
+    private JFXTextArea textAreaDescription;
 
     @FXML
     private Label labelErrorMessage;
@@ -43,6 +41,10 @@ public class NewEntryController{
     public void initialize() {
         btn_eye.setTooltip(new Tooltip("Show Password"));
         btn_key.setTooltip(new Tooltip("Generate a random Password"));
+        textFieldPassword1.setManaged(false);
+        textFieldPassword1.setVisible(false);
+        textFieldPassword2.setManaged(false);
+        textFieldPassword2.setVisible(false);
     }
 
     public void btn_save(ActionEvent actionEvent) {
@@ -55,8 +57,8 @@ public class NewEntryController{
                  * Ja -> Eintrag wird erstellt
                  */
                 comboBox.getValue().getText();
-                presenter.newEntry(tfTitle.getText(), tfUsername.getText(), pf1.getText(), tfURL.getText(),
-                        taDescription.getText(),(comboBox.getSelectionModel().getSelectedIndex()+1));
+                presenter.newEntry(textFieldTitle.getText(), textFieldUsername.getText(), passwordField1.getText(), textFieldURL.getText(),
+                        textAreaDescription.getText(),(comboBox.getSelectionModel().getSelectedIndex()+1));
                 Stage stage = (Stage) btn_save.getScene().getWindow();
                 stage.close();
                 System.out.println("neuer Eintrag angelegt");
@@ -80,19 +82,38 @@ public class NewEntryController{
     }
 
     public void btn_createPassword(ActionEvent actionEvent){
-        System.out.println("Test createPassword");
         String randomPassword = presenter.createPassword();
-        pf1.setText(randomPassword);
-        pf2.setText(randomPassword);
+        passwordField1.setText(randomPassword);
+        passwordField2.setText(randomPassword);
     }
 
     public void btn_eyeIcon(ActionEvent actionEvent){
-        System.out.println("Test Auge");
+        textFieldPassword1.textProperty().bindBidirectional(passwordField1.textProperty());
+        textFieldPassword2.textProperty().bindBidirectional(passwordField2.textProperty());
+        if (passwordField1.isVisible()) {
+            textFieldPassword1.setManaged(true);
+            textFieldPassword1.setVisible(true);
+            passwordField1.setManaged(false);
+            passwordField1.setVisible(false);
+            textFieldPassword2.setManaged(true);
+            textFieldPassword2.setVisible(true);
+            passwordField2.setManaged(false);
+            passwordField2.setVisible(false);
+        } else {
+            textFieldPassword1.setManaged(false);
+            textFieldPassword1.setVisible(false);
+            passwordField1.setManaged(true);
+            passwordField1.setVisible(true);
+            textFieldPassword2.setManaged(false);
+            textFieldPassword2.setVisible(false);
+            passwordField2.setManaged(true);
+            passwordField2.setVisible(true);
+        }
     }
 
     //Ueberpruefung ob Passwoerter gleich sind gibt true oder false zurück und setzt Label bei false
     private boolean equalsPassword() {
-        if (pf1.getText().equals(pf2.getText())) {
+        if (passwordField1.getText().equals(passwordField2.getText())) {
             return true;
         }
         labelErrorMessage.setText("Password not Equals");
@@ -100,7 +121,6 @@ public class NewEntryController{
     }
 
     public void fillComboBox() throws SQLException {
-        System.out.println("test");
         ArrayList<String> categoryList = (ArrayList<String>) presenter.getCategoryListFromDB();
         for (int i = 1; i < categoryList.size(); i++) {
             comboBox.getItems().add(new Label(categoryList.get(i)));

@@ -22,11 +22,11 @@
             </Label>
          </children>
       </AnchorPane>
-      <JFXTextField fx:id="textFieldTitle" layoutX="50.0" layoutY="75.0" promptText="Title" />
-      <JFXTextField fx:id="textFieldUsername" layoutX="50.0" layoutY="113.0" promptText="Username" />
-      <JFXPasswordField fx:id="passwordField1" layoutX="50.0" layoutY="149.0" promptText="Password" />
-      <JFXPasswordField fx:id="passwordField2" layoutX="50.0" layoutY="191.0" promptText="Repeat Password" />
-      <JFXTextField fx:id="textFieldURL" layoutX="50.0" layoutY="229.0" promptText="URL" />
+      <JFXTextField fx:id="textFieldTitle" layoutX="50.0" layoutY="75.0" prefHeight="25.0" prefWidth="222.0" promptText="Title" />
+      <JFXTextField fx:id="textFieldUsername" layoutX="50.0" layoutY="113.0" prefHeight="25.0" prefWidth="222.0" promptText="Username" />
+      <JFXPasswordField fx:id="passwordField1" layoutX="50.0" layoutY="149.0" prefHeight="25.0" prefWidth="222.0" promptText="Password" />
+      <JFXPasswordField fx:id="passwordField2" layoutX="50.0" layoutY="191.0" prefHeight="25.0" prefWidth="222.0" promptText="Repeat Password" />
+      <JFXTextField fx:id="textFieldURL" layoutX="50.0" layoutY="229.0" prefHeight="25.0" prefWidth="222.0" promptText="URL" />
       <JFXTextArea fx:id="textAreaDescription" layoutX="50.0" layoutY="311.0" prefHeight="75.0" prefWidth="222.0" style="-fx-background-color: lightgrey;" unFocusColor="WHITE" />
       <Label layoutX="50.0" layoutY="286.0" prefHeight="17.0" prefWidth="81.0" text="Descripntion" />
       <JFXButton fx:id="btn_save" layoutX="281.0" layoutY="341.0" onAction="#btn_save" prefHeight="45.0" prefWidth="111.0" style="-fx-background-color: #0747A6;" text="Save Changes" textFill="WHITE">
@@ -40,15 +40,25 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ImageView fitHeight="20.0" fitWidth="27.0" layoutX="208.0" layoutY="152.0" onMouseClicked="#btn_eyeIcon" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/eye.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="20.0" fitWidth="27.0" layoutX="240.0" layoutY="152.0" onMouseClicked="#btn_copyPasswordToClipboard" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/copy_icon.png" />
-         </image>
-      </ImageView>
+      <JFXTextField fx:id="textFieldPassword1" layoutX="50.0" layoutY="149.0" prefHeight="25.0" prefWidth="222.0" />
+      <JFXTextField fx:id="textFieldPassword2" layoutX="50.0" layoutY="191.0" prefHeight="25.0" prefWidth="222.0" />
+      <JFXButton fx:id="btn_eye" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="295.0" layoutY="147.0" onAction="#btn_eyeIcon" prefHeight="28.0" prefWidth="27.0" text=" " textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/eye.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btn_copyPassword" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="337.0" layoutY="148.0" onAction="#btn_copyPasswordToClipboard" prefHeight="28.0" prefWidth="27.0" text=" " textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="27.0" onMouseClicked="#btn_copyPasswordToClipboard" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/copy_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
    </children>
 </AnchorPane>
