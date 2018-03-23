@@ -68,12 +68,12 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Neuen Eintrag erstellen (Wichtig: Leere Datenfelder müssen mit dem Wert 'null' übergeben werden)
-        modelMain.newEntry("TestAdHoc2", "marcelP", "abc", "bla bla bla", "www.geilhub.com", 2);
+        //modelMain.newEntry("TestForDeleteWhileUpdate", "marcelP", "abc", "bla bla bla", "www.geilhub.com", 2);
         //modelMain.newEntry("Eintrag-ohne-Description2", "marcel", "abc", "null", "www.coolhub.com", 6);
 
 
         //Beschreibung: Bestehenden Eintrag abändern (alle Datenfelder müssen übergeben werden)
-        //modelMain.updateEntry("8bcde5bf-f1be-4fd5-9bf7-64aeefbed7ec", "DeleteTestRestore4update2", "marcel", "abc", "www.gayhub.com", "bla bla bla", 9);
+        //modelMain.updateEntry("742582fe-cb14-41fb-a9d1-1c8b4f7a54a8", "DeleteTestRestore4update2", "hans3", "abc", "www.gayhub.com", "bla bla bla", 9);
 
 
         //Beschreibung: Eintrag löschen via EntryID
@@ -102,11 +102,26 @@ public class TestklasseModelMain {
         //modelMain.removeCategoryFromDB(10);
 
 
+        //Beschreibung: Maximale Anzahl von BackupEntries für RecycleBin setzen
+        //modelMain.setNumberOfBackupEntiresToDB(3);
+
+
+        //Beschreibung: Maximale Anzahl von BackupEntries in RecycleBin abfragen
+        //modelMain.getNumberOfBackupEntriesFromDB();
+
+
+        //Beschreibung: Länge für Zufallspasswörter setzen
+        //modelMain.setLengthOfRandomPasswordsToDB(30);
+
+
+        //Beschreibung: Länge für Zufallspasswörter von DB abfragen
+        //System.out.println(modelMain.getLengthOfRandomPasswordsFromDB());
+
 
         //ToDo Speicherort für Datenbank export prüfen
 
 
-        //Todo Max. drei Änderungen in Recycle_Bin schreiben
+
 
 
 

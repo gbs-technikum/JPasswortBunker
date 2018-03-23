@@ -79,7 +79,7 @@ public class NewEntryController{
         }
     }
 
-    public void btn_createPassword(ActionEvent actionEvent){
+    public void btn_createPassword(ActionEvent actionEvent) throws SQLException {
         System.out.println("Test createPassword");
         String randomPassword = presenter.createPassword();
         pf1.setText(randomPassword);

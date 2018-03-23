@@ -124,7 +124,7 @@ public final class PresenterMain {
         return model.getCategoryListFromDB();
     }
 
-    public String createPassword() {
+    public String createPassword() throws SQLException {
         return model.createPassword();
     }
 
