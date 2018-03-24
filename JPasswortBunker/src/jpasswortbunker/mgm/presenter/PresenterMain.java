@@ -101,18 +101,18 @@ public final class PresenterMain {
         Entry entry = model.getEntryListEntrysTable().get(model.getEntryListEntrysTable().size() - 1);
         entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
                 entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
-        controller.updateView();
+        controller.updateView2();
     }
 
     public void removeEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         model.removeEntry(entry.getEntryID().toString());
         entryPropertiesList.remove(entry);
-        controller.fillTreeView();
+        //controller.fillTreeView();
     }
 
     public void updateEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         model.updateEntry(entry.getEntryID().toString(), entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getPassword(), entry.getDescription(), entry.getCategoryID());
-        controller.fillTreeView();
+        //controller.fillTreeView();//Obsolet - führt zu Programmabsturz
     }
 
     public void updateView() {

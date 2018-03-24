@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 import jpasswortbunker.mgm.view.EditEntryController;
@@ -91,11 +92,19 @@ public class MainInterfaceController implements Initializable {
     }
 
     public void updateView() {
-        stageMainInterfaceController.show();
         fillTreeView();
         fillRecycleTable();
+        stageMainInterfaceController.show();
     }
 
+    public void updateView2() {
+        //fillTreeView();
+        //fillRecycleTable();
+        stageMainInterfaceController.show();
+    }
+
+
+    //ToDo Ursache für Aktualisierungsproblem der Anzeige liegt hier!
        public void fillTreeView() {
 
         //Spalte Title
@@ -230,6 +239,10 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setScene(new Scene(parent, 400, 400));
         stageNewEntry.setAlwaysOnTop(true);
         stageNewEntry.show();
+        //DELETE - Test von Wagenhuber
+        stageNewEntry.setOnCloseRequest((WindowEvent event1) -> {
+            System.out.println("onClose von newEntry aufgerufen");
+        });
     }
 
     //Todo Sotierfunktion funktioniert nicht richtig, 1-2 mal ja, danach werden einfach alle Einträge angezeigt
@@ -249,7 +262,9 @@ public class MainInterfaceController implements Initializable {
 
     //Button Kategorie_Finanzen
     public void btn_finance(ActionEvent actionEvent) {
-        updateView();
+
+        //Auskommentiert durch Wagenhuber am 24.3.18 bzgl. Ansicht aktualisiert nicht
+        //updateView();
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
