@@ -1,9 +1,7 @@
 package jpasswortbunker.mgm.presenter;
 
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TreeItem;
 import jpasswortbunker.mgm.model.Entry;
 import jpasswortbunker.mgm.model.ModelMain;
 import jpasswortbunker.mgm.view.MainInterfaceController;
@@ -11,14 +9,11 @@ import jpasswortbunker.mgm.view.MainInterfaceController;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public final class PresenterMain {
 
@@ -133,5 +128,17 @@ public final class PresenterMain {
     public void test() {
         System.out.println("testMethode Presenter");
     }
+
+
+    // Folgende Methoden hinzugefügt von Wagenhuber:
+
+    public void setNumberOfBackupEntiresToDB(int number) throws SQLException {
+        model.setNumberOfBackupEntiresToDB(number);
+    }
+
+    public String getNumberOfBackupEntiresFromDB() throws SQLException {
+        return String.valueOf(model.getNumberOfBackupEntriesFromDB());
+    }
+
 
 }

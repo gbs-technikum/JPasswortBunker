@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
-import jpasswortbunker.mgm.view.EditEntryController;
 import jpasswortbunker.mgm.presenter.EntryProperty;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
@@ -53,7 +52,7 @@ public class MainInterfaceController implements Initializable {
     private ImageView btn_logo;
 
     @FXML
-    private AnchorPane pane_entrys, pane_settings,  pane_recycle;
+    private AnchorPane pane_entrys, pane_settings, pane_recycle;
 
     @FXML
     private JFXTreeTableView<EntryProperty> treeView;
@@ -62,14 +61,13 @@ public class MainInterfaceController implements Initializable {
     private JFXTreeTableView<EntryProperty> tableView_recylce;
 
     @FXML
-    private JFXTextField textField_Search;
+    private JFXTextField textField_Search, textField_backupEntries;
 
     @FXML
     private AnchorPane mainAnchorPane;
 
     private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin, stageNewEntry;
     private ContextMenu contextMenu;
-
 
 
     private PresenterMain presenter = new PresenterMain(this);
@@ -105,7 +103,7 @@ public class MainInterfaceController implements Initializable {
 
 
     //ToDo Ursache für Aktualisierungsproblem der Anzeige liegt hier!
-       public void fillTreeView() {
+    public void fillTreeView() {
 
         //Spalte Title
         JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>("Title");
@@ -156,7 +154,6 @@ public class MainInterfaceController implements Initializable {
         buildContextMenu();
 
 
-
         //Eventhandling für die Elemente
         treeView.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -185,7 +182,7 @@ public class MainInterfaceController implements Initializable {
                 treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
                     @Override
                     public boolean test(TreeItem<EntryProperty> entryTreeItem) {
-                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase())||
+                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase()) ||
                                 entryTreeItem.getValue().usernameProperty().getValue().toLowerCase().contains(newValue.toLowerCase());
                         return flag;
                     }
@@ -194,7 +191,8 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
-    /**Ruft Methode in Model auf um zu überprüfen, ob Masterpasswort gesetzt wurde
+    /**
+     * Ruft Methode in Model auf um zu überprüfen, ob Masterpasswort gesetzt wurde
      * Return Value:
      * true -> LoginScreen
      * false -> SetMasterPassword
@@ -226,7 +224,7 @@ public class MainInterfaceController implements Initializable {
     }
 
     /**
-     *Button erstellt neues Fenster um einen neuen Eintrag zu erstellen
+     * Button erstellt neues Fenster um einen neuen Eintrag zu erstellen
      */
     public void btn_newEntry() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewEntry.fxml"));
@@ -342,6 +340,11 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(false);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        try {
+            textField_backupEntries.setText(presenter.getNumberOfBackupEntiresFromDB());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -368,7 +371,7 @@ public class MainInterfaceController implements Initializable {
                 alert.setContentText("Are you realy sure, that you want delete the Entry ");
 
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
+                if (result.get() == ButtonType.OK) {
                     // ... user chose OK
                     try {
                         presenter.removeEntry(treeView.getSelectionModel().getSelectedItem().getValue());
@@ -440,7 +443,6 @@ public class MainInterfaceController implements Initializable {
     }
 
 
-
     //TODO: 14.03.2018 Liste richtig laden in den Mülleimer
     public void fillRecycleTable() {
 
@@ -493,7 +495,6 @@ public class MainInterfaceController implements Initializable {
         buildContextMenu();
 
 
-
         //Eventhandling für die Elemente
         tableView_recylce.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -522,7 +523,7 @@ public class MainInterfaceController implements Initializable {
                 tableView_recylce.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
                     @Override
                     public boolean test(TreeItem<EntryProperty> entryTreeItem) {
-                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase())||
+                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase()) ||
                                 entryTreeItem.getValue().usernameProperty().getValue().toLowerCase().contains(newValue.toLowerCase());
                         return flag;
                     }
@@ -532,5 +533,10 @@ public class MainInterfaceController implements Initializable {
     }
 
 
+// Folgende Methoden hinzugefügt von Wagenhuber:
+
+    /*public void btn_setNumberOfBackupEntiresToDB() throws SQLException {
+
+    }*/
 
 }
