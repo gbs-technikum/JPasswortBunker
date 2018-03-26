@@ -1,5 +1,7 @@
 package jpasswortbunker.mgm.presenter;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -26,7 +28,8 @@ public final class PresenterMain {
     public ObservableList<EntryProperty> entryPropertiesList = FXCollections.observableArrayList();
     public ObservableList<EntryProperty> entryPropertiesListRecycle = FXCollections.observableArrayList();
     private StringProperty textField_settings_numberBackupEntries;
-    private StringProperty textField_settings_saveStatus;
+    private BooleanProperty textField_settings_saveStatusBoolean;
+
 
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
@@ -158,16 +161,19 @@ public final class PresenterMain {
         this.textField_settings_numberBackupEntries.set(textField_settings_numberBackupEntries);
     }
 
-    public String getTextField_settings_saveStatus() {
-        return textField_settings_saveStatus.getValue();
+
+
+
+    public boolean isTextField_settings_saveStatusBoolean() {
+        return textField_settings_saveStatusBoolean.getValue();
     }
 
-    public StringProperty setTextField_settings_saveStatusProperty() {
-        return textField_settings_saveStatus;
+    public BooleanProperty setTextField_settings_saveStatusBooleanProperty() {
+        return textField_settings_saveStatusBoolean;
     }
 
-    public void setTextField_settings_saveStatus(String textField_settings_saveStatus) {
-        this.textField_settings_saveStatus.setValue(textField_settings_saveStatus);
+    public void setTextField_settings_saveStatusBoolean(boolean textField_settings_saveStatusBoolean) {
+        this.textField_settings_saveStatusBoolean.setValue(textField_settings_saveStatusBoolean);
     }
 
     private void initProperties() {
@@ -180,8 +186,7 @@ public final class PresenterMain {
             e.printStackTrace();
         }
 
-        textField_settings_saveStatus = new SimpleStringProperty();
-
+        textField_settings_saveStatusBoolean = new SimpleBooleanProperty();
 
         textField_settings_numberBackupEntries.addListener(new ChangeListener<String>() {
             @Override
@@ -189,37 +194,30 @@ public final class PresenterMain {
                 try {
                     if (checkIfTextFieldNumeric(textField_settings_numberBackupEntries.getValue())) {
                         if (model.setNumberOfBackupEntiresToDB(Integer.parseInt(textField_settings_numberBackupEntries.getValue()))) {
-                            setTextField_settings_saveStatus("true");
+                            setTextField_settings_saveStatusBoolean(true);
                         } else {
-                            setTextField_settings_saveStatus("false");
+                            setTextField_settings_saveStatusBoolean(false);
                         }
                     } else {
-                        setTextField_settings_saveStatus("false");
-                        //System.out.println(textField_settings_saveStatus);
+                        setTextField_settings_saveStatusBoolean(false);
                     }
-
-
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                try {
-                    textField_settings_numberBackupEntries.setValue(String.valueOf(model.getNumberOfBackupEntriesFromDB()));
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+
 
             }
         });
 
     }//ende initProperties
 
-
-    public boolean checkIfTextFieldNumeric(String value){
-            if (!value.matches("\\d*")) {
-                return false;
-            }
+    public boolean checkIfTextFieldNumeric(String value) {
+        if (value.matches("^\\d+$")){
             return true;
+        } else {
+            return false;
         }
+    }
 
 
 }

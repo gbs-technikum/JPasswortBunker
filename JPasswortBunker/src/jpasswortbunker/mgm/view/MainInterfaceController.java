@@ -536,20 +536,17 @@ public class MainInterfaceController implements Initializable {
 
 
 
-
-
-
     public void btn_settings_setNumberBackupEntries(ActionEvent actionEvent) {
        presenter.setTextField_settings_numberBackupEntries(textField_settings_backupEntries.getText());
        updateSaveStatus();
     }
 
     private void updateSaveStatus() {
-        String status = presenter.getTextField_settings_saveStatus();
-        if (status.equals("true")) {
-            textField_settings_saveStatus.setText("'Gespeichert!'");
+        boolean status = presenter.isTextField_settings_saveStatusBoolean();
+        if (status) {
+            textField_settings_saveStatus.setText("Saved successful!");
         } else {
-            textField_settings_saveStatus.setText("'Fehler!'");
+            textField_settings_saveStatus.setText("Error saving!");
         }
 
     }

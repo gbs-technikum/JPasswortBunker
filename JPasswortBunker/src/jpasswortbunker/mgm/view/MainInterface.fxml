@@ -154,7 +154,7 @@
                         <Font size="14.0" />
                      </font>
                   </JFXButton>
-                  <JFXTextField fx:id="textField_settings_saveStatus" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                  <JFXTextField fx:id="textField_settings_saveStatus" editable="false" text="No changes yet!" GridPane.rowIndex="5">
                      <font>
                         <Font size="14.0" />
                      </font>
