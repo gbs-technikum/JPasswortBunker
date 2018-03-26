@@ -423,8 +423,11 @@ public class ModelMain {
         return true;
     }
 
-    public void setNumberOfBackupEntiresToDB(int number) throws SQLException {
-        dbService.setNumberOfBackupEntiresToDB(number);
+    public boolean setNumberOfBackupEntiresToDB(int number) throws SQLException {
+        if (dbService.setNumberOfBackupEntiresToDB(number)) {
+            return true;
+        }
+        return false;
     }
 
     public int getNumberOfBackupEntriesFromDB() throws SQLException {

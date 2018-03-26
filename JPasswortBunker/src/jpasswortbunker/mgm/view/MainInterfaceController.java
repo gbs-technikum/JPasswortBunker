@@ -46,7 +46,7 @@ public class MainInterfaceController implements Initializable {
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle, btn_settings_numberBackupEntriesOk;
 
     @FXML
     private ImageView btn_logo;
@@ -61,7 +61,7 @@ public class MainInterfaceController implements Initializable {
     private JFXTreeTableView<EntryProperty> tableView_recylce;
 
     @FXML
-    private JFXTextField textField_Search, textField_backupEntries;
+    private JFXTextField textField_Search, textField_settings_backupEntries, textField_settings_saveStatus;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -73,7 +73,10 @@ public class MainInterfaceController implements Initializable {
     private PresenterMain presenter = new PresenterMain(this);
 
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        //makeTextFieldNumeric(textField_settings_backupEntries);
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -340,11 +343,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(false);
         pane_recycle.setVisible(false);
         textField_Search.clear();
-        try {
-            textField_backupEntries.setText(presenter.getNumberOfBackupEntiresFromDB());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        textField_settings_backupEntries.setText(presenter.getTextField_settings_numberBackupEntries());
     }
 
 
@@ -535,8 +534,24 @@ public class MainInterfaceController implements Initializable {
 
 // Folgende Methoden hinzugefügt von Wagenhuber:
 
-    /*public void btn_setNumberOfBackupEntiresToDB() throws SQLException {
 
-    }*/
+
+
+
+
+    public void btn_settings_setNumberBackupEntries(ActionEvent actionEvent) {
+       presenter.setTextField_settings_numberBackupEntries(textField_settings_backupEntries.getText());
+       updateSaveStatus();
+    }
+
+    private void updateSaveStatus() {
+        String status = presenter.getTextField_settings_saveStatus();
+        if (status.equals("true")) {
+            textField_settings_saveStatus.setText("'Gespeichert!'");
+        } else {
+            textField_settings_saveStatus.setText("'Fehler!'");
+        }
+
+    }
 
 }

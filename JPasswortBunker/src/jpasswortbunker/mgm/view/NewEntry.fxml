@@ -29,7 +29,7 @@
       <JFXTextField fx:id="tfURL" layoutX="16.0" layoutY="229.0" prefHeight="25.0" prefWidth="234.0" promptText="URL" />
       <JFXTextArea fx:id="taDescription" layoutX="15.0" layoutY="311.0" prefHeight="75.0" prefWidth="257.0" style="-fx-background-color: lightgrey;" unFocusColor="WHITE" />
       <Label layoutX="16.0" layoutY="290.0" prefHeight="17.0" prefWidth="81.0" text="Descripntion" />
-      <JFXButton fx:id="btn_save" layoutX="303.0" layoutY="341.0" onAction="#btn_save" prefHeight="45.0" prefWidth="74.0" style="-fx-background-color: #0747A6;" text="OK" textFill="WHITE">
+      <JFXButton fx:id="btn_save" layoutX="303.0" layoutY="341.0" onAction="#btn_save" prefHeight="45.0" prefWidth="74.0" style="-fx-background-color: #0747A6; -fx-border-color: #ffffff; -fx-border-radius: 2px;" text="OK" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>

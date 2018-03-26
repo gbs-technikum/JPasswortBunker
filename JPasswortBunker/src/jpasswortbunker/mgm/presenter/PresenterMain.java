@@ -1,5 +1,9 @@
 package jpasswortbunker.mgm.presenter;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import jpasswortbunker.mgm.model.Entry;
@@ -21,14 +25,19 @@ public final class PresenterMain {
     private ModelMain model;
     public ObservableList<EntryProperty> entryPropertiesList = FXCollections.observableArrayList();
     public ObservableList<EntryProperty> entryPropertiesListRecycle = FXCollections.observableArrayList();
-
+    private StringProperty textField_settings_numberBackupEntries;
+    private StringProperty textField_settings_saveStatus;
 
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
         model = new ModelMain();
+
+        initProperties();
+
         //model.initMasterPassword("test");
         //model.initEncryptionService();
     }
+
 
     public ObservableList<EntryProperty> getEntryPropertiesList() {
         return entryPropertiesList;
@@ -50,6 +59,7 @@ public final class PresenterMain {
                     entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
         }
     }
+
     //TODO: 14.03.2018  anpassen für das Schreiben in den Mülleimer
     //Schreibt die Liste der Arraylist aus Model in die Observable List im Presenter
     public void writeToObservableListrecycle() throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
@@ -124,7 +134,6 @@ public final class PresenterMain {
     }
 
 
-
     public void test() {
         System.out.println("testMethode Presenter");
     }
@@ -132,13 +141,85 @@ public final class PresenterMain {
 
     // Folgende Methoden hinzugefügt von Wagenhuber:
 
-    public void setNumberOfBackupEntiresToDB(int number) throws SQLException {
-        model.setNumberOfBackupEntiresToDB(number);
+    /*public void setNumberOfBackupEntiresToDB(String number) throws SQLException {
+        model.setNumberOfBackupEntiresToDB(Integer.parseInt(number));
+    }*/
+
+
+    public String getTextField_settings_numberBackupEntries() {
+        return textField_settings_numberBackupEntries.getValue();
     }
 
-    public String getNumberOfBackupEntiresFromDB() throws SQLException {
-        return String.valueOf(model.getNumberOfBackupEntriesFromDB());
+    public StringProperty getTextField_settings_numberBackupEntriesProperty() {
+        return textField_settings_numberBackupEntries;
     }
+
+    public void setTextField_settings_numberBackupEntries(String textField_settings_numberBackupEntries) {
+        this.textField_settings_numberBackupEntries.set(textField_settings_numberBackupEntries);
+    }
+
+    public String getTextField_settings_saveStatus() {
+        return textField_settings_saveStatus.getValue();
+    }
+
+    public StringProperty setTextField_settings_saveStatusProperty() {
+        return textField_settings_saveStatus;
+    }
+
+    public void setTextField_settings_saveStatus(String textField_settings_saveStatus) {
+        this.textField_settings_saveStatus.setValue(textField_settings_saveStatus);
+    }
+
+    private void initProperties() {
+
+
+        try {
+            textField_settings_numberBackupEntries = new SimpleStringProperty();
+            textField_settings_numberBackupEntries.setValue(String.valueOf(model.getNumberOfBackupEntriesFromDB()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        textField_settings_saveStatus = new SimpleStringProperty();
+
+
+        textField_settings_numberBackupEntries.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                try {
+                    if (checkIfTextFieldNumeric(textField_settings_numberBackupEntries.getValue())) {
+                        if (model.setNumberOfBackupEntiresToDB(Integer.parseInt(textField_settings_numberBackupEntries.getValue()))) {
+                            setTextField_settings_saveStatus("true");
+                        } else {
+                            setTextField_settings_saveStatus("false");
+                        }
+                    } else {
+                        setTextField_settings_saveStatus("false");
+                        //System.out.println(textField_settings_saveStatus);
+                    }
+
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    textField_settings_numberBackupEntries.setValue(String.valueOf(model.getNumberOfBackupEntriesFromDB()));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }//ende initProperties
+
+
+    public boolean checkIfTextFieldNumeric(String value){
+            if (!value.matches("\\d*")) {
+                return false;
+            }
+            return true;
+        }
 
 
 }

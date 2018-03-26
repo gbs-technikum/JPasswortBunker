@@ -292,10 +292,11 @@ public class DBService {
 
 
 
-    public void setNumberOfBackupEntiresToDB(int numberEntries) throws SQLException {
+    public boolean setNumberOfBackupEntiresToDB(int numberEntries) throws SQLException {
         String sql = "update System set NumberOfBackupEntries = '" + numberEntries + "' where id = 1";
         this.statement.execute(sql);
         statement.close();
+        return true;
     }
 
 
