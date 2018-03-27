@@ -9,11 +9,18 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import jpasswortbunker.mgm.presenter.EntryProperty;
+import jpasswortbunker.mgm.presenter.PresenterMain;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.security.InvalidKeyException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class EditEntryController implements Initializable {
+public class EditEntryController {
 
     @FXML
     private JFXTextField textFieldTitle, textFieldUsername, textFieldURL;
@@ -33,66 +40,108 @@ public class EditEntryController implements Initializable {
     @FXML
     public JFXComboBox<Label> comboBox = new JFXComboBox<Label>();
 
+
+
+    public EntryProperty entryProperty;
+    private PresenterMain presenter;
+
     @FXML
-    public TreeItem<EntryProperty> entry;
+    public void initialize() throws SQLException {
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        comboBox.getItems().add(new Label("Kategorie0"));
-        comboBox.getItems().add(new Label("Kategorie1"));
-        comboBox.getItems().add(new Label("Kategorie2"));
-        comboBox.getItems().add(new Label("Kategorie3"));
-        comboBox.setPromptText("Select categorie");
-        passwordField1.disableAnimationProperty();
-        passwordField1.isVisible();
-        System.out.println(passwordField1.getText());
     }
 
-    public void btn_eyeIcon(MouseEvent mouseEvent) {
+    public void btn_save(ActionEvent actionEvent) throws IllegalBlockSizeException, SQLException, InvalidKeyException, BadPaddingException, UnsupportedEncodingException {
+
+        if (changeEntry()) {
+            Stage stage = (Stage) btn_save.getScene().getWindow();
+            stage.close();
+        }
+    }
+
+    public void btn_eyeIcon(MouseEvent mouseEvent){
         System.out.println("Test Auge");
-        System.out.println(passwordField1.getText());
     }
 
-
-    public void btn_save(ActionEvent actionEvent) {
-        System.out.println("btn_save gedrückt");
-//
-//        changeEntry();
-//
-//        Stage stage = (Stage) btn_save.getScene().getWindow();
-//        stage.close();
+    public void btn_copyPasswordToClipboard(MouseEvent mouseEvent) {
+        System.out.println("test: btn_copyPasswordToClipboard");
     }
+
 
     //Übergebenes Element wird in die jeweiligen Felder geschrieben
     public void setEntry(TreeItem<EntryProperty> selectedEntry) {
-        this.entry = selectedEntry;
+        this.entryProperty = selectedEntry.getValue();
 
-        textFieldTitle.setText(entry.getValue().getTitle());
-        textFieldUsername.setText(entry.getValue().getUsername());
-        passwordField1.setText(entry.getValue().getPassword());
-        passwordField2.setText(entry.getValue().getPassword());
-        textFieldURL.setText(entry.getValue().getUrl());
-        textAreaDescription.setText(entry.getValue().getDescription());
-        comboBox.getSelectionModel().select(entry.getValue().getCategoryID());
+        textFieldTitle.setText(entryProperty.getTitle());
+        textFieldUsername.setText(entryProperty.getUsername());
+        passwordField1.setText(entryProperty.getPassword());
+        passwordField2.setText(entryProperty.getPassword());
+        textFieldURL.setText(entryProperty.getUrl());
+        textAreaDescription.setText(entryProperty.getDescription());
     }
 
     //Ändert den bestehenden Eintrag
-    public Boolean changeEntry() {
+    public Boolean changeEntry() throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
+        //System.out.println(comboBox.getSelectionModel().getSelectedIndex());
+//        EntryProperty entryPropertyEdit = new EntryProperty(entryProperty);
+//
+//
+//        if (entryPropertyEdit.equals(entryProperty)) {
+//            System.out.println("nix geändert");
+//        } else {
+//            System.out.println("es wurde was geändert");
+//        }
+//        System.out.println(entryPropertyEdit);
+//        System.out.println(entryProperty);
 
-        this.entry.getValue().setTitle(textFieldTitle.getText());
 
 
+        if (entryProperty.getTitle().equals(textFieldTitle.getText()) &&
+                entryProperty.getUsername().equals(textFieldUsername.getText()) &&
+                entryProperty.getPassword().equals(passwordField1.getText()) &&
+                entryProperty.getPassword().equals(passwordField2.getText()) &&
+                entryProperty.getUrl().equals(textFieldURL.getText()) &&
+                entryProperty.getDescription().equals(textAreaDescription.getText()) &&
+                entryProperty.getCategoryID() == (comboBox.getSelectionModel().getSelectedIndex()+1) ) {
+        } else {
+            if (equalsPassword()) {
+                this.entryProperty.setTitle(textFieldTitle.getText());
+                this.entryProperty.setUsername((textFieldUsername.getText()));
+                this.entryProperty.setPassword(passwordField1.getText());
+                this.entryProperty.setUrl(textFieldURL.getText());
+                this.entryProperty.setDescription(textAreaDescription.getText());
+                this.entryProperty.setCategoryID((comboBox.getSelectionModel().getSelectedIndex()+1));
+                presenter.updateEntry(entryProperty);
 
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean equalsPassword() {
+        if (passwordField1.getText().equals(passwordField2.getText())) {
+            return true;
+        }
+        labelErrorMessage.setText("Password not Equals");
         return false;
+    }
+
+    public void fillComboBox() throws SQLException {
+        System.out.println("test");
+        ArrayList<String> categoryList = (ArrayList<String>) presenter.getCategoryListFromDB();
+        for (int i = 1; i < categoryList.size(); i++) {
+            comboBox.getItems().add(new Label(categoryList.get(i)));
+        }
+        comboBox.setPromptText("Select categorie");
+        comboBox.getSelectionModel().select(entryProperty.getCategoryID()-1);
     }
 
 
 
-
-
-
-
-
+    public void setPresenter(PresenterMain presenter) throws SQLException {
+        this.presenter = presenter;
+    }
 
 
 }
