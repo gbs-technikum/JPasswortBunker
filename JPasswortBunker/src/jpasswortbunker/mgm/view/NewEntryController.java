@@ -4,7 +4,11 @@ import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
 import javax.crypto.BadPaddingException;
@@ -12,6 +16,7 @@ import javax.crypto.IllegalBlockSizeException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class NewEntryController{
 
@@ -28,7 +33,7 @@ public class NewEntryController{
     private Label labelErrorMessage;
 
     @FXML
-    private JFXButton btn_save;
+    private JFXButton btn_save, btn_key, btn_eye;
 
     @FXML
     public JFXComboBox<Label> comboBox = new JFXComboBox<Label>();
@@ -37,11 +42,8 @@ public class NewEntryController{
 
     @FXML
     public void initialize() {
-        comboBox.getItems().add(new Label("Finance"));
-        comboBox.getItems().add(new Label("Social"));
-        comboBox.getItems().add(new Label("E-Mail"));
-        comboBox.getItems().add(new Label("Settings"));
-        comboBox.setPromptText("Select categorie");
+        btn_eye.setTooltip(new Tooltip("Show Password"));
+        btn_key.setTooltip(new Tooltip("Generate a random Password"));
     }
 
     public void btn_save(ActionEvent actionEvent) {
@@ -54,7 +56,12 @@ public class NewEntryController{
                  * Ja -> Eintrag wird erstellt
                  */
                 comboBox.getValue().getText();
-                presenter.newEntry(tfTitle.getText(), tfUsername.getText(), pf1.getText(), tfURL.getText(), taDescription.getText(),comboBox.getSelectionModel().getSelectedIndex());
+                presenter.newEntry(tfTitle.getText(), tfUsername.getText(), pf1.getText(), tfURL.getText(),
+                        taDescription.getText(),(comboBox.getSelectionModel().getSelectedIndex()+1));
+
+                //Eingefügt Wagenhuber: Zwischenspeichern der gewählten Kategorie, um diese anschließend im View anzuzeigen
+                presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex()+1));
+
                 Stage stage = (Stage) btn_save.getScene().getWindow();
                 stage.close();
                 System.out.println("neuer Eintrag angelegt");
@@ -74,9 +81,18 @@ public class NewEntryController{
             }
         } else {
             System.out.println("Eintrag konnte nicht erstellt werden");
-
         }
+    }
 
+    public void btn_createPassword(ActionEvent actionEvent) throws SQLException {
+        System.out.println("Test createPassword");
+        String randomPassword = presenter.createPassword();
+        pf1.setText(randomPassword);
+        pf2.setText(randomPassword);
+    }
+
+    public void btn_eyeIcon(ActionEvent actionEvent){
+        System.out.println("Test Auge");
     }
 
     //Ueberpruefung ob Passwoerter gleich sind gibt true oder false zurück und setzt Label bei false
@@ -86,6 +102,15 @@ public class NewEntryController{
         }
         labelErrorMessage.setText("Password not Equals");
         return false;
+    }
+
+    public void fillComboBox() throws SQLException {
+        System.out.println("test");
+        ArrayList<String> categoryList = (ArrayList<String>) presenter.getCategoryListFromDB();
+        for (int i = 1; i < categoryList.size(); i++) {
+            comboBox.getItems().add(new Label(categoryList.get(i)));
+        }
+        comboBox.setPromptText("Select categorie");
     }
 
 
