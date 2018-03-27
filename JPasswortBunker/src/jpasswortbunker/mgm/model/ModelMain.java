@@ -435,8 +435,11 @@ public class ModelMain {
     }
 
 
-    public void setLengthOfRandomPasswordsToDB(int number) throws SQLException {
-        dbService.setLengthOfRandomPasswordsToDB(number);
+    public boolean setLengthOfRandomPasswordsToDB(int number) throws SQLException {
+        if (dbService.setLengthOfRandomPasswordsToDB(number)) {
+            return true;
+        }
+        return false;
     }
 
     public int getLengthOfRandomPasswordsFromDB() throws SQLException {

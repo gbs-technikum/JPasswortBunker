@@ -25,6 +25,7 @@ public final class PresenterMain {
     public ObservableList<EntryProperty> entryPropertiesList = FXCollections.observableArrayList();
     public ObservableList<EntryProperty> entryPropertiesListRecycle = FXCollections.observableArrayList();
     private StringProperty textField_settings_numberBackupEntries;
+    private StringProperty textField_settings_lengthRandomPasswords;
     private BooleanProperty textField_settings_saveStatusBoolean;
     private IntegerProperty categoryChoosenForLastNewEntry;
 
@@ -160,6 +161,19 @@ public final class PresenterMain {
 
 
 
+    public String getTextField_settings_lengthRandomPasswords() {
+        return textField_settings_lengthRandomPasswords.getValue();
+    }
+
+    public StringProperty textField_settings_lengthRandomPasswordsProperty() {
+        return textField_settings_lengthRandomPasswords;
+    }
+
+    public void setTextField_settings_lengthRandomPasswords(String textField_settings_lengthRandomPasswords) {
+        this.textField_settings_lengthRandomPasswords.setValue(textField_settings_lengthRandomPasswords);
+    }
+
+
 
     public boolean isTextField_settings_saveStatusBoolean() {
         return textField_settings_saveStatusBoolean.getValue();
@@ -188,6 +202,8 @@ public final class PresenterMain {
 
 
 
+
+
     private void initProperties() {
 
 
@@ -207,6 +223,15 @@ public final class PresenterMain {
             e.printStackTrace();
         }
 
+
+        try {
+            textField_settings_lengthRandomPasswords = new SimpleStringProperty();
+            textField_settings_lengthRandomPasswords.setValue(String.valueOf(model.getLengthOfRandomPasswordsFromDB()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
         textField_settings_saveStatusBoolean = new SimpleBooleanProperty();
 
         textField_settings_numberBackupEntries.addListener(new ChangeListener<String>() {
@@ -225,10 +250,29 @@ public final class PresenterMain {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
+
+        textField_settings_lengthRandomPasswords.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                try {
+                    if (checkIfTextFieldNumeric(textField_settings_lengthRandomPasswords.getValue())) {
+                        if (model.setLengthOfRandomPasswordsToDB(Integer.parseInt(textField_settings_lengthRandomPasswords.getValue()))) {
+                            setTextField_settings_saveStatusBoolean(true);
+                        } else {
+                            setTextField_settings_saveStatusBoolean(false);
+                        }
+                    } else {
+                        setTextField_settings_saveStatusBoolean(false);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
 
     }//ende initProperties
 

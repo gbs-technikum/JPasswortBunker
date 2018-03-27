@@ -61,7 +61,7 @@ public class MainInterfaceController implements Initializable {
     private JFXTreeTableView<EntryProperty> tableView_recylce;
 
     @FXML
-    private JFXTextField textField_Search, textField_settings_backupEntries, textField_settings_saveStatus;
+    private JFXTextField textField_Search, textField_settings_backupEntries, textField_settings_lengthRandomPasswords,textField_settings_saveStatus;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -103,6 +103,10 @@ public class MainInterfaceController implements Initializable {
 
     //Hinzugefügt von Wagenhuber: Wird nach dem Hinzufügen / Updaten eines neuen / bestehenden Entries ausgeführt um die View zu aktualisieren
     public void updateView2() {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        pane_recycle.setVisible(false);
+        textField_Search.clear();
         stageMainInterfaceController.show();
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
@@ -249,10 +253,6 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setScene(new Scene(parent, 400, 400));
         stageNewEntry.setAlwaysOnTop(true);
         stageNewEntry.show();
-        //DELETE - Test von Wagenhuber
-        /*stageNewEntry.setOnCloseRequest((WindowEvent event1) -> {
-            System.out.println("onClose von newEntry aufgerufen");
-        });*/
     }
 
     //Todo Sotierfunktion funktioniert nicht richtig, 1-2 mal ja, danach werden einfach alle Einträge angezeigt
@@ -352,7 +352,10 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(false);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+
+        //Hinzugefügt durch Wagenhuber: Textfelder für Settings
         textField_settings_backupEntries.setText(presenter.getTextField_settings_numberBackupEntries());
+        textField_settings_lengthRandomPasswords.setText(presenter.getTextField_settings_lengthRandomPasswords());
     }
 
 
@@ -550,12 +553,19 @@ public class MainInterfaceController implements Initializable {
        updateSaveStatus();
     }
 
+
+    public void btn_settings_lengthRandomPasswords(ActionEvent actionEvent) {
+        presenter.setTextField_settings_lengthRandomPasswords(textField_settings_lengthRandomPasswords.getText());
+        updateSaveStatus();
+    }
+
+
     private void updateSaveStatus() {
         boolean status = presenter.isTextField_settings_saveStatusBoolean();
         if (status) {
-            textField_settings_saveStatus.setText("Saved successful!");
+            textField_settings_saveStatus.setText("Success!");
         } else {
-            textField_settings_saveStatus.setText("Error saving!");
+            textField_settings_saveStatus.setText("Error!");
         }
 
     }

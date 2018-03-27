@@ -124,9 +124,9 @@
       <AnchorPane fx:id="pane_settings" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
             <AnchorPane />
-            <GridPane>
+            <GridPane hgap="5.0" vgap="5.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="220.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
@@ -134,12 +134,9 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <JFXTextField editable="false" text="Anzahl BackEntries:">
+                  <JFXTextField editable="false" text="Number of Backup-Entries:">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -149,12 +146,32 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXButton fx:id="btn_settings_numberBackupEntriesOk" onAction="#btn_settings_setNumberBackupEntries" ripplerFill="#276fc6" style="-fx-background-color: orange;" text="OK" textAlignment="CENTER" GridPane.columnIndex="2">
+                  <JFXButton fx:id="btn_settings_numberBackupEntriesOk" onAction="#btn_settings_setNumberBackupEntries" ripplerFill="#276fc6" style="-fx-background-color: orange;" text="SAVE" textAlignment="CENTER" GridPane.columnIndex="2">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </JFXButton>
-                  <JFXTextField fx:id="textField_settings_saveStatus" editable="false" text="No changes yet!" GridPane.rowIndex="5">
+                  <JFXTextField editable="false" text="Length Random-Passwords:" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="textField_settings_lengthRandomPasswords" alignment="CENTER" style="-fx-background-color: lightgrey;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXButton fx:id="btn_settings_lenthRandomPasswords" onAction="#btn_settings_lengthRandomPasswords" style="-fx-background-color: orange;" text="SAVE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXTextField editable="false" text="Save status:" unFocusColor="ORANGE" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="textField_settings_saveStatus" editable="false" text="No changes yet!" unFocusColor="ORANGE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>

@@ -269,10 +269,11 @@ public class DBService {
     }
 
 
-    public void setLengthOfRandomPasswordsToDB(int lengthOfRandomPasswords) throws SQLException {
+    public boolean setLengthOfRandomPasswordsToDB(int lengthOfRandomPasswords) throws SQLException {
         String sql = "update System set LengthOfRandomPasswords = '" + lengthOfRandomPasswords + "' where id = 1";
         this.statement.execute(sql);
         statement.close();
+        return true;
     }
 
 
