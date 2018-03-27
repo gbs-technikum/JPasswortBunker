@@ -72,6 +72,9 @@ public class MainInterfaceController implements Initializable {
 
     private PresenterMain presenter = new PresenterMain(this);
 
+
+
+
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
         //makeTextFieldNumeric(textField_settings_backupEntries);
     }
@@ -98,14 +101,20 @@ public class MainInterfaceController implements Initializable {
         stageMainInterfaceController.show();
     }
 
+    //Hinzugefügt von Wagenhuber: Wird nach dem Hinzufügen / Updaten eines neuen / bestehenden Entries ausgeführt um die View zu aktualisieren
     public void updateView2() {
-        //fillTreeView();
-        //fillRecycleTable();
         stageMainInterfaceController.show();
+        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+            @Override
+            public boolean test(TreeItem<EntryProperty> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(presenter.getCategoryChoosenForLastNewEntry());
+                return flag;
+            }
+        });
+
     }
 
 
-    //ToDo Ursache für Aktualisierungsproblem der Anzeige liegt hier!
     public void fillTreeView() {
 
         //Spalte Title
@@ -241,9 +250,9 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setAlwaysOnTop(true);
         stageNewEntry.show();
         //DELETE - Test von Wagenhuber
-        stageNewEntry.setOnCloseRequest((WindowEvent event1) -> {
+        /*stageNewEntry.setOnCloseRequest((WindowEvent event1) -> {
             System.out.println("onClose von newEntry aufgerufen");
-        });
+        });*/
     }
 
     //Todo Sotierfunktion funktioniert nicht richtig, 1-2 mal ja, danach werden einfach alle Einträge angezeigt

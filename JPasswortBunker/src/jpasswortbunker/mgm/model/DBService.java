@@ -24,7 +24,7 @@ public class DBService {
 
     public DBService() throws SQLException {
         //Java-Property Temp-Verzeichnis für Sqlite setzen:
-        System.setProperty("java.io.tmpdir", System.getProperty("user.dir"));
+        //System.setProperty("java.io.tmpdir", System.getProperty("user.dir"));
         //System.setProperty("org.sqlite.tmpdir", System.getProperty("user.dir"));
 
         this.connection = DriverManager.getConnection(URL);

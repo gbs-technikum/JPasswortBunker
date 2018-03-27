@@ -58,6 +58,10 @@ public class NewEntryController{
                 comboBox.getValue().getText();
                 presenter.newEntry(tfTitle.getText(), tfUsername.getText(), pf1.getText(), tfURL.getText(),
                         taDescription.getText(),(comboBox.getSelectionModel().getSelectedIndex()+1));
+
+                //Eingefügt Wagenhuber: Zwischenspeichern der gewählten Kategorie, um diese anschließend im View anzuzeigen
+                presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex()+1));
+
                 Stage stage = (Stage) btn_save.getScene().getWindow();
                 stage.close();
                 System.out.println("neuer Eintrag angelegt");

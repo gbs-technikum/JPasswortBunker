@@ -1,9 +1,6 @@
 package jpasswortbunker.mgm.presenter;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -29,7 +26,7 @@ public final class PresenterMain {
     public ObservableList<EntryProperty> entryPropertiesListRecycle = FXCollections.observableArrayList();
     private StringProperty textField_settings_numberBackupEntries;
     private BooleanProperty textField_settings_saveStatusBoolean;
-
+    private IntegerProperty categoryChoosenForLastNewEntry;
 
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
@@ -176,7 +173,31 @@ public final class PresenterMain {
         this.textField_settings_saveStatusBoolean.setValue(textField_settings_saveStatusBoolean);
     }
 
+
+    public int getCategoryChoosenForLastNewEntry() {
+        return categoryChoosenForLastNewEntry.getValue();
+    }
+
+    public IntegerProperty categoryChoosenForLastNewEntryProperty() {
+        return categoryChoosenForLastNewEntry;
+    }
+
+    public void setCategoryChoosenForLastNewEntry(int categoryChoosenForLastNewEntry) {
+        this.categoryChoosenForLastNewEntry.setValue(categoryChoosenForLastNewEntry);
+    }
+
+
+
     private void initProperties() {
+
+
+        categoryChoosenForLastNewEntry = new SimpleIntegerProperty();
+        categoryChoosenForLastNewEntry.addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+            }
+        });
 
 
         try {
