@@ -248,10 +248,11 @@ public class DBService {
     }
 
 
-    public void setTimePeriodForClipboardToDB(int timePeriodinSeconds) throws SQLException {
+    public boolean setTimePeriodForClipboardToDB(int timePeriodinSeconds) throws SQLException {
         String sql = "update System set Cache_Time = '" + timePeriodinSeconds + "' where id = 1";
         this.statement.execute(sql);
         statement.close();
+        return true;
     }
 
 
