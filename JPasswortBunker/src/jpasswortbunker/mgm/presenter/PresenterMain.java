@@ -323,7 +323,7 @@ public final class PresenterMain {
 
     public boolean checkIfTextFieldNumeric(String value) {
         if (value.matches("^\\d+$")){
-        //if (value.matches("[0-9]")){
+        //if (value.matches("[0-9][0-9]")){
             return true;
         } else {
             return false;

@@ -307,6 +307,27 @@ public class ModelMain {
     }
 
 
+    public boolean removeEntriesFromRecycleBinFinal(String entryIdAsString) throws SQLException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
+        Iterator<Entry> iterator = entryArrayList.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getEntryIDasString().equals(entryIdAsString)) {
+                //this.FillEntryListFromRecycleBin();
+                dbService.removeEntriesFromRecycleBinFinal(entryIdAsString);
+                iterator.remove();
+                System.out.println("##Status## Entry erfolgreich gelöscht!");
+                return true;
+            }
+        }
+        System.out.println("##Status## Entry konnte nicht gelöscht werden!");
+        return false;
+    }
+
+
+
+
+
+
     //#####Es folgen Methoden für Ausgabe auf Console######
     //=====================================================
 

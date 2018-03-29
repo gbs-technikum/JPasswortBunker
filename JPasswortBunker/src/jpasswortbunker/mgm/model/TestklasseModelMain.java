@@ -37,7 +37,7 @@ public class TestklasseModelMain {
         System.out.println(modelMain.checkIfMasterPasswordIsCorrect());
 
 
-        //Beschreibung: Zeitspanne in Sekunden für Zwischenablage aus DB abfragen bzw. Wert setzen (Defaultwert = 60)
+        //Beschreibung: Zeitspanne in Sekunden für Zwischenablage aus DB abfragen bzw. Wert setzen
         modelMain.getTimePeriodForClipboardFromDB();
         //modelMain.setTimePeriodForClipboardToDB(60);
 
@@ -76,8 +76,12 @@ public class TestklasseModelMain {
         //modelMain.updateEntry("742582fe-cb14-41fb-a9d1-1c8b4f7a54a8", "DeleteTestRestore4update2", "hans3", "abc", "www.gayhub.com", "bla bla bla", 9);
 
 
-        //Beschreibung: Eintrag löschen via EntryID
+        //Beschreibung: Eintrag löschen aus Entrys-Tabelle via EntryID
         //modelMain.removeEntry("8bcde5bf-f1be-4fd5-9bf7-64aeefbed7ec");
+
+
+        //Beschreibung: Einträge endgültig aus Recycle_Bin Tabelle löschen via EntryID
+        //modelMain.removeEntriesFromRecycleBinFinal("71b6e4ea-fc39-4fb8-8fff-9be472eeb556");
 
 
         //Beschreibung: Eintrag von Papierkorb wiederherstellen anhand von entryID und Timestamp
@@ -118,7 +122,7 @@ public class TestklasseModelMain {
         //System.out.println(modelMain.getLengthOfRandomPasswordsFromDB());
 
 
-        //ToDo Speicherort für Datenbank export prüfen
+
 
 
 
