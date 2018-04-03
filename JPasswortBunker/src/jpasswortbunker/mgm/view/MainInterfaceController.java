@@ -170,6 +170,7 @@ public class MainInterfaceController implements Initializable {
         treeView.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
         treeView.setRoot(root);
         treeView.setShowRoot(false);
+        treeView.sort();
         //ruft Methode auf und baut ContextMenu zusammen
         buildContextMenu();
 
@@ -228,6 +229,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setTitle("LoginScreen");
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
+            stageLogin.setResizable(false);
             stageLogin.show();
         } else {
             System.out.println("Nicht gesetzt");
@@ -239,6 +241,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setTitle("SetMasterPassword");
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
+            stageLogin.setResizable(false);
             stageLogin.show();
         }
     }
@@ -256,6 +259,7 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setTitle("New Entry");
         stageNewEntry.setScene(new Scene(parent, 400, 400));
         stageNewEntry.setAlwaysOnTop(true);
+        stageNewEntry.setResizable(false);
         stageNewEntry.show();
     }
 
@@ -426,6 +430,7 @@ public class MainInterfaceController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
+                Ziwschenablage();
                 //Todo Funktion einbauen bzw. Methodenaufruf
                 System.out.println("test: Copy Password");
             }
@@ -504,6 +509,7 @@ public class MainInterfaceController implements Initializable {
         //Inhalte werden in die Tabelle geschrieben
         final TreeItem<EntryProperty> root1 = new RecursiveTreeItem<EntryProperty>(presenter.getEntryPropertiesListRecycle(), RecursiveTreeObject::getChildren);
         tableView_recylce.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
+        tableView_recylce.sort();
         tableView_recylce.setRoot(root1);
         tableView_recylce.setShowRoot(false);
         //ruft Methode auf und baut ContextMenu zusammen
@@ -547,14 +553,14 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
-    public static void main(String[] args) {
+   public void Ziwschenablage() {
         Clipboard systemClip = Toolkit.getDefaultToolkit().getSystemClipboard();
 
         systemClip.setContents(new StringSelection("Ich bin die Zwischenablge"), null);
 
         Transferable transfer = systemClip.getContents(null);
 
-        for (int i = 0; i < transfer.getTransferDataFlavors().length; i++) ;
+        for (int i = 0; i < transfer.getTransferDataFlavors().length; i++)
         {
             Object content = null;
 
@@ -569,10 +575,12 @@ public class MainInterfaceController implements Initializable {
                 System.out.println(content);
 
             }
+
+
         }
 
     }
-    }
+
 
 
 // Folgende Methoden hinzugefügt von Wagenhuber:
@@ -600,4 +608,6 @@ public class MainInterfaceController implements Initializable {
         }
 
     }
+}
+
 
