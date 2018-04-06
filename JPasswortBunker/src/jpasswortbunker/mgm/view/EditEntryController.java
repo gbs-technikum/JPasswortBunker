@@ -75,6 +75,10 @@ public class EditEntryController {
         System.out.println("test: btn_copyPasswordToClipboard");
     }
 
+    public void btn_historie(MouseEvent mouseEvent){
+        System.out.println("Test Geschichte");
+    }
+
 
     //Übergebenes Element wird in die jeweiligen Felder geschrieben
     public void setEntry(TreeItem<EntryProperty> selectedEntry) {

@@ -606,7 +606,7 @@ public class MainInterfaceController implements Initializable {
 
     
     public void btn_settings_ChacheTime(ActionEvent actionEvent){
-        presenter.setTimePeriodForClipboardFromDB(textField_settings_TimeClipboard.getText());
+        presenter.setTextfield_TimePeriodForClipboardFromDB(textField_settings_TimeClipboard.getText());
         updateSaveStatus();
     }
 

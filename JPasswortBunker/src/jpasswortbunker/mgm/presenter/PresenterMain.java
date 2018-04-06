@@ -201,7 +201,7 @@ public final class PresenterMain {
         this.categoryChoosenForLastNewEntry.setValue(categoryChoosenForLastNewEntry);
     }
 
-    public void setTimePeriodForClipboardFromDB(String timePeriodForClipboardFromDB){
+    public void setTimePeriodForClipboardFromDB(int timePeriodForClipboardFromDB){
         this.textField_settings_TimeClipboard.setValue(String.valueOf(timePeriodForClipboardFromDB));
     }
 
