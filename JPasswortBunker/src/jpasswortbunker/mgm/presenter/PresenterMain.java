@@ -28,6 +28,7 @@ public final class PresenterMain {
     private StringProperty textField_settings_lengthRandomPasswords;
     private BooleanProperty textField_settings_saveStatusBoolean;
     private IntegerProperty categoryChoosenForLastNewEntry;
+    private StringProperty textField_settings_TimeClipboard;
 
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
@@ -200,6 +201,17 @@ public final class PresenterMain {
         this.categoryChoosenForLastNewEntry.setValue(categoryChoosenForLastNewEntry);
     }
 
+    public void setTimePeriodForClipboardFromDB(String timePeriodForClipboardFromDB){
+        this.textField_settings_TimeClipboard.setValue(String.valueOf(timePeriodForClipboardFromDB));
+    }
+
+    public StringProperty getTimePeriodForClipboardFromDB(String text) {
+        return textField_settings_TimeClipboard;
+    }
+
+    public void setTextfield_TimePeriodForClipboardFromDB(String textField_settings_TimeClipboard){
+        this.textField_settings_TimeClipboard.setValue( textField_settings_TimeClipboard);
+    }
 
 
 

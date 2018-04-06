@@ -50,7 +50,7 @@ public class MainInterfaceController implements Initializable {
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle, btn_settings_numberBackupEntriesOk;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle, btn_settings_numberBackupEntriesOk,btn_settings_ChacheTime;
 
     @FXML
     private ImageView btn_logo;
@@ -65,7 +65,7 @@ public class MainInterfaceController implements Initializable {
     private JFXTreeTableView<EntryProperty> tableView_recylce;
 
     @FXML
-    private JFXTextField textField_Search, textField_settings_backupEntries, textField_settings_lengthRandomPasswords,textField_settings_saveStatus;
+    private JFXTextField textField_Search, textField_settings_backupEntries, textField_settings_lengthRandomPasswords,textField_settings_saveStatus,textField_settings_TimeClipboard;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -354,6 +354,7 @@ public class MainInterfaceController implements Initializable {
     }
 
 
+
     //Button für die Einstellungen
     public void btn_settings(ActionEvent actionEvent) {
         pane_settings.setVisible(true);
@@ -369,6 +370,10 @@ public class MainInterfaceController implements Initializable {
 
     public void btn_newMasterPassword() {
         ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(presenter);
+    }
+
+    public void btn_about(){
+
     }
 
     /**
@@ -587,6 +592,7 @@ public class MainInterfaceController implements Initializable {
 
 
 
+
     public void btn_settings_setNumberBackupEntries(ActionEvent actionEvent) {
        presenter.setTextField_settings_numberBackupEntries(textField_settings_backupEntries.getText());
        updateSaveStatus();
@@ -598,6 +604,14 @@ public class MainInterfaceController implements Initializable {
         updateSaveStatus();
     }
 
+    
+    public void btn_settings_ChacheTime(ActionEvent actionEvent){
+        presenter.setTimePeriodForClipboardFromDB(textField_settings_TimeClipboard.getText());
+        updateSaveStatus();
+    }
+
+
+
 
     private void updateSaveStatus() {
         boolean status = presenter.isTextField_settings_saveStatusBoolean();
@@ -608,6 +622,7 @@ public class MainInterfaceController implements Initializable {
         }
 
     }
+
 }
 
 

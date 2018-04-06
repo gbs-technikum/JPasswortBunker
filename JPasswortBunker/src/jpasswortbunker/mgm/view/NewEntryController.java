@@ -63,6 +63,9 @@ public class NewEntryController{
                 presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex()+1));
 
 
+
+
+
                 Stage stage = (Stage) btn_save.getScene().getWindow();
                 stage.close();
                 stage.setResizable(false);
@@ -70,6 +73,7 @@ public class NewEntryController{
             } catch (NullPointerException e) {
                 System.out.println("Kategorie nicht ausgewählt");
                 labelErrorMessage.setText("Please choose a categorie");
+               
             } catch (InvalidKeyException e) {
                 e.printStackTrace();
             } catch (SQLException e) {

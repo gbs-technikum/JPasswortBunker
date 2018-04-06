@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<AnchorPane fx:id="mainAnchorPane" prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.view.MainInterfaceController">
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainAnchorPane" prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.view.MainInterfaceController">
    <children>
       <AnchorPane fx:id="pane_recycle" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
@@ -33,60 +42,60 @@
       </AnchorPane>
       <AnchorPane id="sideBar" layoutY="25.0" prefHeight="600.0" prefWidth="200.0" stylesheets="@style/default_style.css">
          <children>
-            <JFXButton fx:id="btn_newEntry" layoutX="11.0" layoutY="101.0" onAction="#btn_finance" prefHeight="49.0" prefWidth="178.0" text="   Finance" textFill="WHITE">
+            <JFXButton fx:id="btn_newEntry" layoutX="18.0" layoutY="101.0" onAction="#btn_finance" prefHeight="49.0" prefWidth="165.0" text="Finance" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="29.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/dollar_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_social" layoutX="11.0" layoutY="156.0" onAction="#btn_social" prefHeight="49.0" prefWidth="178.0" text="   Social" textFill="WHITE">
+            <JFXButton fx:id="btn_social" layoutX="1.0" layoutY="150.0" onAction="#btn_social" prefHeight="49.0" prefWidth="188.0" text="Social" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/User-Group.png" />
                      </image>
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_email" layoutX="11.0" layoutY="212.0" onAction="#btn_email" prefHeight="49.0" prefWidth="178.0" text="   E-Mail" textFill="WHITE">
+            <JFXButton fx:id="btn_email" layoutX="1.0" layoutY="199.0" onAction="#btn_email" prefHeight="49.0" prefWidth="188.0" text="E-Mail" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="34.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/letter.png" />
                      </image>
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_network" layoutX="11.0" layoutY="270.0" onAction="#btn_network" prefHeight="49.0" prefWidth="178.0" text="Network" textFill="WHITE">
+            <JFXButton fx:id="btn_network" layoutX="12.0" layoutY="248.0" onAction="#btn_network" prefHeight="49.0" prefWidth="178.0" text="Network" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="27.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/wifi_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btn_settings" layoutX="11.0" layoutY="525.0" onAction="#btn_settings" prefHeight="49.0" prefWidth="178.0" text="   Settings" textFill="WHITE">
+            <JFXButton fx:id="btn_settings" layoutX="12.0" layoutY="525.0" onAction="#btn_settings" prefHeight="49.0" prefWidth="178.0" text="Settings" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/Settings_icon.png" />
                      </image>
@@ -98,9 +107,9 @@
                   <Image url="@images/logo.png" />
                </image>
             </ImageView>
-            <JFXButton layoutX="-3.0" layoutY="447.0" onAction="#btn_recycle" prefHeight="70.0" prefWidth="203.0" text="Recycle_Bin" textFill="WHITE">
+            <JFXButton layoutX="-1.0" layoutY="462.0" onAction="#btn_recycle" prefHeight="70.0" prefWidth="203.0" text="Recycle" textFill="WHITE">
                <graphic>
-                  <ImageView fitHeight="48.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/recycle.png" />
                      </image>
@@ -115,7 +124,7 @@
       <AnchorPane fx:id="pane_settings" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
             <AnchorPane />
-            <GridPane hgap="5.0" vgap="5.0">
+            <GridPane hgap="5.0" prefHeight="115.0" prefWidth="437.0" vgap="5.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="220.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -125,6 +134,7 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints />
                </rowConstraints>
                <children>
                   <JFXTextField editable="false" text="Number of Backup-Entries:">
@@ -157,14 +167,25 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </JFXButton>
-                  <JFXTextField editable="false" text="Save status:" unFocusColor="ORANGE" GridPane.rowIndex="2">
+                  <JFXTextField editable="false" text="Save status:" unFocusColor="ORANGE" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="textField_settings_saveStatus" editable="false" text="No changes yet!" unFocusColor="ORANGE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <JFXTextField fx:id="textField_settings_saveStatus" editable="false" text="No changes yet!" unFocusColor="ORANGE" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField promptText="Cache-Time-Setzen" text="Cache-Time-set:" GridPane.rowIndex="2" />
+                  <JFXButton fx:id="btn_settings_ChacheTimebtn_settings_ChacheTime" onAction="#btn_settings_ChacheTime" style="-fx-background-color: orange;" text="SAVE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXTextField alignment="CENTER" style="-fx-background-color: lightgrey;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </JFXTextField>
                </children>
@@ -176,7 +197,6 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#btn_newMasterPassword" text="New Masterpassword" />
-                  <MenuItem mnemonicParsing="false" text="Clear Database" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -186,7 +206,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
                <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem mnemonicParsing="false" onAction="#btn_about" text="About" />
                   <MenuItem mnemonicParsing="false" text="Help" />
                </items>
           </Menu>
