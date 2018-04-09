@@ -26,6 +26,7 @@ public final class PresenterMain {
     public ObservableList<EntryProperty> entryPropertiesListRecycle = FXCollections.observableArrayList();
     private StringProperty textField_settings_numberBackupEntries;
     private StringProperty textField_settings_lengthRandomPasswords;
+    private StringProperty textField_settings_timeoutClipboard;
     private BooleanProperty textField_settings_saveStatusBoolean;
     private IntegerProperty categoryChoosenForLastNewEntry;
 
@@ -174,6 +175,20 @@ public final class PresenterMain {
     }
 
 
+    public String getTextField_settings_timeoutClipboard() {
+        return textField_settings_timeoutClipboard.getValue();
+    }
+
+    public StringProperty textField_settings_timeoutClipboardProperty() {
+        return textField_settings_timeoutClipboard;
+    }
+
+    public void setTextField_settings_timeoutClipboard(String textField_settings_timeoutClipboard) {
+        this.textField_settings_timeoutClipboard.setValue(textField_settings_timeoutClipboard);
+    }
+
+
+
 
     public boolean isTextField_settings_saveStatusBoolean() {
         return textField_settings_saveStatusBoolean.getValue();
@@ -232,6 +247,16 @@ public final class PresenterMain {
         }
 
 
+
+        try {
+            textField_settings_timeoutClipboard = new SimpleStringProperty();
+            textField_settings_timeoutClipboard.setValue(String.valueOf(model.getTimePeriodForClipboardFromDB()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
         textField_settings_saveStatusBoolean = new SimpleBooleanProperty();
 
         textField_settings_numberBackupEntries.addListener(new ChangeListener<String>() {
@@ -274,10 +299,31 @@ public final class PresenterMain {
 
 
 
+        textField_settings_timeoutClipboard.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                try {
+                    if (checkIfTextFieldNumeric(textField_settings_timeoutClipboard.getValue())) {
+                        if (model.setTimePeriodForClipboardToDB(Integer.parseInt(textField_settings_timeoutClipboard.getValue()))) {
+                            setTextField_settings_saveStatusBoolean(true);
+                        } else {
+                            setTextField_settings_saveStatusBoolean(false);
+                        }
+                    } else {
+                        setTextField_settings_saveStatusBoolean(false);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
     }//ende initProperties
 
     public boolean checkIfTextFieldNumeric(String value) {
         if (value.matches("^\\d+$")){
+        //if (value.matches("[0-9][0-9]")){
             return true;
         } else {
             return false;

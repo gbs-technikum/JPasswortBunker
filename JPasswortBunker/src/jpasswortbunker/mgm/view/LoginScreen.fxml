@@ -22,7 +22,7 @@
     <children>
         <AnchorPane prefHeight="337.0" prefWidth="390.0" GridPane.rowIndex="1">
             <children>
-                <Label layoutX="40.0" layoutY="185.0" text="Unlock Your Keypasss">
+                <Label layoutX="40.0" layoutY="185.0" text="Unlock your JPasswortBunker">
                     <font>
                         <Font size="14.0" />
                     </font></Label>

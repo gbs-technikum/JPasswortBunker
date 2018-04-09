@@ -110,7 +110,7 @@ public class NewEntryController{
         for (int i = 1; i < categoryList.size(); i++) {
             comboBox.getItems().add(new Label(categoryList.get(i)));
         }
-        comboBox.setPromptText("Select categorie");
+        comboBox.setPromptText("Category ...");
     }
 
 

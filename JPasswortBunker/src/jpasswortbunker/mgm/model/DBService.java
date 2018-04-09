@@ -228,6 +228,13 @@ public class DBService {
     }
 
 
+    public void removeEntriesFromRecycleBinFinal(String entryID) throws SQLException {
+        String sql = "delete from Recycle_Bin where Entry_ID = '" + entryID + "'";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+
     public void updateRecycleBinForRemovedEntrys(String entryID) throws SQLException {
         String sql = "update Recycle_Bin set Categorie_ID = '-1' where Entry_ID = '" + entryID + "'";
         this.statement.execute(sql);
@@ -248,10 +255,11 @@ public class DBService {
     }
 
 
-    public void setTimePeriodForClipboardToDB(int timePeriodinSeconds) throws SQLException {
+    public boolean setTimePeriodForClipboardToDB(int timePeriodinSeconds) throws SQLException {
         String sql = "update System set Cache_Time = '" + timePeriodinSeconds + "' where id = 1";
         this.statement.execute(sql);
         statement.close();
+        return true;
     }
 
 

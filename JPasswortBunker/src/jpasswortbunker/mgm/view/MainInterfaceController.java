@@ -50,7 +50,7 @@ public class MainInterfaceController implements Initializable {
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle, btn_settings_numberBackupEntriesOk;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle, btn_settings_timeoutClipboard, btn_settings_numberBackupEntriesOk;
 
     @FXML
     private ImageView btn_logo;
@@ -65,7 +65,7 @@ public class MainInterfaceController implements Initializable {
     private JFXTreeTableView<EntryProperty> tableView_recylce;
 
     @FXML
-    private JFXTextField textField_Search, textField_settings_backupEntries, textField_settings_lengthRandomPasswords,textField_settings_saveStatus;
+    private JFXTextField textField_Search, textField_settings_timeoutClipboard, textField_settings_backupEntries, textField_settings_lengthRandomPasswords,textField_settings_saveStatus;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -80,7 +80,6 @@ public class MainInterfaceController implements Initializable {
 
 
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
-        //makeTextFieldNumeric(textField_settings_backupEntries);
     }
 
 
@@ -111,6 +110,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(true);
         stageMainInterfaceController.show();
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
@@ -266,6 +266,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(true);
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
@@ -283,6 +284,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(true);
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
@@ -298,6 +300,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(true);
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
@@ -314,6 +317,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(true);
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
@@ -330,6 +334,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(true);
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
@@ -346,6 +351,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(false);
         pane_recycle.setVisible(true);
         textField_Search.clear();
+        textField_Search.setVisible(true);
 
     }
 
@@ -356,10 +362,12 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(false);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(false);
 
         //Hinzugefügt durch Wagenhuber: Textfelder für Settings
         textField_settings_backupEntries.setText(presenter.getTextField_settings_numberBackupEntries());
         textField_settings_lengthRandomPasswords.setText(presenter.getTextField_settings_lengthRandomPasswords());
+        textField_settings_timeoutClipboard.setText(presenter.getTextField_settings_timeoutClipboard());
     }
 
 
@@ -587,6 +595,12 @@ public class MainInterfaceController implements Initializable {
 
     public void btn_settings_lengthRandomPasswords(ActionEvent actionEvent) {
         presenter.setTextField_settings_lengthRandomPasswords(textField_settings_lengthRandomPasswords.getText());
+        updateSaveStatus();
+    }
+
+
+    public void btn_settings_timeoutClipboard(ActionEvent actionEvent) {
+        presenter.setTextField_settings_timeoutClipboard(textField_settings_timeoutClipboard.getText());
         updateSaveStatus();
     }
 
