@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Testklasse extends Application {
@@ -25,9 +27,20 @@ public class Testklasse extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("MainInterface.fxml"));
         primaryStage.setTitle("jPasswordBunker");
         primaryStage.setScene(new Scene(root, 900, 625));
+        primaryStage.setResizable(false);
+        primaryStage.sizeToScene();
+
+
+
+
+
+
+
         //primaryStage.show();
         primaryStage.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
     }
+
+
 
 
     public static void main(String[] args) {

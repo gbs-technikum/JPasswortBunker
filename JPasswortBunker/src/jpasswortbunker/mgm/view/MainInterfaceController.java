@@ -50,7 +50,7 @@ public class MainInterfaceController implements Initializable {
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle, btn_settings_timeoutClipboard, btn_settings_numberBackupEntriesOk;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle, btn_settings_numberBackupEntriesOk,btn_settings_ChacheTime;
 
     @FXML
     private ImageView btn_logo;
@@ -65,7 +65,7 @@ public class MainInterfaceController implements Initializable {
     private JFXTreeTableView<EntryProperty> tableView_recylce;
 
     @FXML
-    private JFXTextField textField_Search, textField_settings_timeoutClipboard, textField_settings_backupEntries, textField_settings_lengthRandomPasswords, textField_settings_saveStatus;
+    private JFXTextField textField_Search, textField_settings_backupEntries, textField_settings_lengthRandomPasswords,textField_settings_saveStatus,textField_settings_TimeClipboard;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -77,8 +77,12 @@ public class MainInterfaceController implements Initializable {
     private PresenterMain presenter = new PresenterMain(this);
 
 
+
+
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        //makeTextFieldNumeric(textField_settings_backupEntries);
     }
+
 
 
     @Override
@@ -167,6 +171,7 @@ public class MainInterfaceController implements Initializable {
         treeView.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
         treeView.setRoot(root);
         treeView.setShowRoot(false);
+        treeView.sort();
         //ruft Methode auf und baut ContextMenu zusammen
         buildContextMenu();
 
@@ -225,6 +230,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setTitle("LoginScreen");
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
+            stageLogin.setResizable(false);
             stageLogin.show();
         } else {
             System.out.println("Nicht gesetzt");
@@ -236,6 +242,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setTitle("SetMasterPassword");
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
+            stageLogin.setResizable(false);
             stageLogin.show();
         }
     }
@@ -253,6 +260,7 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setTitle("New Entry");
         stageNewEntry.setScene(new Scene(parent, 400, 400));
         stageNewEntry.setAlwaysOnTop(true);
+        stageNewEntry.setResizable(false);
         stageNewEntry.show();
     }
 
@@ -353,6 +361,7 @@ public class MainInterfaceController implements Initializable {
     }
 
 
+
     //Button für die Einstellungen
     public void btn_settings(ActionEvent actionEvent) {
         pane_settings.setVisible(true);
@@ -370,6 +379,10 @@ public class MainInterfaceController implements Initializable {
 
     public void btn_newMasterPassword() {
         ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(presenter);
+    }
+
+    public void btn_about(){
+
     }
 
     /**
@@ -431,6 +444,7 @@ public class MainInterfaceController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
+                Ziwschenablage();
                 //Todo Funktion einbauen bzw. Methodenaufruf
                 System.out.println("test: Copy Password");
             }
@@ -552,6 +566,33 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
+   public void Ziwschenablage() {
+        Clipboard systemClip = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        systemClip.setContents(new StringSelection("Ich bin die Zwischenablge"), null);
+
+        Transferable transfer = systemClip.getContents(null);
+
+        for (int i = 0; i < transfer.getTransferDataFlavors().length; i++)
+        {
+            Object content = null;
+
+            try {
+                content = transfer.getTransferData(transfer.getTransferDataFlavors()[i]);
+            } catch (UnsupportedFlavorException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (content instanceof String) {
+                System.out.println(content);
+
+            }
+
+
+        }
+
+    }
 
 
 

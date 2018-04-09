@@ -62,12 +62,18 @@ public class NewEntryController{
                 //Eingefügt Wagenhuber: Zwischenspeichern der gewählten Kategorie, um diese anschließend im View anzuzeigen
                 presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex()+1));
 
+
+
+
+
                 Stage stage = (Stage) btn_save.getScene().getWindow();
                 stage.close();
+                stage.setResizable(false);
                 System.out.println("neuer Eintrag angelegt");
             } catch (NullPointerException e) {
                 System.out.println("Kategorie nicht ausgewählt");
                 labelErrorMessage.setText("Please choose a categorie");
+               
             } catch (InvalidKeyException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
