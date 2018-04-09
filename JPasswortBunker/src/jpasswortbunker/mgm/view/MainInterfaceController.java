@@ -65,7 +65,7 @@ public class MainInterfaceController implements Initializable {
     private JFXTreeTableView<EntryProperty> tableView_recylce;
 
     @FXML
-    private JFXTextField textField_Search, textField_settings_timeoutClipboard, textField_settings_backupEntries, textField_settings_lengthRandomPasswords,textField_settings_saveStatus;
+    private JFXTextField textField_Search, textField_settings_timeoutClipboard, textField_settings_backupEntries, textField_settings_lengthRandomPasswords, textField_settings_saveStatus;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -77,11 +77,8 @@ public class MainInterfaceController implements Initializable {
     private PresenterMain presenter = new PresenterMain(this);
 
 
-
-
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
     }
-
 
 
     @Override
@@ -555,41 +552,15 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
-    public static void main(String[] args) {
-        Clipboard systemClip = Toolkit.getDefaultToolkit().getSystemClipboard();
 
-        systemClip.setContents(new StringSelection("Ich bin die Zwischenablge"), null);
-
-        Transferable transfer = systemClip.getContents(null);
-
-        for (int i = 0; i < transfer.getTransferDataFlavors().length; i++) ;
-        {
-            Object content = null;
-
-            try {
-                content = transfer.getTransferData(transfer.getTransferDataFlavors()[i]);
-            } catch (UnsupportedFlavorException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (content instanceof String) {
-                System.out.println(content);
-
-            }
-        }
-
-    }
-    }
 
 
 // Folgende Methoden hinzugefügt von Wagenhuber:
 
 
-
     public void btn_settings_setNumberBackupEntries(ActionEvent actionEvent) {
-       presenter.setTextField_settings_numberBackupEntries(textField_settings_backupEntries.getText());
-       updateSaveStatus();
+        presenter.setTextField_settings_numberBackupEntries(textField_settings_backupEntries.getText());
+        updateSaveStatus();
     }
 
 
@@ -614,4 +585,4 @@ public class MainInterfaceController implements Initializable {
         }
 
     }
-
+}
