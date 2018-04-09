@@ -22,7 +22,7 @@
     <children>
         <AnchorPane prefHeight="337.0" prefWidth="390.0" GridPane.rowIndex="1">
             <children>
-                <Label layoutX="40.0" layoutY="185.0" text="Unlock Your Keypasss">
+                <Label layoutX="40.0" layoutY="185.0" text="Unlock your JPasswortBunker">
                     <font>
                         <Font size="14.0" />
                     </font></Label>
@@ -33,7 +33,7 @@
                 </ImageView>
                 <Label fx:id="wrongPassword" layoutX="40.0" layoutY="264.0" textFill="RED" />
             <JFXPasswordField fx:id="password_box" layoutX="40.0" layoutY="225.0" onAction="#btn_login" prefHeight="25.0" prefWidth="191.0" promptText="Password" />
-            <JFXButton layoutX="257.0" layoutY="225.0" onAction="#btn_login" style="-fx-background-color: orange;" text="Login">
+            <JFXButton fx:id="btn_login" layoutX="257.0" layoutY="225.0" onAction="#btn_login" style="-fx-background-color: orange;" text="Login">
                <font>
                   <Font size="13.0" />
                </font>
