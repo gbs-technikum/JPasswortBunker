@@ -165,6 +165,7 @@ public class MainInterfaceController implements Initializable {
         final TreeItem<EntryProperty> root = new RecursiveTreeItem<EntryProperty>(presenter.getEntryPropertiesList(), RecursiveTreeObject::getChildren);
         treeView.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
         treeView.setRoot(root);
+        treeView.sort();
         treeView.setShowRoot(false);
         //ruft Methode auf und baut ContextMenu zusammen
         buildContextMenu();
@@ -224,6 +225,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setTitle("LoginScreen");
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
+            stageLogin.setResizable(false);
             stageLogin.show();
         } else {
             System.out.println("Nicht gesetzt");
@@ -235,6 +237,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setTitle("SetMasterPassword");
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
+            stageLogin.setResizable(false);
             stageLogin.show();
         }
     }
@@ -252,10 +255,11 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setTitle("New Entry");
         stageNewEntry.setScene(new Scene(parent, 400, 400));
         stageNewEntry.setAlwaysOnTop(true);
+        stageNewEntry.setResizable(false);
         stageNewEntry.show();
     }
 
-    //Todo Sotierfunktion funktioniert nicht richtig, 1-2 mal ja, danach werden einfach alle Einträge angezeigt
+
     //Button Logo zeit alle Einträge an und setzt Suchfilter bzw Kategorie zurück
     public void btn_logo(MouseEvent mouseEvent) {
         pane_settings.setVisible(false);
@@ -432,9 +436,14 @@ public class MainInterfaceController implements Initializable {
             public void handle(ActionEvent event) {
                 //Todo Funktion einbauen bzw. Methodenaufruf
                 System.out.println("test: Copy Password");
+               ClipBoardCopy();
             }
         });
         contextMenu.getItems().add(item3);
+    }
+
+    private void ClipBoardCopy() {
+
     }
 
     private void editEntryScene() throws SQLException {
@@ -457,12 +466,14 @@ public class MainInterfaceController implements Initializable {
         Scene sceneEditentry = new Scene(parentEditEntry, 400, 400);
         stageEditEntry.setTitle("Edit your EntryProperty");
         stageEditEntry.setScene(sceneEditentry);
+        stageEditEntry.setResizable(false);
         stageEditEntry.show();
+        stageEditEntry.setResizable(false);
         stageEditEntry.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
     }
 
 
-    //TODO: 14.03.2018 Liste richtig laden in den Mülleimer
+
     public void fillRecycleTable() {
 
         //Spalte Title
@@ -510,6 +521,9 @@ public class MainInterfaceController implements Initializable {
         tableView_recylce.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
         tableView_recylce.setRoot(root1);
         tableView_recylce.setShowRoot(false);
+        tableView_recylce.sort();
+
+
         //ruft Methode auf und baut ContextMenu zusammen
         buildContextMenu();
 
