@@ -8,6 +8,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
 import javax.crypto.BadPaddingException;
@@ -57,12 +58,22 @@ public class NewEntryController{
                 comboBox.getValue().getText();
                 presenter.newEntry(tfTitle.getText(), tfUsername.getText(), pf1.getText(), tfURL.getText(),
                         taDescription.getText(),(comboBox.getSelectionModel().getSelectedIndex()+1));
+
+                //Eingefügt Wagenhuber: Zwischenspeichern der gewählten Kategorie, um diese anschließend im View anzuzeigen
+                presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex()+1));
+
+
+
+
+
                 Stage stage = (Stage) btn_save.getScene().getWindow();
                 stage.close();
+                stage.setResizable(false);
                 System.out.println("neuer Eintrag angelegt");
             } catch (NullPointerException e) {
                 System.out.println("Kategorie nicht ausgewählt");
                 labelErrorMessage.setText("Please choose a categorie");
+               
             } catch (InvalidKeyException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
@@ -79,7 +90,7 @@ public class NewEntryController{
         }
     }
 
-    public void btn_createPassword(ActionEvent actionEvent){
+    public void btn_createPassword(ActionEvent actionEvent) throws SQLException {
         System.out.println("Test createPassword");
         String randomPassword = presenter.createPassword();
         pf1.setText(randomPassword);

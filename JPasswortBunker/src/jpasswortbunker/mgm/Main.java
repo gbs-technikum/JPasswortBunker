@@ -13,6 +13,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("gui/LoginScreen2.fxml"));
         primaryStage.setTitle("loginScreen2");
         primaryStage.setScene(new Scene(root, 390, 310));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

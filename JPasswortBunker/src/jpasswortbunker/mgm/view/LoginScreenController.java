@@ -35,6 +35,7 @@ public class LoginScreenController {
         presenter.initMasterPassword(password_box.getText());
         if (presenter.checkIfMasterPasswordIsCorrect()) {
             Stage stage = (Stage) btn_login.getScene().getWindow();
+            stage.setResizable(false);
             stage.close();
         } else {
             wrongPassword.setText("Wrong Password");

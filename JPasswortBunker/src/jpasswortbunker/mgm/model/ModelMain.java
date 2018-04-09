@@ -236,6 +236,12 @@ public class ModelMain {
                 entry.setTimestamp(System.currentTimeMillis() / 1000L);
                 Entry encrypedEntryForEntrysTable = createEncryptedEntry(entry);
                 dbService.updateEntry(encrypedEntryForEntrysTable);
+
+                if (dbService.getNumberOfExistingRecycleBinEntriesForEntryId(entryID) > dbService.getNumberOfBackupEntiresFromDB()
+                        && dbService.getNumberOfExistingRecycleBinEntriesForEntryId(entryID) != -1) {
+                    dbService.deleteOldestEntryFromRecycleBin(entryID, dbService.getOldestTimeStampForEntryIdFromRecycleBin(entryID));
+                }
+
                 return true;
             }
         }
@@ -352,9 +358,9 @@ public class ModelMain {
     }
 
 
-    public String createPassword() {
+    public String createPassword() throws SQLException {
         final String allowedChars = "0123456789abcdefghijklmnopqrstuvwABCDEFGHIJKLMNOP!§$%&?*+#";
-        int length = 30;
+        int length = dbService.getLenthOfRandomPasswordsFromDB();
         SecureRandom random = new SecureRandom();
         StringBuilder pass = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
@@ -415,6 +421,29 @@ public class ModelMain {
         dbService.insertEntry(entry);
         dbService.resetIdInRecycleBinForRestoredEntry(entry.getEntryIDasString(), entry.getCategoryID());
         return true;
+    }
+
+    public boolean setNumberOfBackupEntiresToDB(int number) throws SQLException {
+        if (dbService.setNumberOfBackupEntiresToDB(number)) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getNumberOfBackupEntriesFromDB() throws SQLException {
+        return dbService.getNumberOfBackupEntiresFromDB();
+    }
+
+
+    public boolean setLengthOfRandomPasswordsToDB(int number) throws SQLException {
+        if (dbService.setLengthOfRandomPasswordsToDB(number)) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getLengthOfRandomPasswordsFromDB() throws SQLException {
+        return dbService.getLenthOfRandomPasswordsFromDB();
     }
 
 

@@ -10,18 +10,27 @@ public class DBService {
 
 
     //private static final String URL = "jdbc:sqlite:C:\\Users\\guenther\\IdeaProjects\\JPasswortBunker\\jPasswordBunker.db";
-    //private static final String URL = "jdbc:sqlite:ressources/passwordbunker.db";
 
     //Pfad zu aktueller Testdatenbank im Projektordner
-    private static final String URL = "jdbc:sqlite:jPasswordBunker.db";
+    private static final String URL = "jdbc:sqlite:"+System.getProperty("user.dir")+"/jPasswortBunker.db";
+    //private static final String URL = "jdbc:sqlite:jPasswortBunker.db";
+    //private static final String URL = "jdbc:sqlite::resource:jPasswortBunker.db";
+    //private static final String URL = "jdbc:sqlite:Database:jPasswortBunker.db";
+
 
     private Connection connection;
     private Statement statement;
 
 
     public DBService() throws SQLException {
+        //Java-Property Temp-Verzeichnis für Sqlite setzen:
+        //System.setProperty("java.io.tmpdir", System.getProperty("user.dir"));
+        //System.setProperty("org.sqlite.tmpdir", System.getProperty("user.dir"));
+
         this.connection = DriverManager.getConnection(URL);
         this.statement = connection.createStatement();
+
+
     }
 
 
@@ -246,6 +255,53 @@ public class DBService {
     }
 
 
+
+    public int getLenthOfRandomPasswordsFromDB() throws SQLException {
+        String sql = "select LengthOfRandomPasswords from System where id=1";
+        ResultSet resultSet = this.statement.executeQuery(sql);
+        int cacheTime = -1;
+        if (resultSet.next()) {
+            cacheTime = resultSet.getInt(1);
+        }
+        resultSet.close();
+        statement.close();
+        return cacheTime;
+    }
+
+
+    public boolean setLengthOfRandomPasswordsToDB(int lengthOfRandomPasswords) throws SQLException {
+        String sql = "update System set LengthOfRandomPasswords = '" + lengthOfRandomPasswords + "' where id = 1";
+        this.statement.execute(sql);
+        statement.close();
+        return true;
+    }
+
+
+
+
+    public int getNumberOfBackupEntiresFromDB() throws SQLException {
+        String sql = "select NumberOfBackupEntries from System where id=1";
+        ResultSet resultSet = this.statement.executeQuery(sql);
+        int numberOfBackupEntries = -1;
+        if (resultSet.next()) {
+            numberOfBackupEntries = resultSet.getInt(1);
+        }
+        resultSet.close();
+        statement.close();
+        return numberOfBackupEntries;
+    }
+
+
+
+    public boolean setNumberOfBackupEntiresToDB(int numberEntries) throws SQLException {
+        String sql = "update System set NumberOfBackupEntries = '" + numberEntries + "' where id = 1";
+        this.statement.execute(sql);
+        statement.close();
+        return true;
+    }
+
+
+
     public ArrayList<String> getCategoryListFromDB() throws SQLException {
         String sql = "select * from Categorie";
         ResultSet resultSet = this.statement.executeQuery(sql);
@@ -287,4 +343,42 @@ public class DBService {
         this.statement.execute(sql);
         statement.close();
     }
+
+
+    public void deleteOldestEntryFromRecycleBin(String entryId, long timestamp) throws SQLException {
+        String sql = "delete from Recycle_Bin where Entry_ID = '" + entryId + "' and timestamp = '" + timestamp + "'";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+
+    public int getNumberOfExistingRecycleBinEntriesForEntryId(String entryID) throws SQLException {
+        String sql = "select count(*) from Recycle_Bin where Entry_ID = '" + entryID +"'";
+        ResultSet resultSet = this.statement.executeQuery(sql);
+        int numberOfEntriesInRecycleBinForEntryId = -1;
+        if (resultSet.next()) {
+            numberOfEntriesInRecycleBinForEntryId = resultSet.getInt(1);
+        }
+        resultSet.close();
+        statement.close();
+        return numberOfEntriesInRecycleBinForEntryId;
+    }
+
+
+    public int getOldestTimeStampForEntryIdFromRecycleBin(String entryID) throws SQLException {
+        String sql = "select min(timestamp) from Recycle_Bin where Entry_id = '" + entryID + "'";
+        ResultSet resultSet = this.statement.executeQuery(sql);
+        int oldestTimestampOfEntriesInRecycleBinForEntryId = -1;
+        if (resultSet.next()) {
+            oldestTimestampOfEntriesInRecycleBinForEntryId = resultSet.getInt(1);
+        }
+        resultSet.close();
+        statement.close();
+        return oldestTimestampOfEntriesInRecycleBinForEntryId;
+    }
+
+
+
+
+
 }
