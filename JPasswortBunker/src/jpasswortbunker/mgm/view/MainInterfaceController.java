@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,6 +28,11 @@ import jpasswortbunker.mgm.presenter.PresenterMain;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -443,6 +450,30 @@ public class MainInterfaceController implements Initializable {
     }
 
     private void ClipBoardCopy() {
+        Clipboard systemClip = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        systemClip.setContents(new StringSelection("Ich bin die Zwischenablge"), null);
+
+        Transferable transfer = systemClip.getContents(null);
+
+        for (int i = 0; i < transfer.getTransferDataFlavors().length; i++)
+        {
+            Object content = null;
+
+            try {
+                content = transfer.getTransferData(transfer.getTransferDataFlavors()[i]);
+            } catch (UnsupportedFlavorException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (content instanceof String) {
+                System.out.println(content);
+
+            }
+
+
+        }
 
     }
 
