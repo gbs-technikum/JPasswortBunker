@@ -1,23 +1,18 @@
 package jpasswortbunker.mgm.view;
 
+import com.jfoenix.controls.JFXPasswordField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import jpasswortbunker.mgm.presenter.PresenterMain;
-
-import java.io.IOException;
 
 public final class SetMasterPasswordController{
 
     @FXML
-    private PasswordField password_box;
+    private Label labelErrorMessage;
 
     @FXML
-    private PasswordField repeatPassword_box;
-
-    @FXML
-    private Label l_MasterKeyWrong;
+    private JFXPasswordField passwordField1, passwordField2;
 
     private PresenterMain presenter;
 
@@ -26,11 +21,23 @@ public final class SetMasterPasswordController{
     }
 
     public void btn_setMasterPassword(ActionEvent actionEvent) {
+        if (!(passwordField1.getText().equals("") || passwordField2.getText().equals(""))) {
+            if (equalsPassword()) {
+                System.out.println("Eingaben gleich");
+            }
+        } else {
+            labelErrorMessage.setText("Field can not be empty");
+        }
         System.out.println("Button gedrückt");
     }
 
-    public void test() {
-        System.out.println("testMethode SetmasterPassword Controller");
+    //Ueberpruefung ob Passwoerter gleich sind gibt true oder false zurück und setzt Label bei false
+    private boolean equalsPassword() {
+        if (passwordField1.getText().equals(passwordField2.getText())) {
+            return true;
+        }
+        labelErrorMessage.setText("Password not Equals");
+        return false;
     }
 
 }
