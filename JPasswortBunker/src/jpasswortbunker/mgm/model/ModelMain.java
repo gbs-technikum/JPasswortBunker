@@ -98,7 +98,7 @@ public class ModelMain {
             dbService.reEncryptTable(encrypedEntry, "Recycle_Bin");
         }
 
-        this.dbService.setMasterPasswordToDB(password);
+        this.dbService.setMasterPasswordToDB(PasswordObject.getInstance().getSaltPasswordHashForPasswortStore());
     }
 
 
@@ -236,6 +236,12 @@ public class ModelMain {
                 entry.setTimestamp(System.currentTimeMillis() / 1000L);
                 Entry encrypedEntryForEntrysTable = createEncryptedEntry(entry);
                 dbService.updateEntry(encrypedEntryForEntrysTable);
+
+                if (dbService.getNumberOfExistingRecycleBinEntriesForEntryId(entryID) > dbService.getNumberOfBackupEntiresFromDB()
+                        && dbService.getNumberOfExistingRecycleBinEntriesForEntryId(entryID) != -1) {
+                    dbService.deleteOldestEntryFromRecycleBin(entryID, dbService.getOldestTimeStampForEntryIdFromRecycleBin(entryID));
+                }
+
                 return true;
             }
         }
@@ -301,6 +307,27 @@ public class ModelMain {
     }
 
 
+    public boolean removeEntriesFromRecycleBinFinal(String entryIdAsString) throws SQLException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+        ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
+        Iterator<Entry> iterator = entryArrayList.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getEntryIDasString().equals(entryIdAsString)) {
+                //this.FillEntryListFromRecycleBin();
+                dbService.removeEntriesFromRecycleBinFinal(entryIdAsString);
+                iterator.remove();
+                System.out.println("##Status## Entry erfolgreich gelöscht!");
+                return true;
+            }
+        }
+        System.out.println("##Status## Entry konnte nicht gelöscht werden!");
+        return false;
+    }
+
+
+
+
+
+
     //#####Es folgen Methoden für Ausgabe auf Console######
     //=====================================================
 
@@ -352,9 +379,9 @@ public class ModelMain {
     }
 
 
-    public String createPassword() {
+    public String createPassword() throws SQLException {
         final String allowedChars = "0123456789abcdefghijklmnopqrstuvwABCDEFGHIJKLMNOP!§$%&?*+#";
-        int length = 30;
+        int length = dbService.getLenthOfRandomPasswordsFromDB();
         SecureRandom random = new SecureRandom();
         StringBuilder pass = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
@@ -368,8 +395,12 @@ public class ModelMain {
         return dbService.getTimePeriodForClipboardFromDB();
     }
 
-    public void setTimePeriodForClipboardToDB(int timePeriodinSeconds) throws SQLException {
-        dbService.setTimePeriodForClipboardToDB(timePeriodinSeconds);
+    public boolean setTimePeriodForClipboardToDB(int timePeriodinSeconds) throws SQLException {
+        if (dbService.setTimePeriodForClipboardToDB(timePeriodinSeconds)) {
+            return true;
+        }
+        return false;
+
     }
 
 
@@ -415,6 +446,29 @@ public class ModelMain {
         dbService.insertEntry(entry);
         dbService.resetIdInRecycleBinForRestoredEntry(entry.getEntryIDasString(), entry.getCategoryID());
         return true;
+    }
+
+    public boolean setNumberOfBackupEntiresToDB(int number) throws SQLException {
+        if (dbService.setNumberOfBackupEntiresToDB(number)) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getNumberOfBackupEntriesFromDB() throws SQLException {
+        return dbService.getNumberOfBackupEntiresFromDB();
+    }
+
+
+    public boolean setLengthOfRandomPasswordsToDB(int number) throws SQLException {
+        if (dbService.setLengthOfRandomPasswordsToDB(number)) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getLengthOfRandomPasswordsFromDB() throws SQLException {
+        return dbService.getLenthOfRandomPasswordsFromDB();
     }
 
 

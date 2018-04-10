@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
 import javax.crypto.BadPaddingException;
@@ -59,6 +60,10 @@ public class NewEntryController{
                 comboBox.getValue().getText();
                 presenter.newEntry(textFieldTitle.getText(), textFieldUsername.getText(), passwordField1.getText(), textFieldURL.getText(),
                         textAreaDescription.getText(),(comboBox.getSelectionModel().getSelectedIndex()+1));
+
+                //Eingefügt Wagenhuber: Zwischenspeichern der gewählten Kategorie, um diese anschließend im View anzuzeigen
+                presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex()+1));
+
                 Stage stage = (Stage) btn_save.getScene().getWindow();
                 stage.close();
                 System.out.println("neuer Eintrag angelegt");
@@ -125,7 +130,7 @@ public class NewEntryController{
         for (int i = 1; i < categoryList.size(); i++) {
             comboBox.getItems().add(new Label(categoryList.get(i)));
         }
-        comboBox.setPromptText("Select categorie");
+        comboBox.setPromptText("Category ...");
     }
 
 

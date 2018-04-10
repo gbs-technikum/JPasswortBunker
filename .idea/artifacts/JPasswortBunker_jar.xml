@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JPasswortBunker:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JPasswortBunker_jar</output-path>
+    <root id="archive" name="JPasswortBunker.jar">
+      <element id="module-output" name="JPasswortBunker" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/JPasswortBunker/libs/commons-codec-1.11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/JPasswortBunker/libs/sqlite-jdbc-3.20.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/JPasswortBunker/libs/jfoenix-9.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

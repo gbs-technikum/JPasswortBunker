@@ -14,6 +14,8 @@ public class TestklasseModelMain {
     public static void main(String[] args) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException {
 
 
+        System.out.println(System.getProperty("user.dir"));
+
         //Beschreibung: Instanzierung von ModelMain
         ModelMain modelMain = new ModelMain();
 
@@ -31,10 +33,11 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Prüfen ob richtigs MasterPasswort übergeben wurde (Oben eingegebenes Passwort wird mit DB abgeglichen)
+        System.out.print("Check ob MasterPassword in DB mit Eingabe übereinstimmt: ");
         System.out.println(modelMain.checkIfMasterPasswordIsCorrect());
 
 
-        //Beschreibung: Zeitspanne in Sekunden für Zwischenablage aus DB abfragen bzw. Wert setzen (Defaultwert = 60)
+        //Beschreibung: Zeitspanne in Sekunden für Zwischenablage aus DB abfragen bzw. Wert setzen
         modelMain.getTimePeriodForClipboardFromDB();
         //modelMain.setTimePeriodForClipboardToDB(60);
 
@@ -65,16 +68,20 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Neuen Eintrag erstellen (Wichtig: Leere Datenfelder müssen mit dem Wert 'null' übergeben werden)
-        //modelMain.newEntry("DeleteTestRestore4", "marcelP", "abc", "bla bla bla", "www.geilhub.com", 2);
+        //modelMain.newEntry("TestForDeleteWhileUpdate", "marcelP", "abc", "bla bla bla", "www.geilhub.com", 2);
         //modelMain.newEntry("Eintrag-ohne-Description2", "marcel", "abc", "null", "www.coolhub.com", 6);
 
 
         //Beschreibung: Bestehenden Eintrag abändern (alle Datenfelder müssen übergeben werden)
-        //modelMain.updateEntry("8bcde5bf-f1be-4fd5-9bf7-64aeefbed7ec", "DeleteTestRestore4update2", "marcel", "abc", "www.gayhub.com", "bla bla bla", 9);
+        //modelMain.updateEntry("742582fe-cb14-41fb-a9d1-1c8b4f7a54a8", "DeleteTestRestore4update2", "hans3", "abc", "www.gayhub.com", "bla bla bla", 9);
 
 
-        //Beschreibung: Eintrag löschen via EntryID
+        //Beschreibung: Eintrag löschen aus Entrys-Tabelle via EntryID
         //modelMain.removeEntry("8bcde5bf-f1be-4fd5-9bf7-64aeefbed7ec");
+
+
+        //Beschreibung: Einträge endgültig aus Recycle_Bin Tabelle löschen via EntryID
+        //modelMain.removeEntriesFromRecycleBinFinal("71b6e4ea-fc39-4fb8-8fff-9be472eeb556");
 
 
         //Beschreibung: Eintrag von Papierkorb wiederherstellen anhand von entryID und Timestamp
@@ -82,7 +89,9 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Masterpassword neu setzen (alle bestehenden Einträge werden neu verschlüsselt)
-        //modelMain.renewMasterPassword("neuesPasswort");
+        /*modelMain.renewMasterPassword("test");
+        modelMain.getEntryListEntrysTable();
+        modelMain.getEntryListRecycleBinTable();*/
 
 
         //Beschreibung: Alle Kategorien als ArrayList holen (Positionsnummer = Kategorienummer | Position 0 = Uncategorized
@@ -97,11 +106,26 @@ public class TestklasseModelMain {
         //modelMain.removeCategoryFromDB(10);
 
 
+        //Beschreibung: Maximale Anzahl von BackupEntries für RecycleBin setzen
+        //modelMain.setNumberOfBackupEntiresToDB(3);
 
-        //ToDo Speicherort für Datenbank export prüfen
+
+        //Beschreibung: Maximale Anzahl von BackupEntries in RecycleBin abfragen
+        //modelMain.getNumberOfBackupEntriesFromDB();
 
 
-        //Todo Max. drei Änderungen in Recycle_Bin schreiben
+        //Beschreibung: Länge für Zufallspasswörter setzen
+        //modelMain.setLengthOfRandomPasswordsToDB(30);
+
+
+        //Beschreibung: Länge für Zufallspasswörter von DB abfragen
+        //System.out.println(modelMain.getLengthOfRandomPasswordsFromDB());
+
+
+
+
+
+
 
 
 

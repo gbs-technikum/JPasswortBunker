@@ -32,7 +32,7 @@ Bei Änderung eines Passwortes, soll mittels einer Historien-Funktion, auf das V
 **Strukturierte objektorientierte Programmierung**
 __________________________________________________
 **Das Programm wird so entwickelt, dass es**
-* durch seine Plattformunabhängigkeit auf möglichst vielen Systemen ohne aufwendige Installation lauffähig, lediglich eine Java Laufzeitumgebung  ab Version 1.7 wird benötigt um alle Funktionen des Package Java Cryptography Extension bereitzustellen
+* durch seine Plattformunabhängigkeit auf möglichst vielen Systemen ohne aufwendige Installation lauffähig, lediglich eine Java Laufzeitumgebung  ab Version 9.0 wird benötigt um alle Funktionen des Package Java Cryptography Extension bereitzustellen
 * Passwörter werden verschlüsselt in einer lokalen SQL Datenbank abgelegt
 * eine intuitive Oberfläche auf Basis von JavaFX besitzt
 * modular aufgebaut ist (GUI / Logik / Datenbank)

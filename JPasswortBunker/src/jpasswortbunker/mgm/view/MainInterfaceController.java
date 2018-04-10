@@ -12,20 +12,27 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
-import jpasswortbunker.mgm.view.EditEntryController;
 import jpasswortbunker.mgm.presenter.EntryProperty;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -46,13 +53,13 @@ public class MainInterfaceController implements Initializable {
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle, btn_settings_timeoutClipboard, btn_settings_numberBackupEntriesOk;
 
     @FXML
     private ImageView btn_logo;
 
     @FXML
-    private AnchorPane pane_entrys, pane_settings,  pane_recycle;
+    private AnchorPane pane_entrys, pane_settings, pane_recycle;
 
     @FXML
     private JFXTreeTableView<EntryProperty> treeView;
@@ -61,7 +68,7 @@ public class MainInterfaceController implements Initializable {
     private JFXTreeTableView<EntryProperty> tableView_recylce;
 
     @FXML
-    private JFXTextField textField_Search;
+    private JFXTextField textField_Search, textField_settings_timeoutClipboard, textField_settings_backupEntries, textField_settings_lengthRandomPasswords,textField_settings_saveStatus;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -70,11 +77,15 @@ public class MainInterfaceController implements Initializable {
     private ContextMenu contextMenu;
 
 
-
     private PresenterMain presenter = new PresenterMain(this);
+
+
+
 
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -91,12 +102,31 @@ public class MainInterfaceController implements Initializable {
     }
 
     public void updateView() {
-        stageMainInterfaceController.show();
         fillTreeView();
         fillRecycleTable();
+        stageMainInterfaceController.show();
     }
 
-       public void fillTreeView() {
+    //Hinzugefügt von Wagenhuber: Wird nach dem Hinzufügen / Updaten eines neuen / bestehenden Entries ausgeführt um die View zu aktualisieren
+    public void updateView2() {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        pane_recycle.setVisible(false);
+        textField_Search.clear();
+        textField_Search.setVisible(true);
+        stageMainInterfaceController.show();
+        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+            @Override
+            public boolean test(TreeItem<EntryProperty> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(presenter.getCategoryChoosenForLastNewEntry());
+                return flag;
+            }
+        });
+
+    }
+
+
+    public void fillTreeView() {
 
         //Spalte Title
         JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>("Title");
@@ -142,10 +172,10 @@ public class MainInterfaceController implements Initializable {
         final TreeItem<EntryProperty> root = new RecursiveTreeItem<EntryProperty>(presenter.getEntryPropertiesList(), RecursiveTreeObject::getChildren);
         treeView.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
         treeView.setRoot(root);
+        treeView.sort();
         treeView.setShowRoot(false);
         //ruft Methode auf und baut ContextMenu zusammen
         buildContextMenu();
-
 
 
         //Eventhandling für die Elemente
@@ -176,7 +206,7 @@ public class MainInterfaceController implements Initializable {
                 treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
                     @Override
                     public boolean test(TreeItem<EntryProperty> entryTreeItem) {
-                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase())||
+                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase()) ||
                                 entryTreeItem.getValue().usernameProperty().getValue().toLowerCase().contains(newValue.toLowerCase());
                         return flag;
                     }
@@ -185,7 +215,8 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
-    /**Ruft Methode in Model auf um zu überprüfen, ob Masterpasswort gesetzt wurde
+    /**
+     * Ruft Methode in Model auf um zu überprüfen, ob Masterpasswort gesetzt wurde
      * Return Value:
      * true -> LoginScreen
      * false -> SetMasterPassword
@@ -201,6 +232,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setTitle("LoginScreen");
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
+            stageLogin.setResizable(false);
             stageLogin.show();
         } else {
             System.out.println("Nicht gesetzt");
@@ -212,12 +244,13 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setTitle("SetMasterPassword");
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
+            stageLogin.setResizable(false);
             stageLogin.show();
         }
     }
 
     /**
-     *Button erstellt neues Fenster um einen neuen Eintrag zu erstellen
+     * Button erstellt neues Fenster um einen neuen Eintrag zu erstellen
      */
     public void btn_newEntry() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewEntry.fxml"));
@@ -229,16 +262,18 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setTitle("New Entry");
         stageNewEntry.setScene(new Scene(parent, 400, 400));
         stageNewEntry.setAlwaysOnTop(true);
+        stageNewEntry.setResizable(false);
         stageNewEntry.show();
     }
 
-    //Todo Sotierfunktion funktioniert nicht richtig, 1-2 mal ja, danach werden einfach alle Einträge angezeigt
+
     //Button Logo zeit alle Einträge an und setzt Suchfilter bzw Kategorie zurück
     public void btn_logo(MouseEvent mouseEvent) {
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(true);
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
@@ -249,11 +284,14 @@ public class MainInterfaceController implements Initializable {
 
     //Button Kategorie_Finanzen
     public void btn_finance(ActionEvent actionEvent) {
-        updateView();
+
+        //Auskommentiert durch Wagenhuber am 24.3.18 bzgl. Ansicht aktualisiert nicht
+        //updateView();
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(true);
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
@@ -269,6 +307,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(true);
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
@@ -285,6 +324,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(true);
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
@@ -301,6 +341,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(true);
         treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
@@ -317,6 +358,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(false);
         pane_recycle.setVisible(true);
         textField_Search.clear();
+        textField_Search.setVisible(true);
 
     }
 
@@ -327,6 +369,12 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(false);
         pane_recycle.setVisible(false);
         textField_Search.clear();
+        textField_Search.setVisible(false);
+
+        //Hinzugefügt durch Wagenhuber: Textfelder für Settings
+        textField_settings_backupEntries.setText(presenter.getTextField_settings_numberBackupEntries());
+        textField_settings_lengthRandomPasswords.setText(presenter.getTextField_settings_lengthRandomPasswords());
+        textField_settings_timeoutClipboard.setText(presenter.getTextField_settings_timeoutClipboard());
     }
 
 
@@ -353,7 +401,7 @@ public class MainInterfaceController implements Initializable {
                 alert.setContentText("Are you realy sure, that you want delete the Entry ");
 
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
+                if (result.get() == ButtonType.OK) {
                     // ... user chose OK
                     try {
                         presenter.removeEntry(treeView.getSelectionModel().getSelectedItem().getValue());
@@ -395,9 +443,38 @@ public class MainInterfaceController implements Initializable {
             public void handle(ActionEvent event) {
                 //Todo Funktion einbauen bzw. Methodenaufruf
                 System.out.println("test: Copy Password");
+               ClipBoardCopy();
             }
         });
         contextMenu.getItems().add(item3);
+    }
+
+    private void ClipBoardCopy() {
+        Clipboard systemClip = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        systemClip.setContents(new StringSelection("Ich bin die Zwischenablge"), null);
+
+        Transferable transfer = systemClip.getContents(null);
+
+        for (int i = 0; i < transfer.getTransferDataFlavors().length; i++)
+        {
+            Object content = null;
+
+            try {
+                content = transfer.getTransferData(transfer.getTransferDataFlavors()[i]);
+            } catch (UnsupportedFlavorException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (content instanceof String) {
+                System.out.println(content);
+
+            }
+
+
+        }
+
     }
 
     private void editEntryScene() throws SQLException {
@@ -420,13 +497,14 @@ public class MainInterfaceController implements Initializable {
         Scene sceneEditentry = new Scene(parentEditEntry, 400, 400);
         stageEditEntry.setTitle("Edit your EntryProperty");
         stageEditEntry.setScene(sceneEditentry);
+        stageEditEntry.setResizable(false);
         stageEditEntry.show();
+        stageEditEntry.setResizable(false);
         stageEditEntry.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
     }
 
 
 
-    //TODO: 14.03.2018 Liste richtig laden in den Mülleimer
     public void fillRecycleTable() {
 
         //Spalte Title
@@ -474,9 +552,11 @@ public class MainInterfaceController implements Initializable {
         tableView_recylce.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
         tableView_recylce.setRoot(root1);
         tableView_recylce.setShowRoot(false);
+        tableView_recylce.sort();
+
+
         //ruft Methode auf und baut ContextMenu zusammen
         buildContextMenu();
-
 
 
         //Eventhandling für die Elemente
@@ -507,7 +587,7 @@ public class MainInterfaceController implements Initializable {
                 tableView_recylce.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
                     @Override
                     public boolean test(TreeItem<EntryProperty> entryTreeItem) {
-                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase())||
+                        Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase()) ||
                                 entryTreeItem.getValue().usernameProperty().getValue().toLowerCase().contains(newValue.toLowerCase());
                         return flag;
                     }
@@ -517,5 +597,36 @@ public class MainInterfaceController implements Initializable {
     }
 
 
+// Folgende Methoden hinzugefügt von Wagenhuber:
+
+
+
+    public void btn_settings_setNumberBackupEntries(ActionEvent actionEvent) {
+       presenter.setTextField_settings_numberBackupEntries(textField_settings_backupEntries.getText());
+       updateSaveStatus();
+    }
+
+
+    public void btn_settings_lengthRandomPasswords(ActionEvent actionEvent) {
+        presenter.setTextField_settings_lengthRandomPasswords(textField_settings_lengthRandomPasswords.getText());
+        updateSaveStatus();
+    }
+
+
+    public void btn_settings_timeoutClipboard(ActionEvent actionEvent) {
+        presenter.setTextField_settings_timeoutClipboard(textField_settings_timeoutClipboard.getText());
+        updateSaveStatus();
+    }
+
+
+    private void updateSaveStatus() {
+        boolean status = presenter.isTextField_settings_saveStatusBoolean();
+        if (status) {
+            textField_settings_saveStatus.setText("Success!");
+        } else {
+            textField_settings_saveStatus.setText("Error!");
+        }
+
+    }
 
 }

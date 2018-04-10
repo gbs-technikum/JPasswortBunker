@@ -1,9 +1,10 @@
 package jpasswortbunker.mgm.presenter;
 
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TreeItem;
 import jpasswortbunker.mgm.model.Entry;
 import jpasswortbunker.mgm.model.ModelMain;
 import jpasswortbunker.mgm.view.MainInterfaceController;
@@ -11,14 +12,11 @@ import jpasswortbunker.mgm.view.MainInterfaceController;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public final class PresenterMain {
 
@@ -26,14 +24,22 @@ public final class PresenterMain {
     private ModelMain model;
     public ObservableList<EntryProperty> entryPropertiesList = FXCollections.observableArrayList();
     public ObservableList<EntryProperty> entryPropertiesListRecycle = FXCollections.observableArrayList();
-
+    private StringProperty textField_settings_numberBackupEntries;
+    private StringProperty textField_settings_lengthRandomPasswords;
+    private StringProperty textField_settings_timeoutClipboard;
+    private BooleanProperty textField_settings_saveStatusBoolean;
+    private IntegerProperty categoryChoosenForLastNewEntry;
 
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
         model = new ModelMain();
+
+        initProperties();
+
         //model.initMasterPassword("test");
         //model.initEncryptionService();
     }
+
 
     public ObservableList<EntryProperty> getEntryPropertiesList() {
         return entryPropertiesList;
@@ -55,6 +61,7 @@ public final class PresenterMain {
                     entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
         }
     }
+
     //TODO: 14.03.2018  anpassen für das Schreiben in den Mülleimer
     //Schreibt die Liste der Arraylist aus Model in die Observable List im Presenter
     public void writeToObservableListrecycle() throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
@@ -101,18 +108,18 @@ public final class PresenterMain {
         Entry entry = model.getEntryListEntrysTable().get(model.getEntryListEntrysTable().size() - 1);
         entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
                 entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
-        controller.updateView();
+        controller.updateView2();
     }
 
     public void removeEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         model.removeEntry(entry.getEntryID().toString());
         entryPropertiesList.remove(entry);
-        controller.fillTreeView();
+        //controller.fillTreeView();
     }
 
     public void updateEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         model.updateEntry(entry.getEntryID().toString(), entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getPassword(), entry.getDescription(), entry.getCategoryID());
-        controller.fillTreeView();
+        //controller.fillTreeView();//Obsolet - führt zu Programmabsturz
     }
 
     public void updateView() {
@@ -124,14 +131,204 @@ public final class PresenterMain {
         return model.getCategoryListFromDB();
     }
 
-    public String createPassword() {
+    public String createPassword() throws SQLException {
         return model.createPassword();
     }
-
 
 
     public void test() {
         System.out.println("testMethode Presenter");
     }
+
+
+    // Folgende Methoden hinzugefügt von Wagenhuber:
+
+    /*public void setNumberOfBackupEntiresToDB(String number) throws SQLException {
+        model.setNumberOfBackupEntiresToDB(Integer.parseInt(number));
+    }*/
+
+
+    public String getTextField_settings_numberBackupEntries() {
+        return textField_settings_numberBackupEntries.getValue();
+    }
+
+    public StringProperty getTextField_settings_numberBackupEntriesProperty() {
+        return textField_settings_numberBackupEntries;
+    }
+
+    public void setTextField_settings_numberBackupEntries(String textField_settings_numberBackupEntries) {
+        this.textField_settings_numberBackupEntries.set(textField_settings_numberBackupEntries);
+    }
+
+
+
+    public String getTextField_settings_lengthRandomPasswords() {
+        return textField_settings_lengthRandomPasswords.getValue();
+    }
+
+    public StringProperty textField_settings_lengthRandomPasswordsProperty() {
+        return textField_settings_lengthRandomPasswords;
+    }
+
+    public void setTextField_settings_lengthRandomPasswords(String textField_settings_lengthRandomPasswords) {
+        this.textField_settings_lengthRandomPasswords.setValue(textField_settings_lengthRandomPasswords);
+    }
+
+
+    public String getTextField_settings_timeoutClipboard() {
+        return textField_settings_timeoutClipboard.getValue();
+    }
+
+    public StringProperty textField_settings_timeoutClipboardProperty() {
+        return textField_settings_timeoutClipboard;
+    }
+
+    public void setTextField_settings_timeoutClipboard(String textField_settings_timeoutClipboard) {
+        this.textField_settings_timeoutClipboard.setValue(textField_settings_timeoutClipboard);
+    }
+
+
+
+
+    public boolean isTextField_settings_saveStatusBoolean() {
+        return textField_settings_saveStatusBoolean.getValue();
+    }
+
+    public BooleanProperty setTextField_settings_saveStatusBooleanProperty() {
+        return textField_settings_saveStatusBoolean;
+    }
+
+    public void setTextField_settings_saveStatusBoolean(boolean textField_settings_saveStatusBoolean) {
+        this.textField_settings_saveStatusBoolean.setValue(textField_settings_saveStatusBoolean);
+    }
+
+
+    public int getCategoryChoosenForLastNewEntry() {
+        return categoryChoosenForLastNewEntry.getValue();
+    }
+
+    public IntegerProperty categoryChoosenForLastNewEntryProperty() {
+        return categoryChoosenForLastNewEntry;
+    }
+
+    public void setCategoryChoosenForLastNewEntry(int categoryChoosenForLastNewEntry) {
+        this.categoryChoosenForLastNewEntry.setValue(categoryChoosenForLastNewEntry);
+    }
+
+
+
+
+
+    private void initProperties() {
+
+
+        categoryChoosenForLastNewEntry = new SimpleIntegerProperty();
+        categoryChoosenForLastNewEntry.addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+            }
+        });
+
+
+        try {
+            textField_settings_numberBackupEntries = new SimpleStringProperty();
+            textField_settings_numberBackupEntries.setValue(String.valueOf(model.getNumberOfBackupEntriesFromDB()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            textField_settings_lengthRandomPasswords = new SimpleStringProperty();
+            textField_settings_lengthRandomPasswords.setValue(String.valueOf(model.getLengthOfRandomPasswordsFromDB()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+        try {
+            textField_settings_timeoutClipboard = new SimpleStringProperty();
+            textField_settings_timeoutClipboard.setValue(String.valueOf(model.getTimePeriodForClipboardFromDB()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+        textField_settings_saveStatusBoolean = new SimpleBooleanProperty();
+
+        textField_settings_numberBackupEntries.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                try {
+                    if (checkIfTextFieldNumeric(textField_settings_numberBackupEntries.getValue())) {
+                        if (model.setNumberOfBackupEntiresToDB(Integer.parseInt(textField_settings_numberBackupEntries.getValue()))) {
+                            setTextField_settings_saveStatusBoolean(true);
+                        } else {
+                            setTextField_settings_saveStatusBoolean(false);
+                        }
+                    } else {
+                        setTextField_settings_saveStatusBoolean(false);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        textField_settings_lengthRandomPasswords.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                try {
+                    if (checkIfTextFieldNumeric(textField_settings_lengthRandomPasswords.getValue())) {
+                        if (model.setLengthOfRandomPasswordsToDB(Integer.parseInt(textField_settings_lengthRandomPasswords.getValue()))) {
+                            setTextField_settings_saveStatusBoolean(true);
+                        } else {
+                            setTextField_settings_saveStatusBoolean(false);
+                        }
+                    } else {
+                        setTextField_settings_saveStatusBoolean(false);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
+        textField_settings_timeoutClipboard.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                try {
+                    if (checkIfTextFieldNumeric(textField_settings_timeoutClipboard.getValue())) {
+                        if (model.setTimePeriodForClipboardToDB(Integer.parseInt(textField_settings_timeoutClipboard.getValue()))) {
+                            setTextField_settings_saveStatusBoolean(true);
+                        } else {
+                            setTextField_settings_saveStatusBoolean(false);
+                        }
+                    } else {
+                        setTextField_settings_saveStatusBoolean(false);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+    }//ende initProperties
+
+    public boolean checkIfTextFieldNumeric(String value) {
+        if (value.matches("^\\d+$")){
+        //if (value.matches("[0-9][0-9]")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }
