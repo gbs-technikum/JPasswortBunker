@@ -29,7 +29,10 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.awt.*;
-import java.awt.datatransfer.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -50,7 +53,7 @@ public class MainInterfaceController implements Initializable {
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle, btn_settings_numberBackupEntriesOk,btn_settings_ChacheTime;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle, btn_settings_timeoutClipboard, btn_settings_numberBackupEntriesOk;
 
     @FXML
     private ImageView btn_logo;
@@ -65,7 +68,7 @@ public class MainInterfaceController implements Initializable {
     private JFXTreeTableView<EntryProperty> tableView_recylce;
 
     @FXML
-    private JFXTextField textField_Search, textField_settings_backupEntries, textField_settings_lengthRandomPasswords,textField_settings_saveStatus,textField_settings_TimeClipboard;
+    private JFXTextField textField_Search, textField_settings_timeoutClipboard, textField_settings_backupEntries, textField_settings_lengthRandomPasswords,textField_settings_saveStatus;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -80,7 +83,6 @@ public class MainInterfaceController implements Initializable {
 
 
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
-        //makeTextFieldNumeric(textField_settings_backupEntries);
     }
 
 
@@ -170,8 +172,8 @@ public class MainInterfaceController implements Initializable {
         final TreeItem<EntryProperty> root = new RecursiveTreeItem<EntryProperty>(presenter.getEntryPropertiesList(), RecursiveTreeObject::getChildren);
         treeView.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
         treeView.setRoot(root);
-        treeView.setShowRoot(false);
         treeView.sort();
+        treeView.setShowRoot(false);
         //ruft Methode auf und baut ContextMenu zusammen
         buildContextMenu();
 
@@ -264,7 +266,7 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.show();
     }
 
-    //Todo Sotierfunktion funktioniert nicht richtig, 1-2 mal ja, danach werden einfach alle Einträge angezeigt
+
     //Button Logo zeit alle Einträge an und setzt Suchfilter bzw Kategorie zurück
     public void btn_logo(MouseEvent mouseEvent) {
         pane_settings.setVisible(false);
@@ -361,7 +363,6 @@ public class MainInterfaceController implements Initializable {
     }
 
 
-
     //Button für die Einstellungen
     public void btn_settings(ActionEvent actionEvent) {
         pane_settings.setVisible(true);
@@ -379,10 +380,6 @@ public class MainInterfaceController implements Initializable {
 
     public void btn_newMasterPassword() {
         ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(presenter);
-    }
-
-    public void btn_about(){
-
     }
 
     /**
@@ -444,12 +441,40 @@ public class MainInterfaceController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                Ziwschenablage();
                 //Todo Funktion einbauen bzw. Methodenaufruf
                 System.out.println("test: Copy Password");
+               ClipBoardCopy();
             }
         });
         contextMenu.getItems().add(item3);
+    }
+
+    private void ClipBoardCopy() {
+        Clipboard systemClip = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        systemClip.setContents(new StringSelection("Ich bin die Zwischenablge"), null);
+
+        Transferable transfer = systemClip.getContents(null);
+
+        for (int i = 0; i < transfer.getTransferDataFlavors().length; i++)
+        {
+            Object content = null;
+
+            try {
+                content = transfer.getTransferData(transfer.getTransferDataFlavors()[i]);
+            } catch (UnsupportedFlavorException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (content instanceof String) {
+                System.out.println(content);
+
+            }
+
+
+        }
+
     }
 
     private void editEntryScene() throws SQLException {
@@ -472,12 +497,14 @@ public class MainInterfaceController implements Initializable {
         Scene sceneEditentry = new Scene(parentEditEntry, 400, 400);
         stageEditEntry.setTitle("Edit your EntryProperty");
         stageEditEntry.setScene(sceneEditentry);
+        stageEditEntry.setResizable(false);
         stageEditEntry.show();
+        stageEditEntry.setResizable(false);
         stageEditEntry.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
     }
 
 
-    //TODO: 14.03.2018 Liste richtig laden in den Mülleimer
+
     public void fillRecycleTable() {
 
         //Spalte Title
@@ -525,6 +552,9 @@ public class MainInterfaceController implements Initializable {
         tableView_recylce.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
         tableView_recylce.setRoot(root1);
         tableView_recylce.setShowRoot(false);
+        tableView_recylce.sort();
+
+
         //ruft Methode auf und baut ContextMenu zusammen
         buildContextMenu();
 
@@ -566,42 +596,14 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
-   public void Ziwschenablage() {
-        Clipboard systemClip = Toolkit.getDefaultToolkit().getSystemClipboard();
-
-        systemClip.setContents(new StringSelection("Ich bin die Zwischenablge"), null);
-
-        Transferable transfer = systemClip.getContents(null);
-
-        for (int i = 0; i < transfer.getTransferDataFlavors().length; i++)
-        {
-            Object content = null;
-
-            try {
-                content = transfer.getTransferData(transfer.getTransferDataFlavors()[i]);
-            } catch (UnsupportedFlavorException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (content instanceof String) {
-                System.out.println(content);
-
-            }
-
-
-        }
-
-    }
-
-
 
 // Folgende Methoden hinzugefügt von Wagenhuber:
 
 
+
     public void btn_settings_setNumberBackupEntries(ActionEvent actionEvent) {
-        presenter.setTextField_settings_numberBackupEntries(textField_settings_backupEntries.getText());
-        updateSaveStatus();
+       presenter.setTextField_settings_numberBackupEntries(textField_settings_backupEntries.getText());
+       updateSaveStatus();
     }
 
 
@@ -626,4 +628,5 @@ public class MainInterfaceController implements Initializable {
         }
 
     }
+
 }

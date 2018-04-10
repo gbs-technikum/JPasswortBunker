@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -13,12 +14,6 @@ import jpasswortbunker.mgm.presenter.PresenterMain;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.InvalidKeyException;
@@ -29,7 +24,7 @@ import java.util.ResourceBundle;
 public class EditEntryController {
 
     @FXML
-    private JFXTextField textFieldTitle, textFieldUsername, textFieldURL;
+    private JFXTextField textFieldTitle, textFieldUsername, textFieldURL, textFieldPassword1, textFieldPassword2;
 
     @FXML
     private JFXPasswordField passwordField1, passwordField2;
@@ -41,7 +36,7 @@ public class EditEntryController {
     private Label labelErrorMessage;
 
     @FXML
-    private JFXButton btn_save;
+    private JFXButton btn_save, btn_eye, btn_copyPassword;
 
     @FXML
     public JFXComboBox<Label> comboBox = new JFXComboBox<Label>();
@@ -52,31 +47,49 @@ public class EditEntryController {
     private PresenterMain presenter;
 
     @FXML
-    public void initialize() throws SQLException {
-
+    public void initialize(){
+        btn_eye.setTooltip(new Tooltip("Show Password"));
+        btn_copyPassword.setTooltip(new Tooltip("Copy Password to Clipboard"));
+        textFieldPassword1.setManaged(false);
+        textFieldPassword1.setVisible(false);
+        textFieldPassword2.setManaged(false);
+        textFieldPassword2.setVisible(false);
     }
 
     public void btn_save(ActionEvent actionEvent) throws IllegalBlockSizeException, SQLException, InvalidKeyException, BadPaddingException, UnsupportedEncodingException {
 
         if (changeEntry()) {
             Stage stage = (Stage) btn_save.getScene().getWindow();
-            stage.setResizable(false);
             stage.close();
-            stage.show();
         }
     }
 
-    public void btn_eyeIcon(MouseEvent mouseEvent){
-        System.out.println("Test Auge");
+    public void btn_eyeIcon(ActionEvent actionEvent){
+        textFieldPassword1.textProperty().bindBidirectional(passwordField1.textProperty());
+        textFieldPassword2.textProperty().bindBidirectional(passwordField2.textProperty());
+        if (passwordField1.isVisible()) {
+            textFieldPassword1.setManaged(true);
+            textFieldPassword1.setVisible(true);
+            passwordField1.setManaged(false);
+            passwordField1.setVisible(false);
+            textFieldPassword2.setManaged(true);
+            textFieldPassword2.setVisible(true);
+            passwordField2.setManaged(false);
+            passwordField2.setVisible(false);
+        } else {
+            textFieldPassword1.setManaged(false);
+            textFieldPassword1.setVisible(false);
+            passwordField1.setManaged(true);
+            passwordField1.setVisible(true);
+            textFieldPassword2.setManaged(false);
+            textFieldPassword2.setVisible(false);
+            passwordField2.setManaged(true);
+            passwordField2.setVisible(true);
+        }
     }
 
-    public void btn_copyPasswordToClipboard(MouseEvent mouseEvent) {
-        Ziwschenablage();
+    public void btn_copyPasswordToClipboard(ActionEvent actionEvent) {
         System.out.println("test: btn_copyPasswordToClipboard");
-    }
-
-    public void btn_historie(MouseEvent mouseEvent){
-        System.out.println("Test Geschichte");
     }
 
 
@@ -141,7 +154,6 @@ public class EditEntryController {
     }
 
     public void fillComboBox() throws SQLException {
-        System.out.println("test");
         ArrayList<String> categoryList = (ArrayList<String>) presenter.getCategoryListFromDB();
         for (int i = 1; i < categoryList.size(); i++) {
             comboBox.getItems().add(new Label(categoryList.get(i)));
@@ -156,35 +168,6 @@ public class EditEntryController {
         this.presenter = presenter;
     }
 
-    public void Ziwschenablage() {
-        Clipboard systemClip = Toolkit.getDefaultToolkit().getSystemClipboard();
 
-        systemClip.setContents(new StringSelection("Ich bin die Zwischenablge"), null);
-
-        Transferable transfer = systemClip.getContents(null);
-
-        for (int i = 0; i < transfer.getTransferDataFlavors().length; i++)
-        {
-            Object content = null;
-
-            try {
-                content = transfer.getTransferData(transfer.getTransferDataFlavors()[i]);
-            } catch (UnsupportedFlavorException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (content instanceof String) {
-                System.out.println(content);
-
-            }
-
-        }
-
-    }
-
-    }
-
-
-
+}
 
