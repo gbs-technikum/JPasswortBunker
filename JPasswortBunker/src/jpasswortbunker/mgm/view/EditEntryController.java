@@ -1,14 +1,20 @@
 package jpasswortbunker.mgm.view;
 
 import com.jfoenix.controls.*;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import jpasswortbunker.mgm.presenter.EntryProperty;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
@@ -20,6 +26,8 @@ import java.security.InvalidKeyException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class EditEntryController {
 
@@ -89,7 +97,14 @@ public class EditEntryController {
     }
 
     public void btn_copyPasswordToClipboard(ActionEvent actionEvent) {
-        System.out.println("test: btn_copyPasswordToClipboard");
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent content = new ClipboardContent();
+        content.putString(passwordField1.getText());
+        clipboard.setContent(content);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(Integer.parseInt(presenter.getTextField_settings_timeoutClipboard())), ev -> {
+            clipboard.clear();
+        }));
+        timeline.play();
     }
 
 

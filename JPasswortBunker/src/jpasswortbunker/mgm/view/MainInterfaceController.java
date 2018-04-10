@@ -2,6 +2,8 @@ package jpasswortbunker.mgm.view;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -16,23 +18,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+
 import javafx.util.Callback;
 
+import javafx.util.Duration;
 import jpasswortbunker.mgm.presenter.EntryProperty;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -441,40 +441,17 @@ public class MainInterfaceController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                //Todo Funktion einbauen bzw. Methodenaufruf
-                System.out.println("test: Copy Password");
-               ClipBoardCopy();
+                Clipboard clipboard = Clipboard.getSystemClipboard();
+                ClipboardContent content = new ClipboardContent();
+                content.putString(treeView.getSelectionModel().getSelectedItem().getValue().getPassword());
+                clipboard.setContent(content);
+                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(Integer.parseInt(presenter.getTextField_settings_timeoutClipboard())), ev -> {
+                    clipboard.clear();
+                }));
+                timeline.play();
             }
         });
         contextMenu.getItems().add(item3);
-    }
-
-    private void ClipBoardCopy() {
-        Clipboard systemClip = Toolkit.getDefaultToolkit().getSystemClipboard();
-
-        systemClip.setContents(new StringSelection("Ich bin die Zwischenablge"), null);
-
-        Transferable transfer = systemClip.getContents(null);
-
-        for (int i = 0; i < transfer.getTransferDataFlavors().length; i++)
-        {
-            Object content = null;
-
-            try {
-                content = transfer.getTransferData(transfer.getTransferDataFlavors()[i]);
-            } catch (UnsupportedFlavorException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (content instanceof String) {
-                System.out.println(content);
-
-            }
-
-
-        }
-
     }
 
     private void editEntryScene() throws SQLException {
