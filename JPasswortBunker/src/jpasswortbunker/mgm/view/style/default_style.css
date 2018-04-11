@@ -8,3 +8,9 @@
 #topSideBar{
     -fx-background-color: #0747A6;
 }
+
+#searchField{
+    -fx-prompt-text-fill: white;
+    -fx-text-inner-color: white;
+    -fx-background-color: #0c50b5;
+}

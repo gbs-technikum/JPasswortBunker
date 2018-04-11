@@ -64,6 +64,10 @@ public class EditEntryController {
         textFieldPassword2.setVisible(false);
     }
 
+    /**
+     * public void btn_save(ActionEvent actionEvent)
+     * Ruft changeEntry() auf und schließt bei erfolgreicher Eingabe das Fenster
+     */
     public void btn_save(ActionEvent actionEvent) throws IllegalBlockSizeException, SQLException, InvalidKeyException, BadPaddingException, UnsupportedEncodingException {
 
         if (changeEntry()) {
@@ -72,6 +76,11 @@ public class EditEntryController {
         }
     }
 
+    /**
+     * public void btn_eyeIcon(ActionEvent actionEvent)
+     * Zeit das Passwort im Klartext an, indem das PasswortFeld ausgeblendet wird und Textfeld eingeblendet
+     * Felder sind Bidirektional miteinander verbunden
+     */
     public void btn_eyeIcon(ActionEvent actionEvent){
         textFieldPassword1.textProperty().bindBidirectional(passwordField1.textProperty());
         textFieldPassword2.textProperty().bindBidirectional(passwordField2.textProperty());
@@ -96,6 +105,11 @@ public class EditEntryController {
         }
     }
 
+    /**
+     * public void btn_copyPasswordToClipboard(ActionEvent actionEvent)
+     * kopiert das Passwort in die System Zwischenablage und löscht dieses nach x Sekunden
+     * Zeit wird aus DB abgefragt
+     */
     public void btn_copyPasswordToClipboard(ActionEvent actionEvent) {
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
@@ -108,7 +122,10 @@ public class EditEntryController {
     }
 
 
-    //Übergebenes Element wird in die jeweiligen Felder geschrieben
+    /**
+     * public void setEntry(TreeItem<EntryProperty> selectedEntry)
+     * Übergebenes Element wird in die jeweiligen Felder geschrieben
+     */
     public void setEntry(TreeItem<EntryProperty> selectedEntry) {
         this.entryProperty = selectedEntry.getValue();
 
@@ -120,21 +137,14 @@ public class EditEntryController {
         textAreaDescription.setText(entryProperty.getDescription());
     }
 
-    //Ändert den bestehenden Eintrag
+    /**
+     * public Boolean changeEntry()
+     * Ändert den bestehenden Eintrag, überprüft ob Felder geändert wurden oder nicht
+     * @return
+     * false -> keiner Änderung
+     * true -> mindestens ein Feld wurde geändert
+     */
     public Boolean changeEntry() throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
-        //System.out.println(comboBox.getSelectionModel().getSelectedIndex());
-//        EntryProperty entryPropertyEdit = new EntryProperty(entryProperty);
-//
-//
-//        if (entryPropertyEdit.equals(entryProperty)) {
-//            System.out.println("nix geändert");
-//        } else {
-//            System.out.println("es wurde was geändert");
-//        }
-//        System.out.println(entryPropertyEdit);
-//        System.out.println(entryProperty);
-
-
 
         if (entryProperty.getTitle().equals(textFieldTitle.getText()) &&
                 entryProperty.getUsername().equals(textFieldUsername.getText()) &&
@@ -160,6 +170,13 @@ public class EditEntryController {
         return true;
     }
 
+    /**
+     * private boolean equalsPassword()
+     * Überprüft ob die eingegebenen Passwörter identsich sind
+     * @return
+     * true -> Passwörter sind gleich
+     * false -> Passwörter sind nicht gleich -> Labelmeldung wird angezeigt
+     */
     private boolean equalsPassword() {
         if (passwordField1.getText().equals(passwordField2.getText())) {
             return true;
@@ -168,6 +185,10 @@ public class EditEntryController {
         return false;
     }
 
+    /**
+     *  public void fillComboBox()
+     * Füllt auswahl Combobox mit den Kategorien aus der DB
+     */
     public void fillComboBox() throws SQLException {
         ArrayList<String> categoryList = (ArrayList<String>) presenter.getCategoryListFromDB();
         for (int i = 1; i < categoryList.size(); i++) {
@@ -178,7 +199,10 @@ public class EditEntryController {
     }
 
 
-
+    /**
+     * public void setPresenter(PresenterMain presenter)
+     * Bekommt den Presenter übergeben
+     */
     public void setPresenter(PresenterMain presenter) throws SQLException {
         this.presenter = presenter;
     }

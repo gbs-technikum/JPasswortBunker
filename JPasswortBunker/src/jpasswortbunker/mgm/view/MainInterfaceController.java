@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -48,7 +49,6 @@ import java.util.function.Predicate;
 public class MainInterfaceController implements Initializable {
 
     @FXML
-    private Label labelTest;
     private ResourceBundle bundle;
     private Locale locale;
 
@@ -72,6 +72,12 @@ public class MainInterfaceController implements Initializable {
 
     @FXML
     private AnchorPane mainAnchorPane;
+
+    @FXML
+    private Menu menu_File, menu_Edit, menu_Help;
+
+    @FXML
+    private MenuItem menuItem_NewMasterpassword, menuItem_NewEntry, menuItem_Help, menuItem_About;
 
     private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin, stageNewEntry;
     private ContextMenu contextMenu;
@@ -97,7 +103,7 @@ public class MainInterfaceController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //bekommt die Stage der Main methode
+        //bekommt die Stage der Main methode um diese später sichtbar zu schalten
         stageMainInterfaceController = Testklasse.getPrimaryStage();
     }
 
@@ -197,8 +203,10 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
-
-    //Suchfunktion in Suchleiste Suche nach: Title und Username
+    /**
+     * public void searchFunction()
+     * Suchfunktion in Suchleiste Suche nach: Title und Username
+     */
     public void searchFunction() {
         textField_Search.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -335,7 +343,10 @@ public class MainInterfaceController implements Initializable {
     }
 
 
-    //Button Kategorie_Netzwerk
+    /**
+     * public void btn_network(ActionEvent actionEvent)
+     * Wechselt zur Network Kategorie
+     */
     public void btn_network(ActionEvent actionEvent) {
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
@@ -352,7 +363,10 @@ public class MainInterfaceController implements Initializable {
     }
 
 
-    //Button für den Müll
+    /**
+     * public void btn_recycle(ActionEvent actionEvent)
+     * Wechselt zur Recycle Pane um sich die gelöschten Einträge anzeigen zu lassen
+     */
     public void btn_recycle(ActionEvent actionEvent) {
         pane_settings.setVisible(false);
         pane_entrys.setVisible(false);
@@ -377,9 +391,47 @@ public class MainInterfaceController implements Initializable {
         textField_settings_timeoutClipboard.setText(presenter.getTextField_settings_timeoutClipboard());
     }
 
-
+    /**
+     * public void btn_newMasterPassword()
+     * Ruft einen neuen Dialog auf, um das MasterPasswort zu ändern
+     */
     public void btn_newMasterPassword() {
         ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(presenter);
+    }
+
+    public void btn_lang_en(ActionEvent actionEvent) {
+        System.out.println("Englisch");
+        loadLang("en");
+    }
+
+    public void btn_lang_de(ActionEvent actionEvent) {
+        System.out.println("Deutsch");
+        loadLang("de");
+    }
+
+    /**
+     * private void loadLang(String lang)
+     * Bekommt als Paramter das jeweilige Landeskuerzel
+     * setzt die jeweiligen Felder dann neu mit der neuen Sprache
+     */
+    private void loadLang(String lang) {
+        locale = new Locale(lang);
+        bundle = ResourceBundle.getBundle("jpasswortbunker.mgm.view.bundles.LangBundle", locale);
+        btn_finance.setText(bundle.getString("button.finance"));
+        btn_social.setText(bundle.getString("button.social"));
+        btn_email.setText(bundle.getString("button.email"));
+        btn_network.setText(bundle.getString("button.network"));
+        btn_recycle.setText(bundle.getString("button.recycle"));
+        btn_settings.setText(bundle.getString("button.settings"));
+        btn_newEntry.setText(bundle.getString("button.newEntry"));
+        textField_Search.setPromptText(bundle.getString("promptText.search"));
+        menu_File.setText(bundle.getString("menu.file"));
+        menu_Edit.setText(bundle.getString("menu.edit"));
+        menu_Help.setText(bundle.getString("menu.help"));
+        menuItem_NewMasterpassword.setText(bundle.getString("menuItem.newMasterPassword"));
+        menuItem_NewEntry.setText(bundle.getString("menuItem.newEntry"));
+        menuItem_Help.setText(bundle.getString("menuItem.help"));
+        menuItem_About.setText(bundle.getString("menuItem.about"));
     }
 
     /**
