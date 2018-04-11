@@ -15,7 +15,11 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
+import java.security.Timestamp;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public final class PresenterMain {
@@ -227,6 +231,11 @@ public final class PresenterMain {
     public void setTextfield_TimePeriodForClipboardFromDB(String textField_settings_TimeClipboard){
         this.textField_settings_TimeClipboard.setValue( textField_settings_TimeClipboard);
     }
+
+    public void TimestamptoTime() {
+
+    }
+
 
 
 

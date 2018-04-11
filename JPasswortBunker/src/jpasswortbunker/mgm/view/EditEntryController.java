@@ -4,6 +4,7 @@ import com.jfoenix.controls.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ import javax.crypto.IllegalBlockSizeException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.InvalidKeyException;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -48,6 +50,9 @@ public class EditEntryController {
 
     @FXML
     public JFXComboBox<Label> comboBox = new JFXComboBox<Label>();
+
+    @FXML
+    public JFXComboBox<Label> comboBoxHistorie = new JFXComboBox<Label>();
 
 
 
@@ -208,5 +213,18 @@ public class EditEntryController {
     }
 
 
-}
+
+    public void fillComboBoxhistorie() {
+        ObservableValue<String> historieList = (ObservableValue<String>) presenter.getEntryPropertiesListRecycle();
+//        ArrayList<String> historieList = (ArrayList<String>) presenter.getEntryPropertiesList();
+        comboBoxHistorie.getItems().add(new Label(historieList.getValue()));
+
+        comboBoxHistorie.setPromptText("Historie");
+        comboBoxHistorie.getSelectionModel().select(entryProperty.getCategoryID()-1);
+        }
+
+
+    }
+
+
 

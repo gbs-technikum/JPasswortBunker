@@ -22,18 +22,18 @@
     <children>
         <AnchorPane prefHeight="337.0" prefWidth="390.0" GridPane.rowIndex="1">
             <children>
-                <Label layoutX="40.0" layoutY="185.0" text="Unlock your JPasswortBunker">
+                <Label layoutX="105.0" layoutY="184.0" text="Unlock your JPasswortBunker">
                     <font>
                         <Font size="14.0" />
                     </font></Label>
-                <ImageView fitHeight="115.0" fitWidth="158.0" layoutX="116.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="115.0" fitWidth="158.0" layoutX="117.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@images/logo.png" />
                     </image>
                 </ImageView>
                 <Label fx:id="wrongPassword" layoutX="40.0" layoutY="264.0" textFill="RED" />
-            <JFXPasswordField fx:id="password_box" layoutX="40.0" layoutY="225.0" onAction="#btn_login" prefHeight="25.0" prefWidth="191.0" promptText="Password" />
-            <JFXButton fx:id="btn_login" layoutX="257.0" layoutY="225.0" onAction="#btn_login" style="-fx-background-color: orange;" text="Login">
+            <JFXPasswordField fx:id="password_box" layoutX="100.0" layoutY="225.0" onAction="#btn_login" prefHeight="25.0" prefWidth="191.0" promptText="Password" />
+            <JFXButton fx:id="btn_login" layoutX="299.0" layoutY="223.0" onAction="#btn_login" style="-fx-background-color: orange;" text="Login">
                <font>
                   <Font size="13.0" />
                </font>
