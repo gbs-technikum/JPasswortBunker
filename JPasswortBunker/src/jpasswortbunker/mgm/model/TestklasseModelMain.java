@@ -32,6 +32,10 @@ public class TestklasseModelMain {
         modelMain.initMasterPassword("test");
 
 
+        //Beschreibung: Masterpassword in DB setzen
+        //modelMain.setSaltPasswordHashForPasswortStoreInDb("test");
+
+
         //Beschreibung: Prüfen ob richtigs MasterPasswort übergeben wurde (Oben eingegebenes Passwort wird mit DB abgeglichen)
         System.out.print("Check ob MasterPassword in DB mit Eingabe übereinstimmt: ");
         System.out.println(modelMain.checkIfMasterPasswordIsCorrect());
@@ -59,8 +63,13 @@ public class TestklasseModelMain {
         modelMain.getEntryListRecycleBinTable();
 
 
+        //Beschreibung: ArrayList<Entry> nur mit Neuesten Entrys aus Tabelle Recycle_Bin zurückgeben lassen
+        modelMain.getEntryListRecycleBinTableLatestTimestamp();
+
+
         //Beschreibung: ArrayList<Entry> mit allen Entrys aus Tabelle Recycle_Bin zurückgeben lassen, die der übergebenen entryID entsprechen
         modelMain.getEntrysFromRecycleBinForEntryID("2e264826-6f2a-462a-a114-68c14da385fa");
+
 
 
         //Beschreibung: ArrayList<Entry> mit allen Entrys aus Tabelle Recycle_Bin mit Kategorie -1 (Status gelöscht) zurückgeben lassen
@@ -122,15 +131,9 @@ public class TestklasseModelMain {
         //System.out.println(modelMain.getLengthOfRandomPasswordsFromDB());
 
 
-        //modelMain.restoreEntryFromRecycleBin("f99cb4b0-dbf9-4880-8915-fe8ab1386ae3", 1521378808);
-        System.out.println("######################");
 
-        for(Entry entry: modelMain.getEntryListRecycleBinTableLatestTimestamp()){
-            System.out.println(entry);
-        };
-        System.out.println("######################");
 
-        //#######################Testausgabe auf Console################################
+        //#######################Testausgabe auf Console################################*/
         //==============================================================================
 
 
