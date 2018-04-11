@@ -409,6 +409,35 @@ public class MainInterfaceController implements Initializable {
         loadLang("de");
     }
 
+    public void btn_about(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("About PasswortBunker");
+        alert.setHeaderText("jPasswortBunker");
+        alert.setContentText("jPasswortBunker was created by Marcel Eglseder, Günther Wagenhuber and Michael Kopp \n " +
+                "\n Copyright 2017 - 2099");
+        // Get the Stage.
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+        // Add a custom icon.
+        stage.getIcons().add(new Image(this.getClass().getResource("images/logo.png").toString()));
+        alert.setGraphic(new ImageView(this.getClass().getResource("images/logo.png").toString()));
+        alert.showAndWait();
+    }
+
+    public void btn_help(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Help");
+        alert.setHeaderText("jPasswortBunker");
+        alert.setContentText("Use Google or ask your Administrator");
+        // Get the Stage.
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+        // Add a custom icon.
+        stage.getIcons().add(new Image(this.getClass().getResource("images/logo.png").toString()));
+        alert.setGraphic(new ImageView(this.getClass().getResource("images/logo.png").toString()));
+        alert.showAndWait();
+    }
+
     /**
      * private void loadLang(String lang)
      * Bekommt als Paramter das jeweilige Landeskuerzel

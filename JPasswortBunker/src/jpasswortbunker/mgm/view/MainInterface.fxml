@@ -218,8 +218,8 @@
           </Menu>
           <Menu fx:id="menu_Help" mnemonicParsing="false" text="Help">
                <items>
-                  <MenuItem fx:id="menuItem_About" mnemonicParsing="false" text="About" />
-                  <MenuItem fx:id="menuItem_Help" mnemonicParsing="false" text="Help" />
+                  <MenuItem fx:id="menuItem_About" mnemonicParsing="false" onAction="#btn_about" text="About" />
+                  <MenuItem fx:id="menuItem_Help" mnemonicParsing="false" onAction="#btn_help" text="Help" />
                </items>
           </Menu>
         </menus>
