@@ -122,12 +122,13 @@ public class TestklasseModelMain {
         //System.out.println(modelMain.getLengthOfRandomPasswordsFromDB());
 
 
+        //modelMain.restoreEntryFromRecycleBin("f99cb4b0-dbf9-4880-8915-fe8ab1386ae3", 1521378808);
+        System.out.println("######################");
 
-
-
-
-
-
+        for(Entry entry: modelMain.getEntryListRecycleBinTableLatestTimestamp()){
+            System.out.println(entry);
+        };
+        System.out.println("######################");
 
         //#######################Testausgabe auf Console################################
         //==============================================================================
