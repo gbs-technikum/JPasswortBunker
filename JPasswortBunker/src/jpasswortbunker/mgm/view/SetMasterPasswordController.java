@@ -16,6 +16,10 @@ public final class SetMasterPasswordController{
 
     private PresenterMain presenter;
 
+    /**
+     * public void setPresenter(PresenterMain presenter)
+     * bekommt als Parameter den presenter übergeben
+     */
     public void setPresenter(PresenterMain presenter) {
         this.presenter = presenter;
     }

@@ -23,7 +23,7 @@
       </AnchorPane>
       <AnchorPane id="topBar" layoutX="200.0" layoutY="25.0" prefHeight="70.0" prefWidth="700.0" stylesheets="@style/default_style.css">
          <children>
-            <JFXTextField fx:id="textField_Search" focusColor="WHITE" layoutX="184.0" layoutY="12.0" onKeyTyped="#searchFunction" prefHeight="41.0" prefWidth="297.0" promptText="    Search...." style="-fx-prompt-text-fill: white; -fx-text-inner-color: white; -fx-background-color: #0c50b5;" unFocusColor="#d3cece">
+            <JFXTextField id="searchField" fx:id="textField_Search" focusColor="WHITE" layoutX="184.0" layoutY="12.0" onKeyTyped="#searchFunction" prefHeight="41.0" prefWidth="297.0" promptText="    Search...." stylesheets="@style/default_style.css" unFocusColor="#d3cece">
                <font>
                   <Font size="18.0" />
                </font>
@@ -33,7 +33,7 @@
                   <Image url="@images/plus_icon.png" />
                </image>
             </ImageView>
-            <JFXButton layoutX="14.0" layoutY="11.0" onAction="#btn_newEntry" prefHeight="44.0" prefWidth="156.0" text="NEW Entry" textFill="WHITE">
+            <JFXButton fx:id="btn_newEntry" layoutX="14.0" layoutY="11.0" onAction="#btn_newEntry" prefHeight="44.0" prefWidth="156.0" text="NEW Entry" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
@@ -42,7 +42,7 @@
       </AnchorPane>
       <AnchorPane id="sideBar" layoutY="25.0" prefHeight="600.0" prefWidth="200.0" stylesheets="@style/default_style.css">
          <children>
-            <JFXButton fx:id="btn_newEntry" layoutX="24.0" layoutY="126.0" onAction="#btn_finance" prefHeight="49.0" prefWidth="178.0" text="Finance" textFill="WHITE">
+            <JFXButton fx:id="btn_finance" layoutX="24.0" layoutY="126.0" onAction="#btn_finance" prefHeight="49.0" prefWidth="178.0" text="Finance" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -79,7 +79,7 @@
                   <Image url="@images/logo.png" />
                </image>
             </ImageView>
-            <JFXButton layoutX="11.0" layoutY="469.0" onAction="#btn_recycle" prefHeight="58.0" prefWidth="191.0" text=" Recycle" textFill="WHITE">
+            <JFXButton fx:id="btn_recycle" layoutX="11.0" layoutY="469.0" onAction="#btn_recycle" prefHeight="58.0" prefWidth="191.0" text=" Recycle" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -204,20 +204,22 @@
       </AnchorPane>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="900.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu fx:id="menu_File" mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#btn_newMasterPassword" text="New Masterpassword" />
+              <MenuItem fx:id="menuItem_NewMasterpassword" mnemonicParsing="false" onAction="#btn_newMasterPassword" text="New Masterpassword" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu fx:id="menu_Edit" mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#btn_newEntry" text="New Entry" />
+              <MenuItem fx:id="menuItem_NewEntry" mnemonicParsing="false" onAction="#btn_newEntry" text="New Entry" />
+                  <MenuItem mnemonicParsing="false" onAction="#btn_lang_de" text="Deutsch" />
+                  <MenuItem mnemonicParsing="false" onAction="#btn_lang_en" text="Englisch" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu fx:id="menu_Help" mnemonicParsing="false" text="Help">
                <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
-                  <MenuItem mnemonicParsing="false" text="Help" />
+                  <MenuItem fx:id="menuItem_About" mnemonicParsing="false" text="About" />
+                  <MenuItem fx:id="menuItem_Help" mnemonicParsing="false" text="Help" />
                </items>
           </Menu>
         </menus>
