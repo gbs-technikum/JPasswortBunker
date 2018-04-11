@@ -6,6 +6,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+
 public final class SetMasterPasswordController{
 
     @FXML
@@ -24,10 +32,11 @@ public final class SetMasterPasswordController{
         this.presenter = presenter;
     }
 
-    public void btn_setMasterPassword(ActionEvent actionEvent) {
+    public void btn_setMasterPassword(ActionEvent actionEvent) throws BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
         if (!(passwordField1.getText().equals("") || passwordField2.getText().equals(""))) {
             if (equalsPassword()) {
                 System.out.println("Eingaben gleich");
+                presenter.renewMasterPassword(passwordField1.getText());
             }
         } else {
             labelErrorMessage.setText("Field can not be empty");

@@ -425,7 +425,7 @@ public class MainInterfaceController implements Initializable {
     }
 
     public void btn_help(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION) ;
         alert.setTitle("Help");
         alert.setHeaderText("jPasswortBunker");
         alert.setContentText("Use Google or ask your Administrator");
