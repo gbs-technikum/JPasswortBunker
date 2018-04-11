@@ -36,7 +36,8 @@ public final class SetMasterPasswordController{
         if (!(passwordField1.getText().equals("") || passwordField2.getText().equals(""))) {
             if (equalsPassword()) {
                 System.out.println("Eingaben gleich");
-                presenter.renewMasterPassword(passwordField1.getText());
+                //Todo Methode vom Model aufrufen die passwort in DB schreibt aktuell noch im Bearbeitung
+                presenter.initMasterPassword(passwordField1.getText());
             }
         } else {
             labelErrorMessage.setText("Field can not be empty");
