@@ -5,6 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import jpasswortbunker.mgm.model.Entry;
 import jpasswortbunker.mgm.model.ModelMain;
 import jpasswortbunker.mgm.view.MainInterfaceController;
@@ -17,6 +18,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public final class PresenterMain {
 
@@ -30,13 +33,30 @@ public final class PresenterMain {
     private BooleanProperty textField_settings_saveStatusBoolean;
     private IntegerProperty categoryChoosenForLastNewEntry;
     private StringProperty textField_settings_TimeClipboard;
+    private String language = "de";
+
+    private Locale locale ;
+    private ResourceBundle bundle;
+
+
+    public ResourceBundle setLanguage(String language) {
+        locale = new Locale(language);
+        bundle = ResourceBundle.getBundle("jpasswortbunker.mgm.view.bundles.LangBundle", locale);
+        //Todo language in DB schreiben
+        return bundle;
+    }
+
+    public ResourceBundle getBundle() {
+        return bundle;
+    }
 
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
         model = new ModelMain();
 
         initProperties();
-
+        locale = new Locale(language);//TODo DB Abfrage anstelle von language
+        bundle = ResourceBundle.getBundle("jpasswortbunker.mgm.view.bundles.LangBundle", locale);
         //model.initMasterPassword("test");
         //model.initEncryptionService();
     }

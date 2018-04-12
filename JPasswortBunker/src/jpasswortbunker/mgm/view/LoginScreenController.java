@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 
 public class LoginScreenController {
@@ -23,12 +24,13 @@ public class LoginScreenController {
     private PasswordField password_box;
 
     @FXML
-    private Label wrongPassword;
+    private Label label_wrongPassword, label_infoText;
 
     @FXML
     private JFXButton btn_login;
 
     private PresenterMain presenter;
+    private ResourceBundle bundle;
 
     //EventHandling von Login Button
     public void btn_login(ActionEvent actionEvent) throws IOException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, NoSuchPaddingException, NoSuchAlgorithmException {
@@ -38,13 +40,22 @@ public class LoginScreenController {
             stage.setResizable(false);
             stage.close();
         } else {
-            wrongPassword.setText("Wrong Password");
+            label_wrongPassword.setText(bundle.getString("login.labelWrongPassword"));
         }
     }
 
-
     public void setPresenter(PresenterMain presenter) {
         this.presenter = presenter;
+        bundle = presenter.getBundle();
+        setLang();
     }
+
+    private void setLang() {
+        btn_login.setText(bundle.getString("login.button"));
+        label_infoText.setText(bundle.getString("login.infoText"));
+        password_box.setPromptText(bundle.getString("login.passwordPromptText"));
+    }
+
+
 }
 

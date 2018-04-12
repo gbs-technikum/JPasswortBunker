@@ -23,7 +23,7 @@
       </AnchorPane>
       <AnchorPane id="topBar" layoutX="200.0" layoutY="25.0" prefHeight="70.0" prefWidth="700.0" stylesheets="@style/default_style.css">
          <children>
-            <JFXTextField id="searchField" fx:id="textField_Search" focusColor="WHITE" layoutX="184.0" layoutY="12.0" onKeyTyped="#searchFunction" prefHeight="41.0" prefWidth="297.0" promptText="    Search...." stylesheets="@style/default_style.css" unFocusColor="#d3cece">
+            <JFXTextField id="searchField" fx:id="textField_Search" focusColor="WHITE" layoutX="225.0" layoutY="12.0" onKeyTyped="#searchFunction" prefHeight="41.0" prefWidth="297.0" promptText="    Search...." stylesheets="@style/default_style.css" unFocusColor="#d3cece">
                <font>
                   <Font size="18.0" />
                </font>
@@ -33,7 +33,7 @@
                   <Image url="@images/plus_icon.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="btn_newEntry" layoutX="14.0" layoutY="11.0" onAction="#btn_newEntry" prefHeight="44.0" prefWidth="156.0" text="NEW Entry" textFill="WHITE">
+            <JFXButton fx:id="btn_newEntry" layoutX="14.0" layoutY="11.0" onAction="#btn_newEntry" prefHeight="44.0" prefWidth="191.0" text="NEW Entry" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
@@ -42,73 +42,71 @@
       </AnchorPane>
       <AnchorPane id="sideBar" layoutY="25.0" prefHeight="600.0" prefWidth="200.0" stylesheets="@style/default_style.css">
          <children>
-            <JFXButton fx:id="btn_finance" layoutX="24.0" layoutY="126.0" onAction="#btn_finance" prefHeight="49.0" prefWidth="178.0" text="Finance" textFill="WHITE">
+            <ImageView fitHeight="25.0" fitWidth="35.0" layoutX="7.0" layoutY="540.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/Settings_icon.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="btn_finance" layoutX="-1.0" layoutY="126.0" onAction="#btn_finance" prefHeight="51.0" prefWidth="203.0" text="Finance" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_social" layoutX="22.0" layoutY="167.0" onAction="#btn_social" prefHeight="49.0" prefWidth="178.0" text="Social" textFill="WHITE">
+            <JFXButton fx:id="btn_social" layoutX="-3.0" layoutY="167.0" onAction="#btn_social" prefHeight="51.0" prefWidth="203.0" text="Social" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_email" layoutX="22.0" layoutY="209.0" onAction="#btn_email" prefHeight="49.0" prefWidth="178.0" text="E-Mail" textFill="WHITE">
+            <JFXButton fx:id="btn_email" layoutX="-3.0" layoutY="209.0" onAction="#btn_email" prefHeight="51.0" prefWidth="203.0" text="E-Mail" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_network" layoutX="12.0" layoutY="258.0" onAction="#btn_network" prefHeight="49.0" prefWidth="178.0" text="Network" textFill="WHITE">
-               <font>
-                  <Font size="24.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="29.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/wifi_icon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btn_settings" layoutX="22.0" layoutY="527.0" onAction="#btn_settings" prefHeight="44.0" prefWidth="168.0" text="  Settings" textFill="WHITE">
+            <JFXButton fx:id="btn_network" layoutX="-1.0" layoutY="258.0" onAction="#btn_network" prefHeight="51.0" prefWidth="203.0" text="Network" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </JFXButton>
+            <ImageView fitHeight="29.0" fitWidth="35.0" layoutX="5.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/dollar_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="36.0" fitWidth="31.0" layoutX="4.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/User-Group.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="29.0" fitWidth="35.0" layoutX="5.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/letter.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="29.0" fitWidth="35.0" layoutX="5.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/recycle.png" />
+               </image>
+            </ImageView>
             <ImageView fx:id="btn_logo" fitHeight="58.0" fitWidth="90.0" layoutX="56.0" layoutY="14.0" onMouseClicked="#btn_logo" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/logo.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="btn_recycle" layoutX="11.0" layoutY="469.0" onAction="#btn_recycle" prefHeight="58.0" prefWidth="191.0" text=" Recycle" textFill="WHITE">
+            <ImageView fitHeight="29.0" fitWidth="35.0" layoutX="2.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/wifi_icon.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="btn_recycle" layoutX="-1.0" layoutY="469.0" onAction="#btn_recycle" prefHeight="58.0" prefWidth="203.0" text=" Recycle" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </JFXButton>
-            <ImageView fitHeight="29.0" fitWidth="35.0" layoutX="42.0" layoutY="484.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/recycle.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="35.0" layoutX="44.0" layoutY="540.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/Settings_icon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="29.0" fitWidth="35.0" layoutX="43.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/letter.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="36.0" fitWidth="31.0" layoutX="44.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/User-Group.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="29.0" fitWidth="35.0" layoutX="44.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/dollar_icon.png" />
-               </image>
-            </ImageView>
+            <JFXButton fx:id="btn_settings" layoutY="527.0" onAction="#btn_settings" prefHeight="51.0" prefWidth="203.0" text="  Settings" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </JFXButton>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="pane_settings" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
@@ -128,7 +126,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <JFXTextField editable="false" text="Number of Backup-Entries:">
+                  <JFXTextField fx:id="textField_settings_numberBackupEntries" editable="false" text="Number of Backup-Entries:">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -148,7 +146,7 @@
                         <Font size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField editable="false" text="Length Random-Passwords:" GridPane.rowIndex="1">
+                  <JFXTextField fx:id="textField_settings_lengthRandomPasswordsText" editable="false" text="Length Random-Passwords:" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -158,7 +156,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXButton fx:id="btn_settings_lenthRandomPasswords" onAction="#btn_settings_lengthRandomPasswords" style="-fx-background-color: orange;" text="SAVE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <JFXButton fx:id="btn_settings_lengthRandomPasswords" onAction="#btn_settings_lengthRandomPasswords" style="-fx-background-color: orange;" text="SAVE" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -168,7 +166,7 @@
                         <Font size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField editable="false" text="Timeout Clipboard" GridPane.rowIndex="2">
+                  <JFXTextField fx:id="textField_settings_timeoutClipboardText" editable="false" text="Timeout Clipboard" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -188,7 +186,7 @@
                         <Font size="14.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField editable="false" text="Save status:" unFocusColor="ORANGE" GridPane.rowIndex="3">
+                  <JFXTextField fx:id="textField_settings_saveStatusText" editable="false" text="Save status:" unFocusColor="ORANGE" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

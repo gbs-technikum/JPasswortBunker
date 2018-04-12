@@ -14,7 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
@@ -48,12 +47,13 @@ import java.util.function.Predicate;
 
 public class MainInterfaceController implements Initializable {
 
-    @FXML
+
     private ResourceBundle bundle;
     private Locale locale;
 
     @FXML
-    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle, btn_settings_timeoutClipboard, btn_settings_numberBackupEntriesOk;
+    private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle,
+            btn_settings_timeoutClipboard, btn_settings_numberBackupEntriesOk, btn_settings_lengthRandomPasswords;
 
     @FXML
     private ImageView btn_logo;
@@ -68,7 +68,9 @@ public class MainInterfaceController implements Initializable {
     private JFXTreeTableView<EntryProperty> tableView_recylce;
 
     @FXML
-    private JFXTextField textField_Search, textField_settings_timeoutClipboard, textField_settings_backupEntries, textField_settings_lengthRandomPasswords,textField_settings_saveStatus;
+    private JFXTextField textField_Search, textField_settings_timeoutClipboard, textField_settings_backupEntries,
+            textField_settings_lengthRandomPasswords,textField_settings_saveStatus, textField_settings_numberBackupEntries,
+            textField_settings_lengthRandomPasswordsText, textField_settings_timeoutClipboardText, textField_settings_saveStatusText;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -83,6 +85,7 @@ public class MainInterfaceController implements Initializable {
     private ContextMenu contextMenu;
 
 
+
     private PresenterMain presenter = new PresenterMain(this);
 
 
@@ -95,6 +98,8 @@ public class MainInterfaceController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        bundle = presenter.getBundle();
+        //loadLang(presenter.getLanguage());
         try {
             //Ruft Methode auf und ruft jeweiliges Fenster auf
             checkIfMasterPasswortExistsInDB();
@@ -108,6 +113,7 @@ public class MainInterfaceController implements Initializable {
     }
 
     public void updateView() {
+        setLang();
         fillTreeView();
         fillRecycleTable();
         stageMainInterfaceController.show();
@@ -135,7 +141,7 @@ public class MainInterfaceController implements Initializable {
     public void fillTreeView() {
 
         //Spalte Title
-        JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>("Title");
+        JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>(bundle.getString("tableColumn.title"));
         titleName.setPrefWidth(120);
         titleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
@@ -145,7 +151,7 @@ public class MainInterfaceController implements Initializable {
         });
 
         //Spalte Username
-        JFXTreeTableColumn<EntryProperty, String> usernameCol = new JFXTreeTableColumn<>("Username");
+        JFXTreeTableColumn<EntryProperty, String> usernameCol = new JFXTreeTableColumn<>(bundle.getString("tableColumn.username"));
         usernameCol.setPrefWidth(200);
         usernameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
@@ -155,7 +161,7 @@ public class MainInterfaceController implements Initializable {
         });
 
         //Spalte URL
-        JFXTreeTableColumn<EntryProperty, String> urlCol = new JFXTreeTableColumn<>("URL");
+        JFXTreeTableColumn<EntryProperty, String> urlCol = new JFXTreeTableColumn<>(bundle.getString("tableColumn.url"));
         urlCol.setPrefWidth(190);
         urlCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
@@ -165,7 +171,7 @@ public class MainInterfaceController implements Initializable {
         });
 
         //Spalte Description
-        JFXTreeTableColumn<EntryProperty, String> desCol = new JFXTreeTableColumn<>("Description");
+        JFXTreeTableColumn<EntryProperty, String> desCol = new JFXTreeTableColumn<>(bundle.getString("tableColumn.description"));
         desCol.setPrefWidth(180);
         desCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
@@ -237,7 +243,7 @@ public class MainInterfaceController implements Initializable {
             LoginScreenController loginScreenController = fxmlLoader.<LoginScreenController>getController();
             loginScreenController.setPresenter(presenter);
             this.stageLogin = new Stage();
-            stageLogin.setTitle("LoginScreen");
+            stageLogin.setTitle(bundle.getString("login.title"));
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
             stageLogin.setResizable(false);
@@ -401,20 +407,22 @@ public class MainInterfaceController implements Initializable {
 
     public void btn_lang_en(ActionEvent actionEvent) {
         System.out.println("Englisch");
-        loadLang("en");
+        bundle = presenter.setLanguage("en");
+        setLang();
     }
 
     public void btn_lang_de(ActionEvent actionEvent) {
         System.out.println("Deutsch");
-        loadLang("de");
+        bundle =presenter.setLanguage("de");
+        setLang();
+
     }
 
     public void btn_about(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("About PasswortBunker");
+        alert.setTitle(bundle.getString("title.about"));
         alert.setHeaderText("jPasswortBunker");
-        alert.setContentText("jPasswortBunker was created by Marcel Eglseder, Günther Wagenhuber and Michael Kopp \n " +
-                "\n Copyright 2017 - 2099");
+        alert.setContentText(bundle.getString("text.about"));
         // Get the Stage.
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 
@@ -426,9 +434,9 @@ public class MainInterfaceController implements Initializable {
 
     public void btn_help(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION) ;
-        alert.setTitle("Help");
+        alert.setTitle(bundle.getString("title.help"));
         alert.setHeaderText("jPasswortBunker");
-        alert.setContentText("Use Google or ask your Administrator");
+        alert.setContentText(bundle.getString("text.help"));
         // Get the Stage.
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 
@@ -446,6 +454,10 @@ public class MainInterfaceController implements Initializable {
     private void loadLang(String lang) {
         locale = new Locale(lang);
         bundle = ResourceBundle.getBundle("jpasswortbunker.mgm.view.bundles.LangBundle", locale);
+
+    }
+
+    public void setLang() {
         btn_finance.setText(bundle.getString("button.finance"));
         btn_social.setText(bundle.getString("button.social"));
         btn_email.setText(bundle.getString("button.email"));
@@ -461,6 +473,13 @@ public class MainInterfaceController implements Initializable {
         menuItem_NewEntry.setText(bundle.getString("menuItem.newEntry"));
         menuItem_Help.setText(bundle.getString("menuItem.help"));
         menuItem_About.setText(bundle.getString("menuItem.about"));
+        textField_settings_numberBackupEntries.setText(bundle.getString("textField.settings.numberBackupEntries"));
+        textField_settings_lengthRandomPasswordsText.setText(bundle.getString("textField.settings.lenghtRandomPasswordText"));
+        textField_settings_timeoutClipboardText.setText(bundle.getString("textField.settings.timeoutClipboardText"));
+        textField_settings_saveStatusText.setText(bundle.getString("textField.settings.saveSatusText"));
+        btn_settings_numberBackupEntriesOk.setText(bundle.getString("button.settings.numberBackupEntries"));
+        btn_settings_timeoutClipboard.setText(bundle.getString("button.settings.timeoutClipboard"));
+        btn_settings_lengthRandomPasswords.setText(bundle.getString("button.settings.lengthRandomPassword"));
     }
 
     /**
@@ -566,9 +585,9 @@ public class MainInterfaceController implements Initializable {
     public void fillRecycleTable() {
 
         //Spalte Title
-        JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>("Title");
-        titleName.setPrefWidth(100);
-        titleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
+        JFXTreeTableColumn<EntryProperty, String>columntitleName = new JFXTreeTableColumn<>(bundle.getString("tableColumn.title"));
+        columntitleName.setPrefWidth(100);
+        columntitleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
                 return param.getValue().getValue().titleProperty();
@@ -576,7 +595,7 @@ public class MainInterfaceController implements Initializable {
         });
 
         //Spalte Username
-        JFXTreeTableColumn<EntryProperty, String> usernameCol = new JFXTreeTableColumn<>("Username");
+        JFXTreeTableColumn<EntryProperty, String> usernameCol = new JFXTreeTableColumn<>(bundle.getString("tableColumn.username"));
         usernameCol.setPrefWidth(100);
         usernameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
@@ -586,7 +605,7 @@ public class MainInterfaceController implements Initializable {
         });
 
         //Spalte URL
-        JFXTreeTableColumn<EntryProperty, String> urlCol = new JFXTreeTableColumn<>("URL");
+        JFXTreeTableColumn<EntryProperty, String> urlCol = new JFXTreeTableColumn<>(bundle.getString("tableColumn.url"));
         urlCol.setPrefWidth(150);
         urlCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
@@ -596,7 +615,7 @@ public class MainInterfaceController implements Initializable {
         });
 
         //Spalte Description
-        JFXTreeTableColumn<EntryProperty, String> desCol = new JFXTreeTableColumn<>("Description");
+        JFXTreeTableColumn<EntryProperty, String> desCol = new JFXTreeTableColumn<>(bundle.getString("tableColumn.description"));
         desCol.setPrefWidth(150);
         desCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
@@ -607,7 +626,7 @@ public class MainInterfaceController implements Initializable {
 
         //Inhalte werden in die Tabelle geschrieben
         final TreeItem<EntryProperty> root1 = new RecursiveTreeItem<EntryProperty>(presenter.getEntryPropertiesListRecycle(), RecursiveTreeObject::getChildren);
-        tableView_recylce.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
+        tableView_recylce.getColumns().setAll(columntitleName, usernameCol, urlCol, desCol);
         tableView_recylce.setRoot(root1);
         tableView_recylce.setShowRoot(false);
         tableView_recylce.sort();
