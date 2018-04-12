@@ -83,6 +83,7 @@ public class MainInterfaceController implements Initializable {
 
     private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin, stageNewEntry;
     private ContextMenu contextMenu;
+    private Alert alert;
 
 
 
@@ -113,9 +114,10 @@ public class MainInterfaceController implements Initializable {
     }
 
     public void updateView() {
-        setLang();
+        //setLang();
         fillTreeView();
         fillRecycleTable();
+        setLang();
         stageMainInterfaceController.show();
     }
 
@@ -247,6 +249,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
             stageLogin.setResizable(false);
+            stageLogin.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
             stageLogin.show();
         } else {
             System.out.println("Nicht gesetzt");
@@ -259,6 +262,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setScene(new Scene(parent, 500, 400));
             stageLogin.setAlwaysOnTop(true);
             stageLogin.setResizable(false);
+            stageLogin.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
             stageLogin.show();
         }
     }
@@ -480,6 +484,13 @@ public class MainInterfaceController implements Initializable {
         btn_settings_numberBackupEntriesOk.setText(bundle.getString("button.settings.numberBackupEntries"));
         btn_settings_timeoutClipboard.setText(bundle.getString("button.settings.timeoutClipboard"));
         btn_settings_lengthRandomPasswords.setText(bundle.getString("button.settings.lengthRandomPassword"));
+        contextMenu.getItems().get(0).setText(bundle.getString("contextMenu.delete"));
+        contextMenu.getItems().get(1).setText(bundle.getString("contextMenu.edit"));
+        contextMenu.getItems().get(2).setText(bundle.getString("contextMenu.copyPassword"));
+        treeView.getColumns().get(0).setText(bundle.getString("tableColumn.title"));
+        treeView.getColumns().get(1).setText(bundle.getString("tableColumn.username"));
+        treeView.getColumns().get(2).setText(bundle.getString("tableColumn.url"));
+        treeView.getColumns().get(3).setText(bundle.getString("tableColumn.description"));
     }
 
     /**
@@ -490,15 +501,15 @@ public class MainInterfaceController implements Initializable {
         //ToDo eventuell noch mal anpassen wenn Zeit
         contextMenu = null;
         contextMenu = new ContextMenu();
-        MenuItem item1 = new MenuItem("Delete");
+        MenuItem item1 = new MenuItem(bundle.getString("contextMenu.delete"));
         item1.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText("Delete Confirmation");
-                alert.setContentText("Are you realy sure, that you want delete the Entry ");
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle(bundle.getString("alert.title"));
+                alert.setHeaderText(bundle.getString("alert.alert.headerText"));
+                alert.setContentText(bundle.getString("alert.text"));
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
@@ -523,7 +534,7 @@ public class MainInterfaceController implements Initializable {
             }
         });
         contextMenu.getItems().add(item1);
-        MenuItem item2 = new MenuItem("Edit");
+        MenuItem item2 = new MenuItem(bundle.getString("contextMenu.edit"));
         item2.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -536,7 +547,7 @@ public class MainInterfaceController implements Initializable {
             }
         });
         contextMenu.getItems().add(item2);
-        MenuItem item3 = new MenuItem("Copy Password");
+        MenuItem item3 = new MenuItem(bundle.getString("contextMenu.copyPassword"));
         item3.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
