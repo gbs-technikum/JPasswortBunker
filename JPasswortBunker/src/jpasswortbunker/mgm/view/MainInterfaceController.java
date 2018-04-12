@@ -519,6 +519,7 @@ public class MainInterfaceController implements Initializable {
         editEntryController.setEntry(treeView.getSelectionModel().getSelectedItem());
         editEntryController.setPresenter(presenter);
         editEntryController.fillComboBox();
+        editEntryController.fillComboBoxhistorie();
 
 
         Parent parentEditEntry = loader.getRoot();

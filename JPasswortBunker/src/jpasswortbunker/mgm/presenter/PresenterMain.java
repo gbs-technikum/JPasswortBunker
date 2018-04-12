@@ -17,10 +17,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Timestamp;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
 
 public final class PresenterMain {
 
@@ -134,6 +132,10 @@ public final class PresenterMain {
     public List getCategoryListFromDB() throws SQLException {
         //System.out.println(model.getCategoryListFromDB().size() + "-------------");
         return model.getCategoryListFromDB();
+    }
+
+    public ArrayList<Entry> getEntrysFromRecycleBinForEntryID(String id) throws SQLException {
+        return model.getEntrysFromRecycleBinForEntryID(id);
     }
 
     public String createPassword() throws SQLException {

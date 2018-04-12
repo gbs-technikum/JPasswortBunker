@@ -34,6 +34,11 @@
       <JFXTextField fx:id="textFieldURL" layoutX="50.0" layoutY="229.0" prefHeight="25.0" prefWidth="222.0" promptText="URL" />
       <JFXTextArea fx:id="textAreaDescription" layoutX="50.0" layoutY="306.0" prefHeight="75.0" prefWidth="222.0" style="-fx-background-color: lightgrey;" unFocusColor="WHITE" />
       <Label layoutX="50.0" layoutY="281.0" prefHeight="17.0" prefWidth="81.0" text="Description" />
+      <JFXButton fx:id="btn_restore" layoutX="300.0" layoutY="337.0" onAction="#btn_restore" prefHeight="45.0" prefWidth="111.0" style="-fx-background-color: orange;" text="RESTORE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXButton>
       <JFXButton fx:id="btn_save" layoutX="300.0" layoutY="337.0" onAction="#btn_save" prefHeight="45.0" prefWidth="111.0" style="-fx-background-color: orange;" text="SAVE">
          <font>
             <Font name="System Bold" size="14.0" />
