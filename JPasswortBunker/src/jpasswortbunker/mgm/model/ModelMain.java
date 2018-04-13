@@ -272,7 +272,8 @@ public class ModelMain {
      * Zugriff via View
      * Rückgabe Entrys via EntryID aus Recycle_Bin
      */
-    public ArrayList<Entry> getEntrysFromRecycleBinForEntryID(String entryID) throws SQLException {
+    public ArrayList<Entry> getEntrysFromRecycleBinForEntryID(String entryID) throws SQLException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+        FillEntryListFromRecycleBin();
         ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
         ArrayList<Entry> returnList = new ArrayList<>();
         for (Entry entry : arrayList) {
@@ -371,7 +372,7 @@ public class ModelMain {
      * Kein Zugriff via View
      * Ausgabe alle Entries aus Tabelle Recycle_Bin für die übergebene entryID auf Console
      */
-    protected void soutEntryListRecycleBinForEntryID(String entryID) throws SQLException {
+    protected void soutEntryListRecycleBinForEntryID(String entryID) throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         ArrayList<Entry> removedEntryArrayList = getEntrysFromRecycleBinForEntryID(entryID);
         for (Entry entry : removedEntryArrayList) {
             System.out.println(entry);
