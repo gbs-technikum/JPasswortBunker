@@ -228,7 +228,8 @@ public class EditEntryController {
         comboBoxHistorie.getItems().add(new Label("Current Entry"));
 
         for (Entry entry : entrieHistroy) {
-            comboBoxHistorie.getItems().add(new Label(entry.getTitle() + " " + new Date(entry.getTimestamp() )));
+            comboBoxHistorie.getItems().add(new Label(presenter.timestampToTime(entry.getTimestamp())));
+            System.out.println(entry.getTimestamp());
 
         }
 

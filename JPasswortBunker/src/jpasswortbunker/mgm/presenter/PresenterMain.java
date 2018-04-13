@@ -17,6 +17,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Timestamp;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
@@ -234,8 +235,12 @@ public final class PresenterMain {
         this.textField_settings_TimeClipboard.setValue( textField_settings_TimeClipboard);
     }
 
-    public void TimestamptoTime() {
-
+    public String timestampToTime(long timeStamp) {
+        Date date = new Date(timeStamp * 1000L );
+        SimpleDateFormat jdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String java_date= jdf.format(date);
+        System.out.println("\n"+java_date+"\n");
+        return java_date;
     }
 
 
