@@ -87,7 +87,8 @@ public final class PresenterMain {
     //Schreibt die Liste der Arraylist aus Model in die Observable List im Presenter
     public void writeToObservableListrecycle() throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
         model.FillEntryListFromRecycleBin();
-        for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListRecycleBinTable()) {
+        //Geändert Wagenhuber - Vorher: for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListRecycleBinTable()) {
+        for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListRecycleBinTableLatestTimestamp()) {
             entryPropertiesListRecycle.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
                     entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
         }
