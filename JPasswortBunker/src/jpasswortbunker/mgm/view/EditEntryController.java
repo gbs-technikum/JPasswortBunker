@@ -222,7 +222,7 @@ public class EditEntryController {
 
 
 
-    public void fillComboBoxhistorie() throws SQLException {
+    public void fillComboBoxhistorie() throws SQLException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
         ArrayList<Entry> entrieHistroy = presenter.getEntrysFromRecycleBinForEntryID(entryProperty.getEntryID().toString());
 
         comboBoxHistorie.getItems().add(new Label("Current Entry"));

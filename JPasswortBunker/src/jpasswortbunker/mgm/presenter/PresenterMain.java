@@ -135,7 +135,7 @@ public final class PresenterMain {
         return model.getCategoryListFromDB();
     }
 
-    public ArrayList<Entry> getEntrysFromRecycleBinForEntryID(String id) throws SQLException {
+    public ArrayList<Entry> getEntrysFromRecycleBinForEntryID(String id) throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         return model.getEntrysFromRecycleBinForEntryID(id);
     }
 
