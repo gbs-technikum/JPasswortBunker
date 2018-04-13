@@ -15,7 +15,7 @@
    <children>
       <AnchorPane prefHeight="66.0" prefWidth="400.0" style="-fx-background-color: #0747A6;">
          <children>
-            <Label layoutX="14.0" layoutY="16.0" text="NEW ENTRY" textFill="WHITE">
+            <Label fx:id="labelEntryHead" layoutX="14.0" layoutY="16.0" text="NEW ENTRY" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -33,7 +33,7 @@
       <JFXPasswordField fx:id="passwordField2" layoutX="16.0" layoutY="191.0" prefHeight="25.0" prefWidth="234.0" promptText="Repeat Password" />
       <JFXTextField fx:id="textFieldURL" layoutX="16.0" layoutY="229.0" prefHeight="25.0" prefWidth="234.0" promptText="URL" />
       <JFXTextArea fx:id="textAreaDescription" layoutX="15.0" layoutY="311.0" prefHeight="75.0" prefWidth="257.0" style="-fx-background-color: lightgrey;" unFocusColor="WHITE" />
-      <Label layoutX="16.0" layoutY="290.0" prefHeight="17.0" prefWidth="81.0" text="Descripntion" />
+      <Label fx:id="labelDescriptionText" layoutX="16.0" layoutY="290.0" prefHeight="17.0" prefWidth="81.0" text="Descripntion" />
       <JFXButton fx:id="btn_save" layoutX="303.0" layoutY="341.0" onAction="#btn_save" prefHeight="45.0" prefWidth="74.0" style="-fx-background-color: #0747A6;" text="OK" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />

@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class NewEntryController{
 
@@ -28,7 +29,7 @@ public class NewEntryController{
     private JFXTextArea textAreaDescription;
 
     @FXML
-    private Label labelErrorMessage;
+    private Label labelErrorMessage, labelEntryHead, labelDescriptionText;
 
     @FXML
     private JFXButton btn_save, btn_key, btn_eye;
@@ -37,11 +38,10 @@ public class NewEntryController{
     public JFXComboBox<Label> comboBox = new JFXComboBox<Label>();
 
     public PresenterMain presenter;
+    private ResourceBundle bundle;
 
     @FXML
     public void initialize() {
-        btn_eye.setTooltip(new Tooltip("Show Password"));
-        btn_key.setTooltip(new Tooltip("Generate a random Password"));
         textFieldPassword1.setManaged(false);
         textFieldPassword1.setVisible(false);
         textFieldPassword2.setManaged(false);
@@ -76,7 +76,8 @@ public class NewEntryController{
                     System.out.println("neuer Eintrag angelegt");
                 } catch (NullPointerException e) {
                     System.out.println("Kategorie nicht ausgewählt");
-                    labelErrorMessage.setText("Please choose a categorie");
+                    labelErrorMessage.setText(bundle.getString("entry.labelErrorMessage.chooseCategorie"));
+
 
                 } catch (InvalidKeyException e) {
                     e.printStackTrace();
@@ -93,7 +94,8 @@ public class NewEntryController{
                 System.out.println("Eintrag konnte nicht erstellt werden");
             }
         } else {
-            labelErrorMessage.setText("Please set a title");
+            labelErrorMessage.setText(bundle.getString("entry.labelErrorMessage.setTitle"));
+
         }
 
     }
@@ -143,7 +145,8 @@ public class NewEntryController{
         if (passwordField1.getText().equals(passwordField2.getText())) {
             return true;
         }
-        labelErrorMessage.setText("Password not Equals");
+        labelErrorMessage.setText(bundle.getString("entry.labelErrorMessage.passwordEquals"));
+
         return false;
     }
 
@@ -156,7 +159,7 @@ public class NewEntryController{
         for (int i = 1; i < categoryList.size(); i++) {
             comboBox.getItems().add(new Label(categoryList.get(i)));
         }
-        comboBox.setPromptText("Category ...");
+        comboBox.setPromptText(bundle.getString("entry.comboBox.promptText"));
     }
 
     /**
@@ -165,7 +168,27 @@ public class NewEntryController{
      */
     public void setPresenter(PresenterMain presenter) {
         this.presenter = presenter;
+        bundle = presenter.getBundle();
+        setToolTip();
+        setLang();
     }
-}
 
-//test hallo
+    private void setLang() {
+        textFieldTitle.setPromptText(bundle.getString("entry.promptTextFieldTitle"));
+        textFieldUsername.setPromptText(bundle.getString("entry.promptTextFieldUsername"));
+        textFieldURL.setPromptText(bundle.getString("entry.promptTextFieldURL"));
+        textFieldPassword1.setPromptText(bundle.getString("entry.promptTextPassword1"));
+        textFieldPassword2.setPromptText(bundle.getString("entry.promptTextPassword2"));
+        passwordField1.setPromptText(bundle.getString("entry.promptTextPassword1"));
+        passwordField2.setPromptText(bundle.getString("entry.promptTextPassword2"));
+        btn_save.setText(bundle.getString("entry.button.save"));
+        labelDescriptionText.setText(bundle.getString("entry.label.descriptionText"));
+        labelEntryHead.setText(bundle.getString("entryNew.label.entryHead"));
+    }
+
+    private void setToolTip() {
+        btn_eye.setTooltip(new Tooltip(bundle.getString("entry.tooltip.showPassword")));
+        btn_key.setTooltip(new Tooltip(bundle.getString("entry.tooltip.generatePassword")));
+    }
+
+}

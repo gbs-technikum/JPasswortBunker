@@ -41,7 +41,7 @@ public class EditEntryController {
     private JFXTextArea textAreaDescription;
 
     @FXML
-    private Label labelErrorMessage;
+    private Label labelErrorMessage, labelDescriptionText, labelEntryHead;
 
     @FXML
     private JFXButton btn_save, btn_eye, btn_copyPassword;
@@ -53,11 +53,10 @@ public class EditEntryController {
 
     public EntryProperty entryProperty;
     private PresenterMain presenter;
+    private ResourceBundle bundle;
 
     @FXML
     public void initialize(){
-        btn_eye.setTooltip(new Tooltip("Show Password"));
-        btn_copyPassword.setTooltip(new Tooltip("Copy Password to Clipboard"));
         textFieldPassword1.setManaged(false);
         textFieldPassword1.setVisible(false);
         textFieldPassword2.setManaged(false);
@@ -205,6 +204,27 @@ public class EditEntryController {
      */
     public void setPresenter(PresenterMain presenter) throws SQLException {
         this.presenter = presenter;
+        bundle = presenter.getBundle();
+        setLang();
+        setToolTip();
+    }
+
+    private void setLang() {
+        textFieldTitle.setPromptText(bundle.getString("entry.promptTextFieldTitle"));
+        textFieldUsername.setPromptText(bundle.getString("entry.promptTextFieldUsername"));
+        textFieldURL.setPromptText(bundle.getString("entry.promptTextFieldURL"));
+        textFieldPassword1.setPromptText(bundle.getString("entry.promptTextPassword1"));
+        textFieldPassword2.setPromptText(bundle.getString("entry.promptTextPassword2"));
+        passwordField1.setPromptText(bundle.getString("entry.promptTextPassword1"));
+        passwordField2.setPromptText(bundle.getString("entry.promptTextPassword2"));
+        btn_save.setText(bundle.getString("entry.button.save"));
+        labelDescriptionText.setText(bundle.getString("entry.label.descriptionText"));
+        labelEntryHead.setText(bundle.getString("entryEdit.label.entryHead"));
+    }
+
+    private void setToolTip() {
+        btn_eye.setTooltip(new Tooltip(bundle.getString("entry.tooltip.showPassword")));
+        btn_copyPassword.setTooltip(new Tooltip(bundle.getString("entry.tooltip.copyPassword")));
     }
 
 

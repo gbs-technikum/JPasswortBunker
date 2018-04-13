@@ -277,7 +277,7 @@ public class MainInterfaceController implements Initializable {
         newEntryController.setPresenter(presenter);
         newEntryController.fillComboBox();
         this.stageNewEntry = new Stage();
-        stageNewEntry.setTitle("New Entry");
+        stageNewEntry.setTitle(bundle.getString("entryNew.title"));
         stageNewEntry.setScene(new Scene(parent, 400, 400));
         stageNewEntry.setAlwaysOnTop(true);
         stageNewEntry.setResizable(false);
@@ -508,7 +508,7 @@ public class MainInterfaceController implements Initializable {
             public void handle(ActionEvent event) {
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle(bundle.getString("alert.title"));
-                alert.setHeaderText(bundle.getString("alert.alert.headerText"));
+                alert.setHeaderText(bundle.getString("alert.headerText"));
                 alert.setContentText(bundle.getString("alert.text"));
 
                 Optional<ButtonType> result = alert.showAndWait();
@@ -583,7 +583,7 @@ public class MainInterfaceController implements Initializable {
         Parent parentEditEntry = loader.getRoot();
         Stage stageEditEntry = new Stage();
         Scene sceneEditentry = new Scene(parentEditEntry, 400, 400);
-        stageEditEntry.setTitle("Edit your EntryProperty");
+        stageEditEntry.setTitle(bundle.getString("entryEdit.title"));
         stageEditEntry.setScene(sceneEditentry);
         stageEditEntry.setResizable(false);
         stageEditEntry.show();
