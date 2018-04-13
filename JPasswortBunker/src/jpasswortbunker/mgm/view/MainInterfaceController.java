@@ -202,6 +202,14 @@ public class MainInterfaceController implements Initializable {
                         editEntryScene();
                     } catch (SQLException e) {
                         e.printStackTrace();
+                    } catch (BadPaddingException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    } catch (IllegalBlockSizeException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
+                        e.printStackTrace();
                     }
                 }
                 if (ee.isSecondaryButtonDown()) {
@@ -543,6 +551,14 @@ public class MainInterfaceController implements Initializable {
                     editEntryScene();
                 } catch (SQLException e) {
                     e.printStackTrace();
+                } catch (BadPaddingException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IllegalBlockSizeException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeyException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -565,7 +581,7 @@ public class MainInterfaceController implements Initializable {
         contextMenu.getItems().add(item3);
     }
 
-    private void editEntryScene() throws SQLException {
+    private void editEntryScene() throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("EditEntry.fxml"));
         try {
             loader.load();
@@ -578,11 +594,12 @@ public class MainInterfaceController implements Initializable {
         editEntryController.setEntry(treeView.getSelectionModel().getSelectedItem());
         editEntryController.setPresenter(presenter);
         editEntryController.fillComboBox();
+        editEntryController.fillComboBoxhistorie();
 
 
         Parent parentEditEntry = loader.getRoot();
         Stage stageEditEntry = new Stage();
-        Scene sceneEditentry = new Scene(parentEditEntry, 400, 400);
+        Scene sceneEditentry = new Scene(parentEditEntry, 420, 420);
         stageEditEntry.setTitle(bundle.getString("entryEdit.title"));
         stageEditEntry.setScene(sceneEditentry);
         stageEditEntry.setResizable(false);
@@ -656,6 +673,14 @@ public class MainInterfaceController implements Initializable {
                     try {
                         editEntryScene();
                     } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (BadPaddingException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    } catch (IllegalBlockSizeException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
                         e.printStackTrace();
                     }
                 }

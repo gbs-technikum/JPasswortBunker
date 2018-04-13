@@ -306,20 +306,21 @@ public class ModelMain {
         }
 
 
-        /**
-         * Zugriff via View
-         * Rückgabe Entrys via EntryID aus Recycle_Bin
-         */
-        public ArrayList<Entry> getEntrysFromRecycleBinForEntryID (String entryID) throws SQLException {
-            ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
-            ArrayList<Entry> returnList = new ArrayList<>();
-            for (Entry entry : arrayList) {
-                if (entry.getEntryIDasString().equals(entryID)) {
-                    returnList.add(entry);
-                }
+    /**
+     * Zugriff via View
+     * Rückgabe Entrys via EntryID aus Recycle_Bin
+     */
+    public ArrayList<Entry> getEntrysFromRecycleBinForEntryID(String entryID) throws SQLException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+        FillEntryListFromRecycleBin();
+        ArrayList<Entry> arrayList = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
+        ArrayList<Entry> returnList = new ArrayList<>();
+        for (Entry entry : arrayList) {
+            if (entry.getEntryIDasString().equals(entryID)) {
+                returnList.add(entry);
             }
-            return returnList;
         }
+        return returnList;
+    }
 
 
         /**

@@ -4,6 +4,8 @@ import com.jfoenix.controls.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,19 +17,20 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import jpasswortbunker.mgm.model.Entry;
 import jpasswortbunker.mgm.presenter.EntryProperty;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.InvalidKeyException;
+import java.sql.Array;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class EditEntryController {
 
@@ -44,10 +47,13 @@ public class EditEntryController {
     private Label labelErrorMessage, labelDescriptionText, labelEntryHead;
 
     @FXML
-    private JFXButton btn_save, btn_eye, btn_copyPassword;
+    private JFXButton btn_save, btn_eye, btn_copyPassword, btn_restore;
 
     @FXML
     public JFXComboBox<Label> comboBox = new JFXComboBox<Label>();
+
+    @FXML
+    public JFXComboBox<Label> comboBoxHistorie = new JFXComboBox<Label>();
 
 
 
@@ -75,6 +81,13 @@ public class EditEntryController {
         }
     }
 
+    public void btn_restore(ActionEvent actionEvent) throws  IllegalBlockSizeException, SQLException,InvalidKeyException,BadPaddingException,UnsupportedEncodingException {
+
+        if (changeEntry()) {
+            Stage stage = (Stage) btn_restore.getScene().getWindow();
+            stage.close();
+        }
+    }
     /**
      * public void btn_eyeIcon(ActionEvent actionEvent)
      * Zeit das Passwort im Klartext an, indem das PasswortFeld ausgeblendet wird und Textfeld eingeblendet
@@ -228,5 +241,50 @@ public class EditEntryController {
     }
 
 
-}
+
+    public void fillComboBoxhistorie() throws SQLException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+        ArrayList<Entry> entrieHistroy = presenter.getEntrysFromRecycleBinForEntryID(entryProperty.getEntryID().toString());
+
+        comboBoxHistorie.getItems().add(new Label("Current Entry"));
+
+        for (Entry entry : entrieHistroy) {
+            comboBoxHistorie.getItems().add(new Label(presenter.timestampToTime(entry.getTimestamp())));
+            System.out.println(entry.getTimestamp());
+
+        }
+
+        comboBoxHistorie.setPromptText("Historie");
+        comboBoxHistorie.getSelectionModel().select(entryProperty.getCategoryID()-1);
+
+        comboBoxHistorie.valueProperty().addListener(new ChangeListener<Label>() {
+            @Override
+            public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
+
+                if (comboBoxHistorie.getSelectionModel().getSelectedIndex() == 0) {
+                    btn_save.setVisible(true);
+                    btn_restore.setVisible(false);
+                } else {
+                    btn_save.setVisible(false);
+                    btn_restore.setVisible(true);
+                    Entry selectedEntry = entrieHistroy.get(comboBoxHistorie.getSelectionModel().getSelectedIndex()-1);
+                    textFieldTitle.setText(selectedEntry.getTitle());
+                    textAreaDescription.setText(selectedEntry.getDescription());
+                    textFieldUsername.setText(selectedEntry.getUsername());
+                    textFieldPassword1.setText(selectedEntry.getPassword());
+                    textFieldPassword2.setText(selectedEntry.getPassword());
+                    textFieldURL.setText(selectedEntry.getUrl());
+
+
+                }
+            }
+        });
+
+        }
+
+
+
+
+    }
+
+
 
