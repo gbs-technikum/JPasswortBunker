@@ -289,6 +289,7 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setScene(new Scene(parent, 400, 400));
         stageNewEntry.setAlwaysOnTop(true);
         stageNewEntry.setResizable(false);
+        stageNewEntry.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
         stageNewEntry.show();
     }
 

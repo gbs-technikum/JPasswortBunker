@@ -38,7 +38,7 @@ public final class PresenterMain {
     private BooleanProperty textField_settings_saveStatusBoolean;
     private IntegerProperty categoryChoosenForLastNewEntry;
     private StringProperty textField_settings_TimeClipboard;
-    private String language = "de";
+    private String language = "en";
 
     private Locale locale ;
     private ResourceBundle bundle;
