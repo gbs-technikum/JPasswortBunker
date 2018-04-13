@@ -15,7 +15,7 @@
    <children>
       <AnchorPane prefHeight="66.0" prefWidth="438.0" style="-fx-background-color: #0747A6;">
          <children>
-            <Label layoutX="47.0" layoutY="16.0" text="Edit Entry" textFill="WHITE">
+            <Label fx:id="labelEntryHead" layoutX="47.0" layoutY="16.0" text="Edit Entry" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>

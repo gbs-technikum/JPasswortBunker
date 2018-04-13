@@ -410,7 +410,7 @@ public class ModelMain {
          * Kein Zugriff via View
          * Ausgabe alle Entries aus Tabelle Recycle_Bin für die übergebene entryID auf Console
          */
-        protected void soutEntryListRecycleBinForEntryID (String entryID) throws SQLException {
+        protected void soutEntryListRecycleBinForEntryID (String entryID) throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
             ArrayList<Entry> removedEntryArrayList = getEntrysFromRecycleBinForEntryID(entryID);
             for (Entry entry : removedEntryArrayList) {
                 System.out.println(entry);
