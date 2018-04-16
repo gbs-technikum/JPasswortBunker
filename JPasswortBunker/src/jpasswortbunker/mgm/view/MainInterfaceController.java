@@ -113,7 +113,7 @@ public class MainInterfaceController implements Initializable {
         stageMainInterfaceController = Testklasse.getPrimaryStage();
     }
 
-    public void updateView() {
+    public void loadView() {
         //setLang();
         fillTreeView();
         fillRecycleTable();
@@ -122,7 +122,7 @@ public class MainInterfaceController implements Initializable {
     }
 
     //Hinzugefügt von Wagenhuber: Wird nach dem Hinzufügen / Updaten eines neuen / bestehenden Entries ausgeführt um die View zu aktualisieren
-    public void updateView2() {
+    public void updateView() {
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);
@@ -267,7 +267,7 @@ public class MainInterfaceController implements Initializable {
             loginScreenController.setPresenter(presenter);
             this.stageLogin = new Stage();
             stageLogin.setTitle("SetMasterPassword");
-            stageLogin.setScene(new Scene(parent, 500, 400));
+            stageLogin.setScene(new Scene(parent, 390, 310));
             stageLogin.setAlwaysOnTop(true);
             stageLogin.setResizable(false);
             stageLogin.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
@@ -313,7 +313,7 @@ public class MainInterfaceController implements Initializable {
     public void btn_finance(ActionEvent actionEvent) {
 
         //Auskommentiert durch Wagenhuber am 24.3.18 bzgl. Ansicht aktualisiert nicht
-        //updateView();
+        //loadView();
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
         pane_recycle.setVisible(false);

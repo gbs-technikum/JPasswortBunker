@@ -4,9 +4,11 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
@@ -39,7 +41,11 @@ public class ChangePasswordDialog {
         dialog.setTitle("Change Masterpassword");
         dialog.setHeaderText("You can change your Masterpassword");
 
-        // Set the icon (must be included in the project).
+        // Aus dem Fenster die stage geben lassen
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+
+        // Setzt Icon für die Stage
+        stage.getIcons().add(new Image(this.getClass().getResource("images/logo.png").toString()));
         dialog.setGraphic(new ImageView(this.getClass().getResource("images/lock.png").toString()));
 
         // Set the button types.

@@ -1,9 +1,11 @@
 package jpasswortbunker.mgm.view;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
 import javax.crypto.BadPaddingException;
@@ -22,6 +24,9 @@ public final class SetMasterPasswordController{
     @FXML
     private JFXPasswordField passwordField1, passwordField2;
 
+    @FXML
+    private JFXButton btn_OK;
+
     private PresenterMain presenter;
 
     /**
@@ -35,11 +40,11 @@ public final class SetMasterPasswordController{
     public void btn_setMasterPassword(ActionEvent actionEvent) throws BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
         if (!(passwordField1.getText().equals("") || passwordField2.getText().equals(""))) {
             if (equalsPassword()) {
-                System.out.println("Eingaben gleich");
-                //Todo Methode vom Model aufrufen die passwort in DB schreibt aktuell noch im Bearbeitung
-                //presenter.initMasterPassword(passwordField1.getText());
                 //Hinzugefügt Wagenhuber am 16-4-2018
                 presenter.setMasterPasswordinDB(passwordField1.getText());
+                //Hinzugefügt Kopp am 16-4-2018
+                Stage stage = (Stage) btn_OK.getScene().getWindow();
+                stage.close();
             }
         } else {
             labelErrorMessage.setText("Field can not be empty");
