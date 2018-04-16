@@ -29,6 +29,7 @@ public class DBService {
 
         this.connection = DriverManager.getConnection(URL);
         this.statement = connection.createStatement();
+        checkIfDBTableExists();
 
 
     }
@@ -385,7 +386,39 @@ public class DBService {
         return oldestTimestampOfEntriesInRecycleBinForEntryId;
     }
 
+     //Hinzugefügt von EGLSEDER/KOPP :
+    /**
+     * createDatabaseTables()
+     * Erstellt die benötigten Tabellen, DB wird automatisch erstellt, falls nicht vorhanden.
+     */
 
+    public void createDatabaseTables() throws SQLException {
+        String sql = "CREATE TABLE \"Categorie\" ( `Categorie_ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `Categorie_Name` TEXT NOT NULL )";
+        String sql1 = "CREATE TABLE \"Entrys\" ( `DB_ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `Entry_ID` INTEGER NOT NULL, `Title` TEXT NOT NULL, `Username` TEXT NOT NULL, `Password` TEXT NOT NULL, `URL` TEXT, `Description` TEXT, `Categorie_ID` TEXT, `timestamp` INTEGER NOT NULL )";
+        String sql2 = "CREATE TABLE `Masterkey` ( `id` INTEGER, `password` TEXT )";
+        String sql3 = "CREATE TABLE \"Recycle_Bin\" ( `DB_ID` INTEGER NOT NULL, `Entry_ID` INTEGER NOT NULL, `Title` INTEGER NOT NULL, `Username` TEXT NOT NULL, `Password` TEXT NOT NULL, `URL` TEXT, `Description` TEXT, `Categorie_ID` INTEGER, `timestamp` INTEGER NOT NULL, PRIMARY KEY(`DB_ID`) )";
+        String sql4 = "CREATE TABLE \"System\" ( `ID` INTEGER NOT NULL, `Cache_Time` INTEGER NOT NULL, `Language` TEXT NOT NULL, `NumberOfBackupEntries` INTEGER, `LengthOfRandomPasswords` INTEGER, PRIMARY KEY(`ID`) )";
+        this.statement.execute(sql);
+        this.statement.execute(sql1);
+        this.statement.execute(sql2);
+        this.statement.execute(sql3);
+        this.statement.execute(sql4);
+        statement.close();
+
+    }
+
+    /*
+     * public void checkIfDBTableExists()
+     * überprüft ob Tabellen in DB
+     * Wenn nicht wird die Methode createDatabaseTables() aufgerufen
+     */
+    public void checkIfDBTableExists() throws SQLException {
+        DatabaseMetaData dbm = connection.getMetaData();
+        ResultSet rs = dbm.getTables(null, null, "Masterkey", null);
+        if (!rs.next()) {
+            createDatabaseTables();
+        }
+    }
 
 
 
