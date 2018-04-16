@@ -199,7 +199,7 @@ public class MainInterfaceController implements Initializable {
                 if (ee.isPrimaryButtonDown() && ee.getClickCount() == 2) {
 
                     try {
-                        editEntryScene();
+                        editEntryScene(treeView.getSelectionModel().getSelectedItem());
                     } catch (SQLException e) {
                         e.printStackTrace();
                     } catch (BadPaddingException e) {
@@ -549,7 +549,7 @@ public class MainInterfaceController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    editEntryScene();
+                    editEntryScene(treeView.getSelectionModel().getSelectedItem());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (BadPaddingException e) {
@@ -582,7 +582,7 @@ public class MainInterfaceController implements Initializable {
         contextMenu.getItems().add(item3);
     }
 
-    private void editEntryScene() throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+    private void editEntryScene(TreeItem<EntryProperty> selectedItem) throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("EditEntry.fxml"));
         try {
             loader.load();
@@ -592,7 +592,7 @@ public class MainInterfaceController implements Initializable {
         //übergibt an EditEntryController den ausgewählten Eintrag
         EditEntryController editEntryController = loader.getController();
         //Ausgewähltes Element treeView.getSelectionModel().getSelectedItem()
-        editEntryController.setEntry(treeView.getSelectionModel().getSelectedItem());
+        editEntryController.setEntry(selectedItem);
         editEntryController.setPresenter(presenter);
         editEntryController.fillComboBox();
         editEntryController.fillComboBoxhistorie();
@@ -672,7 +672,7 @@ public class MainInterfaceController implements Initializable {
                 if (ee.isPrimaryButtonDown() && ee.getClickCount() == 2) {
 
                     try {
-                        editEntryScene();
+                        editEntryScene(tableView_recylce.getSelectionModel().getSelectedItem());
                     } catch (SQLException e) {
                         e.printStackTrace();
                     } catch (BadPaddingException e) {
