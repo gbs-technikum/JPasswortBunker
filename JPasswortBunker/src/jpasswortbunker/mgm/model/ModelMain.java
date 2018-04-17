@@ -117,7 +117,7 @@ public class ModelMain {
      * Masterpasswort-Hash-Wert in Datenbank setzen bzw. überschreiben
      */
     public void setSaltPasswordHashForPasswortStoreInDb(String password) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, SQLException {
-        dbService.setMasterPasswordToDB(this.masterPasswordObject.getSaltPasswordHashForPasswortStore());
+        dbService.setMasterPasswordToDB(this.masterPasswordObject.createSaltPasswordHashForPasswortStore(masterPasswordObject.createSaltyPassword(password)));
     }
 
 
