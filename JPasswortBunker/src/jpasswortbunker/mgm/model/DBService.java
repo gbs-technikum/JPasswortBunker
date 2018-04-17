@@ -1,5 +1,7 @@
 package jpasswortbunker.mgm.model;
 
+import jdk.jfr.Category;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -237,6 +239,12 @@ public class DBService {
 
     public void updateRecycleBinForRemovedEntrys(String entryID) throws SQLException {
         String sql = "update Recycle_Bin set Categorie_ID = '-1' where Entry_ID = '" + entryID + "'";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+    public void updateRecycleBinToUpdateCategory(String entryID, int categoryID) throws SQLException {
+        String sql = "update Recycle_Bin set Categorie_ID = '" + categoryID + "' where Entry_ID = '" + entryID + "'";
         this.statement.execute(sql);
         statement.close();
     }
