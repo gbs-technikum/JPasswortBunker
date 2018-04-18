@@ -403,12 +403,6 @@ public class DBService {
                 "(3, 'E-Mail')," +
                 "(4, 'Network')";
 
-//        INSERT INTO `immobilienverwaltung`.`new_table` (`Categorie_ID`, `Categorie_Name`) VALUES ('0', 'Uncategorized');
-//        INSERT INTO `immobilienverwaltung`.`new_table` (`Categorie_ID`, `Categorie_Name`) VALUES ('1', 'Finance');
-//        INSERT INTO `immobilienverwaltung`.`new_table` (`Categorie_ID`, `Categorie_Name`) VALUES ('2', 'Social');
-//        INSERT INTO `immobilienverwaltung`.`new_table` (`Categorie_ID`, `Categorie_Name`) VALUES ('3', 'E-Mail');
-//        INSERT INTO `immobilienverwaltung`.`new_table` (`Categorie_ID`, `Categorie_Name`) VALUES ('4', 'Network');
-        this.statement.execute(sql);
         this.statement.execute(sql1);
         this.statement.execute(sql2);
         this.statement.execute(sql3);
