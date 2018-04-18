@@ -292,6 +292,7 @@ public class EditEntryController {
                     textFieldPassword1.setText(selectedEntry.getPassword());
                     textFieldPassword2.setText(selectedEntry.getPassword());
                     textFieldURL.setText(selectedEntry.getUrl());
+                    labelTimestamp.setText(presenter.timestampToTime(selectedEntry.getTimestamp()));
 
 
                 }
