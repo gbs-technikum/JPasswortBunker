@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Menu?>
@@ -16,6 +17,109 @@
 
 <AnchorPane fx:id="mainAnchorPane" prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.view.MainInterfaceController">
    <children>
+      <AnchorPane fx:id="pane_settings" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
+         <children>
+            <AnchorPane />
+            <GridPane hgap="5.0" layoutX="6.0" layoutY="15.0" prefHeight="163.0" prefWidth="681.0" vgap="5.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="238.0" minWidth="218.0" prefWidth="218.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="166.00005086263022" minWidth="10.0" prefWidth="119.99997965494791" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="162.66670735677081" minWidth="10.0" prefWidth="114.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="212.66666666666663" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <JFXTextField fx:id="textField_settings_numberBackupEntries" editable="false" text="Number of Backup-Entries:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="textField_settings_backupEntries" alignment="CENTER" onAction="#btn_settings_setNumberBackupEntries" style="-fx-background-color: lightgrey;" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXButton fx:id="btn_settings_numberBackupEntriesOk" onAction="#btn_settings_setNumberBackupEntries" ripplerFill="#276fc6" style="-fx-background-color: orange;" text="SAVE" textAlignment="CENTER" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXTextField editable="false" text="// Integer Value" GridPane.columnIndex="3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="textField_settings_lengthRandomPasswordsText" editable="false" text="Length Random-Passwords:" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="textField_settings_lengthRandomPasswords" alignment="CENTER" onAction="#btn_settings_lengthRandomPasswords" style="-fx-background-color: lightgrey;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXButton fx:id="btn_settings_lengthRandomPasswords" onAction="#btn_settings_lengthRandomPasswords" style="-fx-background-color: orange;" text="SAVE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXTextField text="// Integer Value" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="textField_settings_timeoutClipboardText" editable="false" text="Timeout Clipboard" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="textField_settings_timeoutClipboard" alignment="CENTER" onAction="#btn_settings_timeoutClipboard" style="-fx-background-color: lightgrey;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXButton fx:id="btn_settings_timeoutClipboard" onAction="#btn_settings_timeoutClipboard" style="-fx-background-color: orange;" text="SAVE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXTextField editable="false" text="// Integer Value (time in seconds)" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="textField_settings_saveStatusText" editable="false" text="Save status:" unFocusColor="ORANGE" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="textField_settings_saveStatus" editable="false" text="No changes!" unFocusColor="ORANGE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="textField_settings_language" editable="false" text="Language" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXButton fx:id="btn_settings_language" onAction="#btn_settings_language" style="-fx-background-color: orange;" text="SAVE" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXComboBox fx:id="comboBox_settings_language" prefHeight="25.0" prefWidth="165.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
       <AnchorPane fx:id="pane_recycle" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
             <JFXTreeTableView fx:id="tableView_recylce" prefHeight="530.0" prefWidth="700.0" />
@@ -107,97 +211,6 @@
                   <Font size="24.0" />
                </font>
             </JFXButton>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pane_settings" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
-         <children>
-            <AnchorPane />
-            <GridPane hgap="5.0" layoutY="11.0" prefHeight="122.0" prefWidth="670.0" vgap="5.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="238.0" minWidth="218.0" prefWidth="218.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" prefWidth="71.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.0" minWidth="10.0" prefWidth="69.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="294.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <JFXTextField fx:id="textField_settings_numberBackupEntries" editable="false" text="Number of Backup-Entries:">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="textField_settings_backupEntries" alignment="CENTER" onAction="#btn_settings_setNumberBackupEntries" style="-fx-background-color: lightgrey;" GridPane.columnIndex="1">
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXButton fx:id="btn_settings_numberBackupEntriesOk" onAction="#btn_settings_setNumberBackupEntries" ripplerFill="#276fc6" style="-fx-background-color: orange;" text="SAVE" textAlignment="CENTER" GridPane.columnIndex="2">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXTextField editable="false" text="// Integer Value" GridPane.columnIndex="3">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="textField_settings_lengthRandomPasswordsText" editable="false" text="Length Random-Passwords:" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="textField_settings_lengthRandomPasswords" alignment="CENTER" onAction="#btn_settings_lengthRandomPasswords" style="-fx-background-color: lightgrey;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXButton fx:id="btn_settings_lengthRandomPasswords" onAction="#btn_settings_lengthRandomPasswords" style="-fx-background-color: orange;" text="SAVE" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXTextField text="// Integer Value" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="textField_settings_timeoutClipboardText" editable="false" text="Timeout Clipboard" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="textField_settings_timeoutClipboard" alignment="CENTER" onAction="#btn_settings_timeoutClipboard" style="-fx-background-color: lightgrey;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXButton fx:id="btn_settings_timeoutClipboard" onAction="#btn_settings_timeoutClipboard" style="-fx-background-color: orange;" text="SAVE" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXTextField editable="false" text="// Integer Value (time in seconds)" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="textField_settings_saveStatusText" editable="false" text="Save status:" unFocusColor="ORANGE" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="textField_settings_saveStatus" editable="false" text="No changes!" unFocusColor="ORANGE" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </JFXTextField>
-               </children>
-            </GridPane>
          </children>
       </AnchorPane>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="900.0">

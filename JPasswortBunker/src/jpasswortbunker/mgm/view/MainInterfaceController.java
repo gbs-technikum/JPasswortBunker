@@ -53,10 +53,14 @@ public class MainInterfaceController implements Initializable {
 
     @FXML
     private JFXButton btn_finance, btn_social, btn_email, btn_network, btn_settings, btn_newEntry, btn_recycle,
-            btn_settings_timeoutClipboard, btn_settings_numberBackupEntriesOk, btn_settings_lengthRandomPasswords;
+            btn_settings_timeoutClipboard, btn_settings_numberBackupEntriesOk, btn_settings_lengthRandomPasswords,
+            btn_settings_language;
 
     @FXML
     private ImageView btn_logo;
+
+    @FXML
+    private JFXComboBox<Label> comboBox_settings_language;
 
     @FXML
     private AnchorPane pane_entrys, pane_settings, pane_recycle;
@@ -70,7 +74,8 @@ public class MainInterfaceController implements Initializable {
     @FXML
     private JFXTextField textField_Search, textField_settings_timeoutClipboard, textField_settings_backupEntries,
             textField_settings_lengthRandomPasswords,textField_settings_saveStatus, textField_settings_numberBackupEntries,
-            textField_settings_lengthRandomPasswordsText, textField_settings_timeoutClipboardText, textField_settings_saveStatusText;
+            textField_settings_lengthRandomPasswordsText, textField_settings_timeoutClipboardText,
+            textField_settings_saveStatusText, textField_settings_language;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -119,6 +124,7 @@ public class MainInterfaceController implements Initializable {
         fillRecycleTable();
         setLang();
         stageMainInterfaceController.show();
+        fillComboboxLangauge();
     }
 
     //Hinzugefügt von Wagenhuber: Wird nach dem Hinzufügen / Updaten eines neuen / bestehenden Entries ausgeführt um die View zu aktualisieren
@@ -410,6 +416,7 @@ public class MainInterfaceController implements Initializable {
         textField_settings_timeoutClipboard.setText(presenter.getTextField_settings_timeoutClipboard());
     }
 
+
     /**
      * public void btn_newMasterPassword()
      * Ruft einen neuen Dialog auf, um das MasterPasswort zu ändern
@@ -490,9 +497,12 @@ public class MainInterfaceController implements Initializable {
         textField_settings_lengthRandomPasswordsText.setText(bundle.getString("textField.settings.lenghtRandomPasswordText"));
         textField_settings_timeoutClipboardText.setText(bundle.getString("textField.settings.timeoutClipboardText"));
         textField_settings_saveStatusText.setText(bundle.getString("textField.settings.saveSatusText"));
+        textField_settings_language.setText(bundle.getString("textField.settings.language"));
+        textField_settings_saveStatus.setText(bundle.getString("textField.settings.saveStatus"));
         btn_settings_numberBackupEntriesOk.setText(bundle.getString("button.settings.numberBackupEntries"));
         btn_settings_timeoutClipboard.setText(bundle.getString("button.settings.timeoutClipboard"));
         btn_settings_lengthRandomPasswords.setText(bundle.getString("button.settings.lengthRandomPassword"));
+        btn_settings_language.setText(bundle.getString("button.settings.setLanguage"));
         contextMenu.getItems().get(0).setText(bundle.getString("contextMenu.delete"));
         contextMenu.getItems().get(1).setText(bundle.getString("contextMenu.edit"));
         contextMenu.getItems().get(2).setText(bundle.getString("contextMenu.copyPassword"));
@@ -711,6 +721,13 @@ public class MainInterfaceController implements Initializable {
     }
 
 
+    public void fillComboboxLangauge() {
+        comboBox_settings_language.setPromptText("Select...");
+        comboBox_settings_language.getItems().add(new Label("English"));
+        comboBox_settings_language.getItems().add(new Label("German"));
+    }
+
+
 // Folgende Methoden hinzugefügt von Wagenhuber:
 
 
@@ -732,13 +749,33 @@ public class MainInterfaceController implements Initializable {
         updateSaveStatus();
     }
 
+    //Hinzugefügt Kopp
+    public void btn_settings_language(ActionEvent actionEvent) {
+        switch (comboBox_settings_language.getSelectionModel().getSelectedIndex()) {
+            case 0:
+                presenter.setLanguage("en");
+                bundle = presenter.setLanguage("en");
+                setLang();
+                presenter.setTextField_settings_saveStatusBoolean(true);
+                updateSaveStatus();
+                break;
+            case 1:
+                presenter.setLanguage("de");
+                bundle =presenter.setLanguage("de");
+                setLang();
+                presenter.setTextField_settings_saveStatusBoolean(true);
+                updateSaveStatus();
+                break;
+        }
+    }
+
 
     private void updateSaveStatus() {
         boolean status = presenter.isTextField_settings_saveStatusBoolean();
         if (status) {
-            textField_settings_saveStatus.setText("Success!");
+            textField_settings_saveStatus.setText(bundle.getString("textField.settings.success"));
         } else {
-            textField_settings_saveStatus.setText("Error!");
+            textField_settings_saveStatus.setText(bundle.getString("textField.settings.error"));
         }
 
     }
