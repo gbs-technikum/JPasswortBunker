@@ -37,7 +37,7 @@ public final class PresenterMain {
     private StringProperty textField_settings_TimeClipboard;
     private String language = "en";
 
-    private Locale locale ;
+    private Locale locale;
     private ResourceBundle bundle;
 
 
@@ -198,7 +198,6 @@ public final class PresenterMain {
     }
 
 
-
     public String getTextField_settings_lengthRandomPasswords() {
         return textField_settings_lengthRandomPasswords.getValue();
     }
@@ -223,8 +222,6 @@ public final class PresenterMain {
     public void setTextField_settings_timeoutClipboard(String textField_settings_timeoutClipboard) {
         this.textField_settings_timeoutClipboard.setValue(textField_settings_timeoutClipboard);
     }
-
-
 
 
     public boolean isTextField_settings_saveStatusBoolean() {
@@ -252,7 +249,7 @@ public final class PresenterMain {
         this.categoryChoosenForLastNewEntry.setValue(categoryChoosenForLastNewEntry);
     }
 
-    public void setTimePeriodForClipboardFromDB(int timePeriodForClipboardFromDB){
+    public void setTimePeriodForClipboardFromDB(int timePeriodForClipboardFromDB) {
         this.textField_settings_TimeClipboard.setValue(String.valueOf(timePeriodForClipboardFromDB));
     }
 
@@ -260,20 +257,17 @@ public final class PresenterMain {
         return textField_settings_TimeClipboard;
     }
 
-    public void setTextfield_TimePeriodForClipboardFromDB(String textField_settings_TimeClipboard){
-        this.textField_settings_TimeClipboard.setValue( textField_settings_TimeClipboard);
+    public void setTextfield_TimePeriodForClipboardFromDB(String textField_settings_TimeClipboard) {
+        this.textField_settings_TimeClipboard.setValue(textField_settings_TimeClipboard);
     }
 
     public String timestampToTime(long timeStamp) {
-        Date date = new Date(timeStamp * 1000L );
+        Date date = new Date(timeStamp * 1000L);
         SimpleDateFormat jdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        String java_date= jdf.format(date);
-        System.out.println("\n"+java_date+"\n");
+        String java_date = jdf.format(date);
+        System.out.println("\n" + java_date + "\n");
         return java_date;
     }
-
-
-
 
 
     private void initProperties() {
@@ -304,14 +298,12 @@ public final class PresenterMain {
         }
 
 
-
         try {
             textField_settings_timeoutClipboard = new SimpleStringProperty();
             textField_settings_timeoutClipboard.setValue(String.valueOf(model.getTimePeriodForClipboardFromDB()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
 
         textField_settings_saveStatusBoolean = new SimpleBooleanProperty();
@@ -355,7 +347,6 @@ public final class PresenterMain {
         });
 
 
-
         textField_settings_timeoutClipboard.addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -379,12 +370,15 @@ public final class PresenterMain {
     }//ende initProperties
 
     public boolean checkIfTextFieldNumeric(String value) {
-        if (value.matches("^\\d+$")){
-        //if (value.matches("[0-9][0-9]")){
-            return true;
-        } else {
-            return false;
+        try {
+            int i = Integer.parseInt(value);
+            if (i > 0 && i < 31) {
+                return true;
+            }
+        } catch (NumberFormatException e) {
         }
+        return false;
+
     }
 
 
