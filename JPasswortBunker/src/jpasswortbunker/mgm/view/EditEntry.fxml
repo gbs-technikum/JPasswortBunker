@@ -45,7 +45,7 @@
          </font>
       </JFXButton>
       <JFXComboBox fx:id="comboBox" focusColor="WHITE" layoutX="272.0" layoutY="75.0" prefHeight="25.0" prefWidth="126.0" unFocusColor="#fffafa" />
-      <Label fx:id="labelErrorMessage" layoutX="251.0" layoutY="317.0" prefHeight="20.0" prefWidth="173.0" textAlignment="CENTER" textFill="RED">
+      <Label fx:id="labelErrorMessage" layoutX="249.0" layoutY="285.0" prefHeight="20.0" prefWidth="173.0" textAlignment="CENTER" textFill="RED">
          <font>
             <Font size="14.0" />
          </font>
