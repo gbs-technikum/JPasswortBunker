@@ -22,6 +22,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.util.Callback;
@@ -264,6 +265,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setAlwaysOnTop(true);
             stageLogin.setResizable(false);
             stageLogin.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
+            stageLogin.initModality(Modality.APPLICATION_MODAL);
             stageLogin.show();
         } else {
             System.out.println("Nicht gesetzt");
@@ -276,6 +278,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.setScene(new Scene(parent, 390, 310));
             stageLogin.setAlwaysOnTop(true);
             stageLogin.setResizable(false);
+            stageLogin.initModality(Modality.APPLICATION_MODAL);
             stageLogin.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
             stageLogin.show();
         }
@@ -295,6 +298,7 @@ public class MainInterfaceController implements Initializable {
         stageNewEntry.setScene(new Scene(parent, 400, 400));
         stageNewEntry.setAlwaysOnTop(true);
         stageNewEntry.setResizable(false);
+        stageNewEntry.initModality(Modality.APPLICATION_MODAL);
         stageNewEntry.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
         stageNewEntry.show();
     }
@@ -446,7 +450,9 @@ public class MainInterfaceController implements Initializable {
         // Get the Stage.
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 
+
         // Add a custom icon.
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.getIcons().add(new Image(this.getClass().getResource("images/logo.png").toString()));
         alert.setGraphic(new ImageView(this.getClass().getResource("images/logo.png").toString()));
         alert.showAndWait();
@@ -462,6 +468,7 @@ public class MainInterfaceController implements Initializable {
 
         // Add a custom icon.
         stage.getIcons().add(new Image(this.getClass().getResource("images/logo.png").toString()));
+        stage.initModality(Modality.APPLICATION_MODAL);
         alert.setGraphic(new ImageView(this.getClass().getResource("images/logo.png").toString()));
         alert.showAndWait();
     }
@@ -615,6 +622,7 @@ public class MainInterfaceController implements Initializable {
         stageEditEntry.setTitle(bundle.getString("entryEdit.title"));
         stageEditEntry.setScene(sceneEditentry);
         stageEditEntry.setResizable(false);
+        stageEditEntry.initModality(Modality.APPLICATION_MODAL);
         stageEditEntry.show();
         stageEditEntry.setResizable(false);
         stageEditEntry.getIcons().add(new Image(String.valueOf(this.getClass().getResource("images/logo.png"))));
