@@ -149,6 +149,7 @@ public final class PresenterMain {
     public void updateEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         model.updateEntry(entry.getEntryID().toString(), entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getPassword(), entry.getDescription(), entry.getCategoryID());
         //controller.fillTreeView();//Obsolet - führt zu Programmabsturz
+        controller.updateView();
     }
 
 //    public void updateView() {
