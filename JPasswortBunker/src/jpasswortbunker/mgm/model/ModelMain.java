@@ -264,6 +264,9 @@ public class ModelMain {
                 entry.setCategoryID(categoryID);
                 entry.setTimestamp(System.currentTimeMillis() / 1000L);
                 Entry encrypedEntryForEntrysTable = createEncryptedEntry(entry);
+
+                this.updateEntriesKategoryInRecycleBin(entryID, categoryID);
+
                 dbService.updateEntry(encrypedEntryForEntrysTable);
 
                 if (dbService.getNumberOfExistingRecycleBinEntriesForEntryId(entryID) > dbService.getNumberOfBackupEntiresFromDB()
@@ -278,17 +281,17 @@ public class ModelMain {
         return false;
     }
 
-    //ToDo: Ändern Kategrie für Entries in RecycleBin
+
 
     /**
      * Beim Abändern der Kagegorie eines bestehenden Eintrages wird die Kategrie aller Historie-Einträge ebenfalls angepasst
      */
     public void updateEntriesKategoryInRecycleBin(String entryID, int categoryID) throws SQLException {
+        dbService.updateRecycleBinToUpdateCategory(entryID,categoryID);
         ArrayList<Entry> entryListRecycleBinTable = (ArrayList<Entry>) this.entryListRecycleBinTable.getEntryObjectList();
         for (Entry entry : entryListRecycleBinTable) {
             if (entry.getEntryIDasString() == entryID) {
                 entry.setCategoryID(categoryID);
-                dbService.updateRecycleBinToUpdateCategory(entryID,categoryID);
             }
         }
     }
