@@ -76,6 +76,9 @@ public class EditEntryController {
      */
     public void btn_save(ActionEvent actionEvent) throws IllegalBlockSizeException, SQLException, InvalidKeyException, BadPaddingException, UnsupportedEncodingException {
 
+        //Eingefügt Wagenhuber: Zwischenspeichern der gewählten Kategorie, um diese anschließend im View anzuzeigen
+        presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex() + 1));
+
         if (changeEntry()) {
             Stage stage = (Stage) btn_save.getScene().getWindow();
             stage.close();
