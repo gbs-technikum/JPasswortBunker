@@ -14,3 +14,6 @@
     -fx-text-inner-color: white;
     -fx-background-color: #0c50b5;
 }
+#button{
+    -fx-background-color: orange;
+}

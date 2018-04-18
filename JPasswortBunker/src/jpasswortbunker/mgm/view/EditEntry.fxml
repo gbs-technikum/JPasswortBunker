@@ -39,7 +39,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btn_save" layoutX="300.0" layoutY="337.0" onAction="#btn_save" prefHeight="45.0" prefWidth="111.0" style="-fx-background-color: orange;" text="SAVE">
+      <JFXButton id="button" fx:id="btn_save" layoutX="300.0" layoutY="337.0" onAction="#btn_save" prefHeight="45.0" prefWidth="111.0" stylesheets="@style/default_style.css" text="SAVE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
