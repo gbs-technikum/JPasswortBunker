@@ -5,7 +5,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import jpasswortbunker.mgm.model.Entry;
 import jpasswortbunker.mgm.model.ModelMain;
 import jpasswortbunker.mgm.view.MainInterfaceController;
@@ -20,8 +19,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.security.Timestamp;
-import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
@@ -111,6 +108,7 @@ public final class PresenterMain {
     //Hinzugefügt Wagenhuber am 16-04-2018
     public void setMasterPasswordinDB(String password) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         model.setSaltPasswordHashForPasswortStoreInDb(password);
+        controller.loadView();
     }
 
     public boolean checkIfMasterPasswordIsCorrect() throws UnsupportedEncodingException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
@@ -120,7 +118,7 @@ public final class PresenterMain {
             //Todo Fehler mit den Recycle Einträgen, wirft eine Exception nach MasterPasswort Änderung
             //Könnte ein Problem mit der Verschlüsselung oder Datenbank sein
             writeToObservableListrecycle();
-            controller.updateView();
+            controller.loadView();
             return true;
         }
         return false;
@@ -139,7 +137,7 @@ public final class PresenterMain {
         Entry entry = model.getEntryListEntrysTable().get(model.getEntryListEntrysTable().size() - 1);
         entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
                 entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
-        controller.updateView2();
+        controller.updateView();
     }
 
     public void removeEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
@@ -153,9 +151,9 @@ public final class PresenterMain {
         //controller.fillTreeView();//Obsolet - führt zu Programmabsturz
     }
 
-    public void updateView() {
-        controller.updateView();
-    }
+//    public void updateView() {
+//        controller.loadView();
+//    }
 
     public List getCategoryListFromDB() throws SQLException {
         //System.out.println(model.getCategoryListFromDB().size() + "-------------");
