@@ -81,7 +81,7 @@ public final class PresenterMain {
         model.FillEntryListFromDb();
         for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListEntrysTable()) {
             entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
-                    entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
+                    entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID(), entry.getTimestamp()));
         }
     }
 
@@ -92,7 +92,7 @@ public final class PresenterMain {
         //Geändert Wagenhuber - Vorher: for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListRecycleBinTable()) {
         for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListRecycleBinTableLatestTimestamp()) {
             entryPropertiesListRecycle.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
-                    entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
+                    entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID(), entry.getTimestamp()));
         }
     }
 
@@ -136,7 +136,7 @@ public final class PresenterMain {
          */
         Entry entry = model.getEntryListEntrysTable().get(model.getEntryListEntrysTable().size() - 1);
         entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
-                entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
+                entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID(), entry.getTimestamp()));
         controller.updateView();
     }
 
@@ -171,6 +171,10 @@ public final class PresenterMain {
 
     public void test() {
         System.out.println("testMethode Presenter");
+    }
+
+    public void restoreEntryFromRecycleBin(String entryID, long timestamp) throws SQLException {
+        model.restoreEntryFromRecycleBin(entryID, timestamp);
     }
 
 

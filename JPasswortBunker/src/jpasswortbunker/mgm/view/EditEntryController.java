@@ -60,6 +60,7 @@ public class EditEntryController {
     public EntryProperty entryProperty;
     private PresenterMain presenter;
     private ResourceBundle bundle;
+    private Boolean recycleEntry;
 
     @FXML
     public void initialize(){
@@ -82,8 +83,14 @@ public class EditEntryController {
     }
 
     public void btn_restore(ActionEvent actionEvent) throws  IllegalBlockSizeException, SQLException,InvalidKeyException,BadPaddingException,UnsupportedEncodingException {
-
-        if (changeEntry()) {
+        if (recycleEntry) {
+            System.out.println("mülleimer");
+            if (checkIfCategoryIfSelected()) {
+                presenter.restoreEntryFromRecycleBin(entryProperty.getEntryID().toString(), entryProperty.getTimestamp());
+                Stage stage = (Stage) btn_restore.getScene().getWindow();
+                stage.close();
+            }
+        } else if (changeEntry()) {
             Stage stage = (Stage) btn_restore.getScene().getWindow();
             stage.close();
         }
@@ -147,6 +154,8 @@ public class EditEntryController {
         passwordField2.setText(entryProperty.getPassword());
         textFieldURL.setText(entryProperty.getUrl());
         textAreaDescription.setText(entryProperty.getDescription());
+        checkIfRecycleEntry(entryProperty);
+        System.out.println("Kategorie: " +  entryProperty.getCategoryID());
     }
 
     /**
@@ -254,7 +263,7 @@ public class EditEntryController {
         }
 
         comboBoxHistorie.setPromptText("Historie");
-        comboBoxHistorie.getSelectionModel().select(entryProperty.getCategoryID()-1);
+        //comboBoxHistorie.getSelectionModel().select(entryProperty.getCategoryID()-1);
 
         comboBoxHistorie.valueProperty().addListener(new ChangeListener<Label>() {
             @Override
@@ -263,6 +272,12 @@ public class EditEntryController {
                 if (comboBoxHistorie.getSelectionModel().getSelectedIndex() == 0) {
                     btn_save.setVisible(true);
                     btn_restore.setVisible(false);
+                    textFieldTitle.setText(entryProperty.getTitle());
+                    textAreaDescription.setText(entryProperty.getDescription());
+                    textFieldUsername.setText(entryProperty.getUsername());
+                    textFieldPassword1.setText(entryProperty.getPassword());
+                    textFieldPassword2.setText(entryProperty.getPassword());
+                    textFieldURL.setText(entryProperty.getUrl());
                 } else {
                     btn_save.setVisible(false);
                     btn_restore.setVisible(true);
@@ -279,7 +294,40 @@ public class EditEntryController {
             }
         });
 
+    }
+
+
+    public void checkIfRecycleEntry(EntryProperty entryProperty) {
+        if (entryProperty.getCategoryID() == -1) {
+            setFieldsDisable();
+            recycleEntry = true;
+        } else {
+            recycleEntry = false;
         }
+
+    }
+
+    private void setFieldsDisable() {
+        textFieldTitle.setDisable(true);
+        textFieldUsername.setDisable(true);
+        textFieldPassword1.setDisable(true);
+        textFieldPassword2.setDisable(true);
+        textFieldURL.setDisable(true);
+        textAreaDescription.setDisable(true);
+        passwordField1.setDisable(true);
+        passwordField2.setDisable(true);
+        btn_save.setVisible(false);
+        btn_restore.setVisible(true);
+    }
+
+    private boolean checkIfCategoryIfSelected() {
+        System.out.println(comboBox.getSelectionModel().getSelectedIndex());
+        if (comboBox.getSelectionModel().getSelectedIndex() == -1) {
+            labelErrorMessage.setText(bundle.getString("entry.labelErrorMessage.chooseCategorie"));
+            return false;
+        }
+        return true;
+    }
 
 
 
