@@ -44,7 +44,7 @@ public class EditEntryController {
     private JFXTextArea textAreaDescription;
 
     @FXML
-    private Label labelErrorMessage, labelDescriptionText, labelEntryHead;
+    private Label labelErrorMessage, labelDescriptionText, labelEntryHead, labelTimestamp;
 
     @FXML
     private JFXButton btn_save, btn_eye, btn_copyPassword, btn_restore;
@@ -154,6 +154,7 @@ public class EditEntryController {
         passwordField2.setText(entryProperty.getPassword());
         textFieldURL.setText(entryProperty.getUrl());
         textAreaDescription.setText(entryProperty.getDescription());
+        labelTimestamp.setText(presenter.timestampToTime(entryProperty.getTimestamp()));
         checkIfRecycleEntry(entryProperty);
         System.out.println("Kategorie: " +  entryProperty.getCategoryID());
     }
@@ -254,7 +255,7 @@ public class EditEntryController {
     public void fillComboBoxhistorie() throws SQLException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
         ArrayList<Entry> entrieHistroy = presenter.getEntrysFromRecycleBinForEntryID(entryProperty.getEntryID().toString());
 
-        comboBoxHistorie.getItems().add(new Label("Current Entry"));
+        comboBoxHistorie.getItems().add(new Label("Selected Entry"));
 
         for (Entry entry : entrieHistroy) {
             comboBoxHistorie.getItems().add(new Label(presenter.timestampToTime(entry.getTimestamp())));

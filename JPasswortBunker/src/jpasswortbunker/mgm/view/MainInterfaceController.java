@@ -529,6 +529,7 @@ public class MainInterfaceController implements Initializable {
                 alert.setTitle(bundle.getString("alert.title"));
                 alert.setHeaderText(bundle.getString("alert.headerText"));
                 alert.setContentText(bundle.getString("alert.text"));
+                alert.setGraphic(new ImageView(this.getClass().getResource("images/logo.png").toString()));
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
@@ -602,8 +603,8 @@ public class MainInterfaceController implements Initializable {
         //übergibt an EditEntryController den ausgewählten Eintrag
         EditEntryController editEntryController = loader.getController();
         //Ausgewähltes Element treeView.getSelectionModel().getSelectedItem()
-        editEntryController.setEntry(selectedItem);
         editEntryController.setPresenter(presenter);
+        editEntryController.setEntry(selectedItem);
         editEntryController.fillComboBox();
         editEntryController.fillComboBoxhistorie();
 
