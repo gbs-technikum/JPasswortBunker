@@ -129,7 +129,7 @@ public final class PresenterMain {
         return model.checkIfMasterPasswortExistsInDB();
     }
 
-    public void newEntry(String title, String username, String password, String description, String url, int categoryID) throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
+    public void newEntry(String title, String username, String password, String url, String description, int categoryID) throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
         model.newEntry(title, username, password, description, url, categoryID);
         /**
          * Parameter werden an Model übergeben und Entry in Model erstellt
