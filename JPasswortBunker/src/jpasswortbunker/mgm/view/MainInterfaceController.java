@@ -128,6 +128,10 @@ public class MainInterfaceController implements Initializable {
         fillComboboxLangauge();
     }
 
+    public void updateRecycleView() {
+        fillRecycleTable();
+    }
+
     //Hinzugefügt von Wagenhuber: Wird nach dem Hinzufügen / Updaten eines neuen / bestehenden Entries ausgeführt um die View zu aktualisieren
     public void updateView() {
         pane_settings.setVisible(false);

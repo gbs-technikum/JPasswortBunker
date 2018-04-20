@@ -282,6 +282,7 @@ public class EditEntryController {
                     textFieldPassword1.setText(entryProperty.getPassword());
                     textFieldPassword2.setText(entryProperty.getPassword());
                     textFieldURL.setText(entryProperty.getUrl());
+                    labelTimestamp.setText(presenter.timestampToTime(entryProperty.getTimestamp()));
                 } else {
                     btn_save.setVisible(false);
                     btn_restore.setVisible(true);
