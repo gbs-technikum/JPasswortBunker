@@ -182,6 +182,7 @@ public final class PresenterMain {
         model.restoreEntryFromRecycleBin(entryID, categoryID, timestamp);
         writeToObservableListrecycle();
         controller.updateRecycleView();
+        controller.updateView();
     }
 
 
