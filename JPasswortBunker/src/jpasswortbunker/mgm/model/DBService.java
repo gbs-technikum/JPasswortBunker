@@ -231,6 +231,13 @@ public class DBService {
     }
 
 
+    public void removeEntryFromRecycleBinCurrentRestore(String entryID, long timestamp) throws SQLException {
+        String sql = "delete from Recycle_Bin where Entry_ID = '" + entryID + "' and timestamp = '" + timestamp + "'";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+
     public void removeEntriesFromRecycleBinFinal(String entryID) throws SQLException {
         String sql = "delete from Recycle_Bin where Entry_ID = '" + entryID + "'";
         this.statement.execute(sql);

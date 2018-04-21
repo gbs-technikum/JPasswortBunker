@@ -178,8 +178,10 @@ public final class PresenterMain {
         System.out.println("testMethode Presenter");
     }
 
-    public void restoreEntryFromRecycleBin(String entryID, long timestamp) throws SQLException {
-        model.restoreEntryFromRecycleBin(entryID, timestamp);
+    public void restoreEntryFromRecycleBin(String entryID, int categoryID, long timestamp) throws SQLException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, UnsupportedEncodingException {
+        model.restoreEntryFromRecycleBin(entryID, categoryID, timestamp);
+        writeToObservableListrecycle();
+        controller.updateRecycleView();
     }
 
 

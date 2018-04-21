@@ -504,18 +504,19 @@ public class ModelMain {
     }
 
 
-    public boolean restoreEntryFromRecycleBin(String entryId, long timestamp) throws SQLException {
+    public boolean restoreEntryFromRecycleBin(String entryId, int categoryID, long timestamp) throws SQLException {
         Entry entry = dbService.readSingleEntryFromRecycleBin(entryId, timestamp);
         if (entry == null) {
             return false;
         }
 
         if (entry.getCategoryID() == -1) {
-            entry.setCategoryID(0);
+            entry.setCategoryID(categoryID);
         } else {
             dbService.deleteEntrytoAvoidDuplicate(entry.getEntryIDasString());
         }
         dbService.insertEntry(entry);
+        dbService.removeEntryFromRecycleBinCurrentRestore(entry.getEntryIDasString(), entry.getTimestamp());
         dbService.resetIdInRecycleBinForRestoredEntry(entry.getEntryIDasString(), entry.getCategoryID());
         return true;
     }

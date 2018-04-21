@@ -89,7 +89,7 @@ public class EditEntryController {
         if (recycleEntry) {
             System.out.println("mülleimer");
             if (checkIfCategoryIfSelected()) {
-                presenter.restoreEntryFromRecycleBin(entryProperty.getEntryID().toString(), entryProperty.getTimestamp());
+                presenter.restoreEntryFromRecycleBin(entryProperty.getEntryID().toString(), (comboBox.getSelectionModel().getSelectedIndex()+1), entryProperty.getTimestamp());
                 Stage stage = (Stage) btn_restore.getScene().getWindow();
                 stage.close();
             }
