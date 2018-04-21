@@ -142,7 +142,7 @@ public final class PresenterMain {
     }
 
     public void removeEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
-        model.removeEntry(entry.getEntryID().toString());
+        model.removeEntry(entry.getEntryID().toString(), entry.getCategoryID());
         entryPropertiesList.remove(entry);
         //controller.fillTreeView();
         writeToObservableListrecycle();
@@ -151,7 +151,7 @@ public final class PresenterMain {
     }
 
     public void updateEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
-        model.updateEntry(entry.getEntryID().toString(), entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getPassword(), entry.getDescription(), entry.getCategoryID());
+        model.updateEntry(entry.getEntryID().toString(), entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID());
         //controller.fillTreeView();//Obsolet - führt zu Programmabsturz
         controller.updateView();
     }

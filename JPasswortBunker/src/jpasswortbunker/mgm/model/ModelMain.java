@@ -339,36 +339,46 @@ public class ModelMain {
      * Löscht einen Entry aus der Liste und Datenbank. Zudem wird die Category_ID für Einträge im Recycle_Bin auf -1 gesetzt.
      * Kategorie -1 bedeutet gelöscht in Entry-Tabelle
      */
-    public boolean removeEntry(String entryIdAsString) throws
+    public boolean removeEntry(String entryIdAsString, int kategoryID) throws
             SQLException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
         ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
-        Iterator<Entry> iterator = entryArrayList.iterator();
-        while (iterator.hasNext()) {
-            Entry entryFromList = iterator.next();
 
-            if (entryFromList.getEntryIDasString().equals(entryIdAsString)) {
+        boolean entryRemoved = false;
 
-                //Aktuellen Entry im RecycleBin erstellen:
-                Entry encrypedEntryForRecycleBinTable = createEncryptedEntry(entryFromList);
-                dbService.insertEntryInRecycleBin(encrypedEntryForRecycleBinTable);
+        if (kategoryID != -1) {
+            Iterator<Entry> iterator = entryArrayList.iterator();
+            while (iterator.hasNext()) {
+                Entry entryFromList = iterator.next();
 
-                //Kategorie im RecycleBin auf -1 setzen:
-                dbService.updateRecycleBinForRemovedEntrys(entryIdAsString);
+                if (entryFromList.getEntryIDasString().equals(entryIdAsString)) {
 
-                //Liste neu laden
-                this.FillEntryListFromRecycleBin();
+                    //Aktuellen Entry im RecycleBin erstellen:
+                    Entry encrypedEntryForRecycleBinTable = createEncryptedEntry(entryFromList);
+                    dbService.insertEntryInRecycleBin(encrypedEntryForRecycleBinTable);
 
-                //Entry löschen
-                dbService.removeEntry(entryIdAsString);
-                iterator.remove();
-                System.out.println("##Status## Entry erfolgreich gelöscht!");
-                return true;
+                    //Kategorie im RecycleBin auf -1 setzen:
+                    dbService.updateRecycleBinForRemovedEntrys(entryIdAsString);
+
+                    //Liste neu laden
+                    this.FillEntryListFromRecycleBin();
+
+                    //Entry löschen
+                    dbService.removeEntry(entryIdAsString);
+                    iterator.remove();
+                    System.out.println("##Status## Entry erfolgreich aus EntryTable gelöscht!");
+                    return true;
+                }
+            }
+
+        } else {
+            if (kategoryID == -1) {
+                System.out.println("Übergabe EntryID an RemoveFromRecycleBin!");
+                entryRemoved = removeEntriesFromRecycleBinFinal(entryIdAsString);
+                return entryRemoved;
             }
         }
-
-
-        System.out.println("##Status## Entry konnte nicht gelöscht werden!");
-        return false;
+        System.out.println("##Status## Entry konnte nicht aus EntryTable gelöscht werden!");
+        return entryRemoved;
     }
 
 
@@ -378,14 +388,14 @@ public class ModelMain {
         Iterator<Entry> iterator = entryArrayList.iterator();
         while (iterator.hasNext()) {
             if (iterator.next().getEntryIDasString().equals(entryIdAsString)) {
-                //this.FillEntryListFromRecycleBin();
+                this.FillEntryListFromRecycleBin();
                 dbService.removeEntriesFromRecycleBinFinal(entryIdAsString);
                 iterator.remove();
-                System.out.println("##Status## Entry erfolgreich gelöscht!");
+                System.out.println("##Status## Entry erfolgreich aus RecycleBin gelöscht!");
                 return true;
             }
         }
-        System.out.println("##Status## Entry konnte nicht gelöscht werden!");
+        System.out.println("##Status## Entry konnte nicht aus RecycleBin gelöscht werden!");
         return false;
     }
 

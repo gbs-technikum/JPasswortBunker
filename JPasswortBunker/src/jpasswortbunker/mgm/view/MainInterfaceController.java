@@ -74,7 +74,7 @@ public class MainInterfaceController implements Initializable {
 
     @FXML
     private JFXTextField textField_Search, textField_settings_timeoutClipboard, textField_settings_backupEntries,
-            textField_settings_lengthRandomPasswords,textField_settings_saveStatus, textField_settings_numberBackupEntries,
+            textField_settings_lengthRandomPasswords, textField_settings_saveStatus, textField_settings_numberBackupEntries,
             textField_settings_lengthRandomPasswordsText, textField_settings_timeoutClipboardText,
             textField_settings_saveStatusText, textField_settings_language;
 
@@ -88,19 +88,15 @@ public class MainInterfaceController implements Initializable {
     private MenuItem menuItem_NewMasterpassword, menuItem_NewEntry, menuItem_Help, menuItem_About;
 
     private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin, stageNewEntry;
-    private ContextMenu contextMenu;
+    private ContextMenu contextMenu, contextMenuRecycleBin;
     private Alert alert;
-
 
 
     private PresenterMain presenter = new PresenterMain(this);
 
 
-
-
     public MainInterfaceController() throws NoSuchPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, BadPaddingException, NoSuchAlgorithmException, InvalidKeyException {
     }
-
 
 
     @Override
@@ -121,8 +117,8 @@ public class MainInterfaceController implements Initializable {
 
     public void loadView() {
         //setLang();
-        fillTreeView();
         fillRecycleTable();
+        fillTreeView();
         setLang();
         stageMainInterfaceController.show();
         fillComboboxLangauge();
@@ -441,7 +437,7 @@ public class MainInterfaceController implements Initializable {
 
     public void btn_lang_de(ActionEvent actionEvent) {
         System.out.println("Deutsch");
-        bundle =presenter.setLanguage("de");
+        bundle = presenter.setLanguage("de");
         setLang();
 
     }
@@ -463,7 +459,7 @@ public class MainInterfaceController implements Initializable {
     }
 
     public void btn_help(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION) ;
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(bundle.getString("title.help"));
         alert.setHeaderText("jPasswortBunker");
         alert.setContentText(bundle.getString("text.help"));
@@ -604,6 +600,86 @@ public class MainInterfaceController implements Initializable {
         contextMenu.getItems().add(item3);
     }
 
+
+    //Eingefügt Wagenhuber 21-4-2018
+    private void buildContextMenuRecycleBin() {
+        //ToDo eventuell noch mal anpassen wenn Zeit
+        contextMenuRecycleBin = null;
+        contextMenuRecycleBin = new ContextMenu();
+        MenuItem item1 = new MenuItem(bundle.getString("contextMenu.delete"));
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle(bundle.getString("alert.title"));
+                alert.setHeaderText(bundle.getString("alert.headerText"));
+                alert.setContentText(bundle.getString("alert.text"));
+                alert.setGraphic(new ImageView(this.getClass().getResource("images/logo.png").toString()));
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    // ... user chose OK
+                    try {
+                        presenter.removeEntry(treeView.getSelectionModel().getSelectedItem().getValue());
+                    } catch (IllegalBlockSizeException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (BadPaddingException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    // ... user chose CANCEL or closed the dialog
+
+                }
+            }
+        });
+        contextMenuRecycleBin.getItems().add(item1);
+        MenuItem item2 = new MenuItem(bundle.getString("contextMenu.edit"));
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    editEntryScene(treeView.getSelectionModel().getSelectedItem());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (BadPaddingException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IllegalBlockSizeException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeyException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        contextMenuRecycleBin.getItems().add(item2);
+        MenuItem item3 = new MenuItem(bundle.getString("contextMenu.copyPassword"));
+        item3.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                Clipboard clipboard = Clipboard.getSystemClipboard();
+                ClipboardContent content = new ClipboardContent();
+                content.putString(treeView.getSelectionModel().getSelectedItem().getValue().getPassword());
+                clipboard.setContent(content);
+                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(Integer.parseInt(presenter.getTextField_settings_timeoutClipboard())), ev -> {
+                    clipboard.clear();
+                }));
+                timeline.play();
+            }
+        });
+        contextMenuRecycleBin.getItems().add(item3);
+    }
+
+
     private void editEntryScene(TreeItem<EntryProperty> selectedItem) throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("EditEntry.fxml"));
         try {
@@ -633,11 +709,10 @@ public class MainInterfaceController implements Initializable {
     }
 
 
-
     public void fillRecycleTable() {
 
         //Spalte Title
-        JFXTreeTableColumn<EntryProperty, String>columntitleName = new JFXTreeTableColumn<>(bundle.getString("tableColumn.title"));
+        JFXTreeTableColumn<EntryProperty, String> columntitleName = new JFXTreeTableColumn<>(bundle.getString("tableColumn.title"));
         columntitleName.setPrefWidth(100);
         columntitleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
@@ -685,7 +760,7 @@ public class MainInterfaceController implements Initializable {
 
 
         //ruft Methode auf und baut ContextMenu zusammen
-        buildContextMenu();
+        buildContextMenuRecycleBin();
 
 
         //Eventhandling für die Elemente
@@ -744,10 +819,9 @@ public class MainInterfaceController implements Initializable {
 // Folgende Methoden hinzugefügt von Wagenhuber:
 
 
-
     public void btn_settings_setNumberBackupEntries(ActionEvent actionEvent) {
-       presenter.setTextField_settings_numberBackupEntries(textField_settings_backupEntries.getText());
-       updateSaveStatus();
+        presenter.setTextField_settings_numberBackupEntries(textField_settings_backupEntries.getText());
+        updateSaveStatus();
     }
 
 
@@ -774,7 +848,7 @@ public class MainInterfaceController implements Initializable {
                 break;
             case 1:
                 presenter.setLanguage("de");
-                bundle =presenter.setLanguage("de");
+                bundle = presenter.setLanguage("de");
                 setLang();
                 presenter.setTextField_settings_saveStatusBoolean(true);
                 updateSaveStatus();
