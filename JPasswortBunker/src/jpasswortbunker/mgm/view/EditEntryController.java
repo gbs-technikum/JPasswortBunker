@@ -89,7 +89,10 @@ public class EditEntryController {
         if (recycleEntry) {
             System.out.println("mülleimer");
             if (checkIfCategoryIfSelected()) {
-                presenter.restoreEntryFromRecycleBin(entryProperty.getEntryID().toString(), (comboBox.getSelectionModel().getSelectedIndex()+1), entryProperty.getTimestamp());
+                //Alle zugehörigen Einträge holen:
+                ArrayList<Entry> entrieHistroy = presenter.getEntrysFromRecycleBinForEntryID(entryProperty.getEntryID().toString());
+                //ToDo Fehler: Es wird immer der neueste TimeStamp für den Restore übermittelt
+                presenter.restoreEntryFromRecycleBin(entryProperty.getEntryID().toString(), (comboBox.getSelectionModel().getSelectedIndex()+1), entrieHistroy.get((comboBoxHistorie.getSelectionModel().getSelectedIndex() -1)).getTimestamp());
                 Stage stage = (Stage) btn_restore.getScene().getWindow();
                 stage.close();
             }
