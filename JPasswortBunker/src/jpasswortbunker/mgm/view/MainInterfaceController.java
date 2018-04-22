@@ -662,6 +662,7 @@ public class MainInterfaceController implements Initializable {
                 }
             }
         });
+        contextMenuRecycleBin.getItems().add(item2);
     }
 
 
