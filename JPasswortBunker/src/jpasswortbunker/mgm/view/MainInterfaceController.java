@@ -226,6 +226,9 @@ public class MainInterfaceController implements Initializable {
         });
     }
 
+
+
+
     /**
      * public void searchFunction()
      * Suchfunktion in Suchleiste Suche nach: Title und Username
@@ -600,10 +603,9 @@ public class MainInterfaceController implements Initializable {
         contextMenu.getItems().add(item3);
     }
 
+//Folgende Methode Hinzugefügt von Eglseder am 22.04.18
 
-    //Eingefügt Wagenhuber 21-4-2018
     private void buildContextMenuRecycleBin() {
-        //ToDo eventuell noch mal anpassen wenn Zeit
         contextMenuRecycleBin = null;
         contextMenuRecycleBin = new ContextMenu();
         MenuItem item1 = new MenuItem(bundle.getString("contextMenu.delete"));
@@ -621,7 +623,7 @@ public class MainInterfaceController implements Initializable {
                 if (result.get() == ButtonType.OK) {
                     // ... user chose OK
                     try {
-                        presenter.removeEntry(treeView.getSelectionModel().getSelectedItem().getValue());
+                        presenter.removeEntry(tableView_recylce.getSelectionModel().getSelectedItem().getValue());
                     } catch (IllegalBlockSizeException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
@@ -646,7 +648,7 @@ public class MainInterfaceController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    editEntryScene(treeView.getSelectionModel().getSelectedItem());
+                    editEntryScene(tableView_recylce.getSelectionModel().getSelectedItem());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (BadPaddingException e) {
@@ -660,23 +662,6 @@ public class MainInterfaceController implements Initializable {
                 }
             }
         });
-        contextMenuRecycleBin.getItems().add(item2);
-        MenuItem item3 = new MenuItem(bundle.getString("contextMenu.copyPassword"));
-        item3.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                Clipboard clipboard = Clipboard.getSystemClipboard();
-                ClipboardContent content = new ClipboardContent();
-                content.putString(treeView.getSelectionModel().getSelectedItem().getValue().getPassword());
-                clipboard.setContent(content);
-                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(Integer.parseInt(presenter.getTextField_settings_timeoutClipboard())), ev -> {
-                    clipboard.clear();
-                }));
-                timeline.play();
-            }
-        });
-        contextMenuRecycleBin.getItems().add(item3);
     }
 
 
@@ -763,6 +748,7 @@ public class MainInterfaceController implements Initializable {
         buildContextMenuRecycleBin();
 
 
+
         //Eventhandling für die Elemente
         tableView_recylce.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -784,7 +770,7 @@ public class MainInterfaceController implements Initializable {
                     }
                 }
                 if (ee.isSecondaryButtonDown()) {
-                    contextMenu.show(treeView, ee.getScreenX(), ee.getScreenY());
+                    contextMenuRecycleBin.show(tableView_recylce, ee.getScreenX(), ee.getScreenY());
                 }
             }
         });
