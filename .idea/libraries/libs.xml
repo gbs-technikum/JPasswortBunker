@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/JPasswortBunker/libs/jfoenix-9.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/JPasswortBunker/libs/sqlite-jdbc-3.20.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/JPasswortBunker/libs/commons-codec-1.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
