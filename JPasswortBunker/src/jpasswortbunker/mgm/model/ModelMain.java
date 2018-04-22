@@ -254,22 +254,34 @@ public class ModelMain {
         ArrayList<Entry> entryArrayList = (ArrayList<Entry>) this.entryListEntrysTable.getEntryObjectList();
         for (Entry entry : entryArrayList) {
             if (entry.getEntryIDasString().equals(entryID)) {
-                //Backup-Entry im Recycle-Bin erstellen:
-                Entry encrypedEntryForRecycleBinTable = createEncryptedEntry(entry);
-                dbService.insertEntryInRecycleBin(encrypedEntryForRecycleBinTable);
 
-                entry.setTitle(title);
-                entry.setUsername(username);
-                entry.setPassword(password);
-                entry.setUrl(url);
-                entry.setDescription(descripton);
-                entry.setCategoryID(categoryID);
-                entry.setTimestamp(System.currentTimeMillis() / 1000L);
-                Entry encrypedEntryForEntrysTable = createEncryptedEntry(entry);
+                //Prüfung, ob sich nur Kategorie geändert hat, in diesem Fall kein neuer BackupEntry:
+                if (entry.getTitle().equals(title) && entry.getUsername().equals(username) && entry.getPassword().equals(password) && entry.getUrl().equals(url) && entry.getDescription().equals(descripton) && entry.getCategoryID() != categoryID) {
+                    entry.setCategoryID(categoryID);
+                    Entry encrypedEntryForEntrysTable = createEncryptedEntry(entry);
+                    this.updateEntriesKategoryInRecycleBin(entryID, categoryID);
+                    dbService.updateEntry(encrypedEntryForEntrysTable);
 
-                this.updateEntriesKategoryInRecycleBin(entryID, categoryID);
+                } else {
+                    //Backup-Entry im Recycle-Bin erstellen:
+                    Entry encrypedEntryForRecycleBinTable = createEncryptedEntry(entry);
+                    dbService.insertEntryInRecycleBin(encrypedEntryForRecycleBinTable);
 
-                dbService.updateEntry(encrypedEntryForEntrysTable);
+                    entry.setTitle(title);
+                    entry.setUsername(username);
+                    entry.setPassword(password);
+                    entry.setUrl(url);
+                    entry.setDescription(descripton);
+                    entry.setCategoryID(categoryID);
+                    entry.setTimestamp(System.currentTimeMillis() / 1000L);
+                    Entry encrypedEntryForEntrysTable = createEncryptedEntry(entry);
+
+                    this.updateEntriesKategoryInRecycleBin(entryID, categoryID);
+
+                    dbService.updateEntry(encrypedEntryForEntrysTable);
+
+                }
+
 
                 if (dbService.getNumberOfExistingRecycleBinEntriesForEntryId(entryID) > dbService.getNumberOfBackupEntiresFromDB()
                         && dbService.getNumberOfExistingRecycleBinEntriesForEntryId(entryID) != -1) {
@@ -282,6 +294,8 @@ public class ModelMain {
         System.out.println("EntryID nicht gefunden!");
         return false;
     }
+
+
 
 
     /**
