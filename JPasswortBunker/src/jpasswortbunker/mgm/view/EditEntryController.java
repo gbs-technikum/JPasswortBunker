@@ -187,6 +187,8 @@ public class EditEntryController {
                 this.entryProperty.setUrl(textFieldURL.getText());
                 this.entryProperty.setDescription(textAreaDescription.getText());
                 this.entryProperty.setCategoryID((comboBox.getSelectionModel().getSelectedIndex()+1));
+                this.entryProperty.setTimestamp(System.currentTimeMillis() / 1000L);
+                presenter.updateEntry(entryProperty);
                 presenter.updateEntry(entryProperty);
 
             } else {

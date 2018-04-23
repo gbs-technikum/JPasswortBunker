@@ -539,7 +539,9 @@ public class MainInterfaceController implements Initializable {
                 alert.setTitle(bundle.getString("alert.title"));
                 alert.setHeaderText(bundle.getString("alert.headerText"));
                 alert.setContentText(bundle.getString("alert.text"));
-                alert.setGraphic(new ImageView(this.getClass().getResource("images/logo.png").toString()));
+
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(this.getClass().getResource("images/logo.png").toString()));
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
@@ -618,7 +620,9 @@ public class MainInterfaceController implements Initializable {
                 alert.setTitle(bundle.getString("alert.title"));
                 alert.setHeaderText(bundle.getString("alert.headerText"));
                 alert.setContentText(bundle.getString("alert.text"));
-                alert.setGraphic(new ImageView(this.getClass().getResource("images/logo.png").toString()));
+
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(this.getClass().getResource("images/logo.png").toString()));
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
