@@ -278,6 +278,25 @@ public class DBService {
         return true;
     }
 
+    public boolean setLanguageToDB(String language) throws SQLException {
+        String sql ="update System set Language = '" + language + "' where id = 1";
+        this.statement.execute(sql);
+        statement.close();
+        return true;
+    }
+
+    public String getLanguageFromDB() throws SQLException {
+        String sql = "select LANGUAGE from System where id=1";
+        ResultSet resultSet = this.statement.executeQuery(sql);
+        String language = "";
+        if (resultSet.next()) {
+            language = resultSet.getString(1);
+        }
+        resultSet.close();
+        statement.close();
+        return language;
+    }
+
 
     public int getLenthOfRandomPasswordsFromDB() throws SQLException {
         String sql = "select LengthOfRandomPasswords from System where id=1";

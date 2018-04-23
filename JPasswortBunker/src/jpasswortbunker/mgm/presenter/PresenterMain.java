@@ -35,20 +35,22 @@ public final class PresenterMain {
     private BooleanProperty textField_settings_saveStatusBoolean;
     private IntegerProperty categoryChoosenForLastNewEntry;
     private StringProperty textField_settings_TimeClipboard;
-    private String language = "en";
+    //private String language = "en";
 
     private Locale locale;
     private ResourceBundle bundle;
 
 
-    public ResourceBundle setLanguage(String language) {
+    public ResourceBundle setLanguage(String language) throws SQLException {
         locale = new Locale(language);
         bundle = ResourceBundle.getBundle("jpasswortbunker.mgm.view.bundles.LangBundle", locale);
-        //Todo language in DB schreiben
+        model.setLanguageToDB(language);
         return bundle;
     }
 
-    public ResourceBundle getBundle() {
+    public ResourceBundle getLangBundle() throws SQLException {
+        locale = new Locale(model.getLanguageFromDB());
+        bundle = ResourceBundle.getBundle("jpasswortbunker.mgm.view.bundles.LangBundle", locale);
         return bundle;
     }
 
@@ -57,10 +59,7 @@ public final class PresenterMain {
         model = new ModelMain();
 
         initProperties();
-        locale = new Locale(language);//TODo DB Abfrage anstelle von language
-        bundle = ResourceBundle.getBundle("jpasswortbunker.mgm.view.bundles.LangBundle", locale);
-        //model.initMasterPassword("test");
-        //model.initEncryptionService();
+        getLangBundle();
     }
 
 

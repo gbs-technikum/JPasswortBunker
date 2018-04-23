@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import jpasswortbunker.mgm.presenter.PresenterMain;
 
 import javax.crypto.BadPaddingException;
@@ -166,9 +165,9 @@ public class NewEntryController{
      * public void setPresenter(PresenterMain presenter)
      * Bekommt den Presenter übergeben
      */
-    public void setPresenter(PresenterMain presenter) {
+    public void setPresenter(PresenterMain presenter) throws SQLException {
         this.presenter = presenter;
-        bundle = presenter.getBundle();
+        bundle = presenter.getLangBundle();
         setToolTip();
         setLang();
     }

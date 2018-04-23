@@ -296,8 +296,6 @@ public class ModelMain {
     }
 
 
-
-
     /**
      * Beim Abändern der Kagegorie eines bestehenden Eintrages wird die Kategrie aller Historie-Einträge ebenfalls angepasst
      */
@@ -488,6 +486,19 @@ public class ModelMain {
         return false;
 
     }
+
+    public String getLanguageFromDB() throws SQLException {
+        return dbService.getLanguageFromDB();
+    }
+
+    public boolean setLanguageToDB(String language) throws SQLException {
+        if (dbService.setLanguageToDB(language)) {
+            return true;
+        }
+        return false;
+    }
+
+
 
 
     public List getCategoryListFromDB() throws SQLException {

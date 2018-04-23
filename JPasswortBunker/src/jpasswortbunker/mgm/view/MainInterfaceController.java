@@ -101,7 +101,11 @@ public class MainInterfaceController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        bundle = presenter.getBundle();
+        try {
+            bundle = presenter.getLangBundle();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //loadLang(presenter.getLanguage());
         try {
             //Ruft Methode auf und ruft jeweiliges Fenster auf
@@ -432,13 +436,13 @@ public class MainInterfaceController implements Initializable {
         ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(presenter);
     }
 
-    public void btn_lang_en(ActionEvent actionEvent) {
+    public void btn_lang_en(ActionEvent actionEvent) throws SQLException {
         System.out.println("Englisch");
         bundle = presenter.setLanguage("en");
         setLang();
     }
 
-    public void btn_lang_de(ActionEvent actionEvent) {
+    public void btn_lang_de(ActionEvent actionEvent) throws SQLException {
         System.out.println("Deutsch");
         bundle = presenter.setLanguage("de");
         setLang();
@@ -830,7 +834,7 @@ public class MainInterfaceController implements Initializable {
     }
 
     //Hinzugefügt Kopp
-    public void btn_settings_language(ActionEvent actionEvent) {
+    public void btn_settings_language(ActionEvent actionEvent) throws SQLException {
         switch (comboBox_settings_language.getSelectionModel().getSelectedIndex()) {
             case 0:
                 presenter.setLanguage("en");

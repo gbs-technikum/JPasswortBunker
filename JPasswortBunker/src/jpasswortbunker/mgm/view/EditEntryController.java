@@ -1,20 +1,17 @@
 package jpasswortbunker.mgm.view;
 
 import com.jfoenix.controls.*;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import jpasswortbunker.mgm.model.Entry;
@@ -23,12 +20,8 @@ import jpasswortbunker.mgm.presenter.PresenterMain;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.security.InvalidKeyException;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -233,7 +226,7 @@ public class EditEntryController {
      */
     public void setPresenter(PresenterMain presenter) throws SQLException {
         this.presenter = presenter;
-        bundle = presenter.getBundle();
+        bundle = presenter.getLangBundle();
         setLang();
         setToolTip();
     }

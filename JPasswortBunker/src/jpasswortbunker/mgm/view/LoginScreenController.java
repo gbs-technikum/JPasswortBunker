@@ -74,9 +74,9 @@ public class LoginScreenController {
         }
     }
 
-    public void setPresenter(PresenterMain presenter) {
+    public void setPresenter(PresenterMain presenter) throws SQLException {
         this.presenter = presenter;
-        bundle = presenter.getBundle();
+        bundle = presenter.getLangBundle();
         setLang();
     }
 
