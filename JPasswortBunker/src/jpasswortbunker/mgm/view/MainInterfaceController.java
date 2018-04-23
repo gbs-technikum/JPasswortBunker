@@ -611,6 +611,7 @@ public class MainInterfaceController implements Initializable {
         MenuItem item1 = new MenuItem(bundle.getString("contextMenu.delete"));
         item1.setOnAction(new EventHandler<ActionEvent>() {
 
+
             @Override
             public void handle(ActionEvent event) {
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -680,6 +681,7 @@ public class MainInterfaceController implements Initializable {
         editEntryController.setEntry(selectedItem);
         editEntryController.fillComboBox();
         editEntryController.fillComboBoxhistorie();
+
 
 
         Parent parentEditEntry = loader.getRoot();

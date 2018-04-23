@@ -87,16 +87,17 @@ public class EditEntryController {
 
     public void btn_restore(ActionEvent actionEvent) throws  IllegalBlockSizeException, SQLException,InvalidKeyException,BadPaddingException,UnsupportedEncodingException {
         if (recycleEntry) {
-            System.out.println("mülleimer");
             if (checkIfCategoryIfSelected()) {
                 ArrayList<Entry> entrieHistroy = presenter.getEntrysFromRecycleBinForEntryID(entryProperty.getEntryID().toString());
                 presenter.restoreEntryFromRecycleBin(entryProperty.getEntryID().toString(), (comboBox.getSelectionModel().getSelectedIndex()+1), entrieHistroy.get((comboBoxHistorie.getSelectionModel().getSelectedIndex() -1)).getTimestamp());
                 Stage stage = (Stage) btn_restore.getScene().getWindow();
                 stage.close();
+                presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex() + 1));
             }
         } else if (changeEntry()) {
             Stage stage = (Stage) btn_restore.getScene().getWindow();
             stage.close();
+            presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex() + 1));
         }
     }
     /**
@@ -160,7 +161,6 @@ public class EditEntryController {
         textAreaDescription.setText(entryProperty.getDescription());
         labelTimestamp.setText(presenter.timestampToTime(entryProperty.getTimestamp()));
         checkIfRecycleEntry(entryProperty);
-        System.out.println("Kategorie: " +  entryProperty.getCategoryID());
     }
 
     /**
@@ -263,7 +263,6 @@ public class EditEntryController {
 
         for (Entry entry : entrieHistroy) {
             comboBoxHistorie.getItems().add(new Label(presenter.timestampToTime(entry.getTimestamp())));
-            System.out.println(entry.getTimestamp());
 
         }
 
@@ -282,6 +281,8 @@ public class EditEntryController {
                     textFieldUsername.setText(entryProperty.getUsername());
                     textFieldPassword1.setText(entryProperty.getPassword());
                     textFieldPassword2.setText(entryProperty.getPassword());
+                    passwordField1.setText(entryProperty.getPassword());
+                    passwordField2.setText(entryProperty.getPassword());
                     textFieldURL.setText(entryProperty.getUrl());
                     labelTimestamp.setText(presenter.timestampToTime(entryProperty.getTimestamp()));
                 } else {
@@ -293,6 +294,8 @@ public class EditEntryController {
                     textFieldUsername.setText(selectedEntry.getUsername());
                     textFieldPassword1.setText(selectedEntry.getPassword());
                     textFieldPassword2.setText(selectedEntry.getPassword());
+                    passwordField1.setText(selectedEntry.getPassword());
+                    passwordField2.setText(selectedEntry.getPassword());
                     textFieldURL.setText(selectedEntry.getUrl());
                     labelTimestamp.setText(presenter.timestampToTime(selectedEntry.getTimestamp()));
 
@@ -328,7 +331,6 @@ public class EditEntryController {
     }
 
     private boolean checkIfCategoryIfSelected() {
-        System.out.println(comboBox.getSelectionModel().getSelectedIndex());
         if (comboBox.getSelectionModel().getSelectedIndex() == -1) {
             labelErrorMessage.setText(bundle.getString("entry.labelErrorMessage.chooseCategorie"));
             return false;
