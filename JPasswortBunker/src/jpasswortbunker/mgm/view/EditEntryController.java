@@ -49,8 +49,8 @@ public class EditEntryController {
     public JFXComboBox<Label> comboBoxHistorie = new JFXComboBox<Label>();
 
 
-
     public EntryProperty entryProperty;
+    private long selectedEntryTimestamp;
     private PresenterMain presenter;
     private ResourceBundle bundle;
     private Boolean recycleEntry;
@@ -82,7 +82,7 @@ public class EditEntryController {
         if (recycleEntry) {
             if (checkIfCategoryIfSelected()) {
                 ArrayList<Entry> entrieHistroy = presenter.getEntrysFromRecycleBinForEntryID(entryProperty.getEntryID().toString());
-                presenter.restoreEntryFromRecycleBin(entryProperty.getEntryID().toString(), (comboBox.getSelectionModel().getSelectedIndex()+1), entrieHistroy.get((comboBoxHistorie.getSelectionModel().getSelectedIndex() -1)).getTimestamp());
+                presenter.restoreEntryFromRecycleBin(entryProperty.getEntryID().toString(), (comboBox.getSelectionModel().getSelectedIndex()+1), selectedEntryTimestamp);
                 Stage stage = (Stage) btn_restore.getScene().getWindow();
                 stage.close();
                 presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex() + 1));
@@ -154,6 +154,7 @@ public class EditEntryController {
         textAreaDescription.setText(entryProperty.getDescription());
         labelTimestamp.setText(presenter.timestampToTime(entryProperty.getTimestamp()));
         checkIfRecycleEntry(entryProperty);
+        selectedEntryTimestamp = entryProperty.getTimestamp();
     }
 
     /**
@@ -290,6 +291,7 @@ public class EditEntryController {
                     passwordField2.setText(entryProperty.getPassword());
                     textFieldURL.setText(entryProperty.getUrl());
                     labelTimestamp.setText(presenter.timestampToTime(entryProperty.getTimestamp()));
+                    selectedEntryTimestamp = entryProperty.getTimestamp();
                 } else {
                     btn_save.setVisible(false);
                     btn_restore.setVisible(true);
@@ -303,7 +305,7 @@ public class EditEntryController {
                     passwordField2.setText(selectedEntry.getPassword());
                     textFieldURL.setText(selectedEntry.getUrl());
                     labelTimestamp.setText(presenter.timestampToTime(selectedEntry.getTimestamp()));
-
+                    selectedEntryTimestamp = selectedEntry.getTimestamp();
 
                 }
             }
