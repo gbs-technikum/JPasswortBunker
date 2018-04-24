@@ -206,6 +206,7 @@ public class EditEntryController {
     }
 
     /**
+     *
      *  public void fillComboBox()
      * Füllt auswahl Combobox mit den Kategorien aus der DB
      */
