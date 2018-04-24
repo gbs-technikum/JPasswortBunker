@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact name="JPasswortBunker:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JPasswortBunker_jar</output-path>
+    <root id="root">
+      <element id="archive" name="JPasswortBunker.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="JPasswortBunker" />
+      </element>
+      <element id="library" level="project" name="libs" />
+      <element id="library" level="project" name="commons-codec-1.11" />
+      <element id="library" level="project" name="jfoenix-9.0.1" />
+      <element id="library" level="project" name="sqlite-jdbc-3.20.0" />
+    </root>
+  </artifact>
+</component>
