@@ -6,6 +6,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -409,14 +411,6 @@ public class MainInterfaceController implements Initializable {
         pane_recycle.setVisible(true);
         textField_Search.clear();
         textField_Search.setVisible(true);
-        tableView_recylce.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
-            @Override
-            public boolean test(TreeItem<EntryProperty> entryTreeItem) {
-                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(-1);
-                return flag;
-            }
-        });
-
     }
 
 
@@ -753,9 +747,16 @@ public class MainInterfaceController implements Initializable {
                 return param.getValue().getValue().descriptionProperty();
             }
         });
+        ObservableList<EntryProperty> entryPropertiesListRecycle = FXCollections.observableArrayList();
+
+        for (EntryProperty entryRecycle:presenter.getEntryPropertiesListRecycle()) {
+            if (entryRecycle.getCategoryID() == -1) {
+                entryPropertiesListRecycle.add(entryRecycle);
+            }
+        }
 
         //Inhalte werden in die Tabelle geschrieben
-        final TreeItem<EntryProperty> root1 = new RecursiveTreeItem<EntryProperty>(presenter.getEntryPropertiesListRecycle(), RecursiveTreeObject::getChildren);
+        final TreeItem<EntryProperty> root1 = new RecursiveTreeItem<EntryProperty>(entryPropertiesListRecycle, RecursiveTreeObject::getChildren);
         tableView_recylce.getColumns().setAll(columntitleName, usernameCol, urlCol, desCol);
         tableView_recylce.setRoot(root1);
         tableView_recylce.setShowRoot(false);

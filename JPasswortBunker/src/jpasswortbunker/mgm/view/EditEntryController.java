@@ -254,11 +254,16 @@ public class EditEntryController {
         ArrayList<Entry> entrieHistroy = presenter.getEntrysFromRecycleBinForEntryID(entryProperty.getEntryID().toString());
 
         comboBoxHistorie.getItems().add(new Label("Selected Entry"));
-
-        for (Entry entry : entrieHistroy) {
-            comboBoxHistorie.getItems().add(new Label(presenter.timestampToTime(entry.getTimestamp())));
-
+        if (entryProperty.getCategoryID() != -1) {
+            for (Entry entry : entrieHistroy) {
+                comboBoxHistorie.getItems().add(new Label(presenter.timestampToTime(entry.getTimestamp())));
+            }
+        } else {
+            for (int i = 0; i < entrieHistroy.size()-1 ; i++) {
+                comboBoxHistorie.getItems().add(new Label(presenter.timestampToTime(entrieHistroy.get(i).getTimestamp())));
+            }
         }
+
 
         comboBoxHistorie.setPromptText("Historie");
         //comboBoxHistorie.getSelectionModel().select(entryProperty.getCategoryID()-1);
@@ -268,8 +273,13 @@ public class EditEntryController {
             public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
 
                 if (comboBoxHistorie.getSelectionModel().getSelectedIndex() == 0) {
-                    btn_save.setVisible(true);
-                    btn_restore.setVisible(false);
+                    if (entryProperty.getCategoryID() == -1) {
+                        btn_save.setVisible(false);
+                        btn_restore.setVisible(true);
+                    } else {
+                        btn_save.setVisible(true);
+                        btn_restore.setVisible(false);
+                    }
                     textFieldTitle.setText(entryProperty.getTitle());
                     textAreaDescription.setText(entryProperty.getDescription());
                     textFieldUsername.setText(entryProperty.getUsername());
