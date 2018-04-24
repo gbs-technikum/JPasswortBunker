@@ -409,6 +409,13 @@ public class MainInterfaceController implements Initializable {
         pane_recycle.setVisible(true);
         textField_Search.clear();
         textField_Search.setVisible(true);
+        tableView_recylce.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+            @Override
+            public boolean test(TreeItem<EntryProperty> entryTreeItem) {
+                Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(-1);
+                return flag;
+            }
+        });
 
     }
 
