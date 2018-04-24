@@ -410,7 +410,7 @@ public class MainInterfaceController implements Initializable {
         pane_entrys.setVisible(false);
         pane_recycle.setVisible(true);
         textField_Search.clear();
-        textField_Search.setVisible(true);
+        textField_Search.setVisible(false);
     }
 
 
