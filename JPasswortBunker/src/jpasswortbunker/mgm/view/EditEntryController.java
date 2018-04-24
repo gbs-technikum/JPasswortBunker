@@ -182,7 +182,6 @@ public class EditEntryController {
                 this.entryProperty.setCategoryID((comboBox.getSelectionModel().getSelectedIndex()+1));
                 this.entryProperty.setTimestamp(System.currentTimeMillis() / 1000L);
                 presenter.updateEntry(entryProperty);
-                presenter.updateEntry(entryProperty);
 
             } else {
                 return false;
