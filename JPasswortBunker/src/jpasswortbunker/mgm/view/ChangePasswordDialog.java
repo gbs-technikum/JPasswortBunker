@@ -20,26 +20,28 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class ChangePasswordDialog {
 
     public Dialog<Pair<String, String>> dialog;
     public PresenterMain presenter;
     public Label labelMessage;
+    private ResourceBundle bundle;
 
-    public ChangePasswordDialog(PresenterMain presenter) {
+    public ChangePasswordDialog(PresenterMain presenter) throws SQLException {
         this.presenter = presenter;
         this.dialog = new Dialog<>();
         this.labelMessage = new Label();
         this.labelMessage.setTextFill(Color.web("#ff0000"));
-        //this.labelMessage.setMinWidth(100);
-        test();
+        this.bundle = presenter.getLangBundle();
+        buildView();
 
     }
 
-    public void test() {
-        dialog.setTitle("Change Masterpassword");
-        dialog.setHeaderText("You can change your Masterpassword");
+    public void buildView() {
+        dialog.setTitle(bundle.getString("changeMasterPassword.title"));
+        dialog.setHeaderText(bundle.getString("changeMasterPassword.header"));
 
         // Aus dem Fenster die stage geben lassen
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
@@ -59,13 +61,13 @@ public class ChangePasswordDialog {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         PasswordField password = new PasswordField();
-        password.setPromptText("RepeatPassword");
+        password.setPromptText(bundle.getString("changeMasterPassword.promptText2"));
         PasswordField password2 = new PasswordField();
-        password.setPromptText("Password");
+        password.setPromptText(bundle.getString("changeMasterPassword.promptText1"));
 
-        grid.add(new Label("Password:"), 0, 0);
+        grid.add(new Label(bundle.getString("changeMasterPassword.label")), 0, 0);
         grid.add(password, 1, 0);
-        grid.add(new Label("Password:"), 0, 1);
+        grid.add(new Label(bundle.getString("changeMasterPassword.label")), 0, 1);
         grid.add(password2, 1, 1);
         grid.add(labelMessage,1,2);
 
@@ -83,7 +85,7 @@ public class ChangePasswordDialog {
                 labelMessage.setText("");
                 okButton.setDisable(false);
             } else {
-                labelMessage.setText("Password not equals");
+                labelMessage.setText(bundle.getString("changeMasterPasswqord.labelError"));
                 okButton.setDisable(true);
             }
         });
@@ -123,5 +125,9 @@ public class ChangePasswordDialog {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void setLang() {
+
     }
 }

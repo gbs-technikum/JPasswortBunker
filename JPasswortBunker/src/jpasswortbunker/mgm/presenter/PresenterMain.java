@@ -84,7 +84,7 @@ public final class PresenterMain {
         }
     }
 
-    //TODO: 14.03.2018  anpassen für das Schreiben in den Mülleimer
+
     //Schreibt die Liste der Arraylist aus Model in die Observable List im Presenter
     public void writeToObservableListrecycle() throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
         model.FillEntryListFromRecycleBin();
@@ -115,8 +115,6 @@ public final class PresenterMain {
         if (model.checkIfMasterPasswordIsCorrect()) {
             model.initEncryptionService();
             writeToObservableList();
-            //Todo Fehler mit den Recycle Einträgen, wirft eine Exception nach MasterPasswort Änderung
-            //Könnte ein Problem mit der Verschlüsselung oder Datenbank sein
             writeToObservableListrecycle();
             controller.loadView();
             return true;

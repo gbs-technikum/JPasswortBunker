@@ -29,11 +29,11 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Masterpassword übergeben
-        modelMain.initMasterPassword("test");
+        modelMain.initMasterPassword("buildView");
 
 
         //Beschreibung: Masterpassword in DB setzen
-        //modelMain.setSaltPasswordHashForPasswortStoreInDb("test");
+        //modelMain.setSaltPasswordHashForPasswortStoreInDb("buildView");
 
 
         //Beschreibung: Prüfen ob richtigs MasterPasswort übergeben wurde (Oben eingegebenes Passwort wird mit DB abgeglichen)
@@ -98,7 +98,7 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Masterpassword neu setzen (alle bestehenden Einträge werden neu verschlüsselt)
-        /*modelMain.renewMasterPassword("test");
+        /*modelMain.renewMasterPassword("buildView");
         modelMain.getEntryListEntrysTable();
         modelMain.getEntryListRecycleBinTable();*/
 

@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public final class TestklasseWagenhuber {
+public final class TestklasseEncryption {
     public static void main(String[] args) throws NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, SQLException {
 
         PasswordObject.getInstance().setPassword("MasterKey_");

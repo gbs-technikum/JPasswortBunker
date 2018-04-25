@@ -31,7 +31,7 @@ public class ModelMain {
         this.entryListRecycleBinTable = new EntryList();
     }
 
-//ToDo Michi Kopp: Instanzierung Presenter im Model
+
     /**
      * Zugriff via View
      /**Zugriff via Presenter

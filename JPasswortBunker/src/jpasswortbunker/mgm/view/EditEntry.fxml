@@ -20,9 +20,9 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <ImageView fx:id="btn_logo" fitHeight="35.0" fitWidth="67.0" layoutX="355.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btn_logo" fitHeight="54.0" fitWidth="93.0" layoutX="319.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/logo.png" />
+                  <Image url="@images/logoJpasswortBunkerWhiteFont.png" />
                </image>
             </ImageView>
          </children>

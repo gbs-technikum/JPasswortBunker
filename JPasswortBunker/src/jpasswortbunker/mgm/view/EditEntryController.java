@@ -69,7 +69,7 @@ public class EditEntryController {
      */
     public void btn_save(ActionEvent actionEvent) throws IllegalBlockSizeException, SQLException, InvalidKeyException, BadPaddingException, UnsupportedEncodingException {
 
-        //Eingefügt Wagenhuber: Zwischenspeichern der gewählten Kategorie, um diese anschließend im View anzuzeigen
+
         presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex() + 1));
 
         if (changeEntry()) {
@@ -267,7 +267,7 @@ public class EditEntryController {
 
 
         comboBoxHistorie.setPromptText("Historie");
-        //comboBoxHistorie.getSelectionModel().select(entryProperty.getCategoryID()-1);
+
 
         comboBoxHistorie.valueProperty().addListener(new ChangeListener<Label>() {
             @Override

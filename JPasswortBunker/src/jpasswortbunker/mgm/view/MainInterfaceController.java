@@ -78,16 +78,17 @@ public class MainInterfaceController implements Initializable {
     private JFXTextField textField_Search, textField_settings_timeoutClipboard, textField_settings_backupEntries,
             textField_settings_lengthRandomPasswords, textField_settings_saveStatus, textField_settings_numberBackupEntries,
             textField_settings_lengthRandomPasswordsText, textField_settings_timeoutClipboardText,
-            textField_settings_saveStatusText, textField_settings_language;
+            textField_settings_saveStatusText, textField_settings_language, textField_settings_description1,
+            textField_settings_description2, textField_settings_description3;
 
     @FXML
     private AnchorPane mainAnchorPane;
 
     @FXML
-    private Menu menu_File, menu_Edit, menu_Help;
+    private Menu menu_File, menu_Edit;
 
     @FXML
-    private MenuItem menuItem_NewMasterpassword, menuItem_NewEntry, menuItem_Help, menuItem_About;
+    private MenuItem menuItem_NewMasterpassword, menuItem_NewEntry, menuItem_About, menuItem_Settings;
 
     private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin, stageNewEntry;
     private ContextMenu contextMenu, contextMenuRecycleBin;
@@ -118,11 +119,10 @@ public class MainInterfaceController implements Initializable {
             e.printStackTrace();
         }
         //bekommt die Stage der Main methode um diese später sichtbar zu schalten
-        stageMainInterfaceController = Testklasse.getPrimaryStage();
+        stageMainInterfaceController = Main.getPrimaryStage();
     }
 
     public void loadView() {
-        //setLang();
         fillRecycleTable();
         fillTreeView();
         setLang();
@@ -134,7 +134,6 @@ public class MainInterfaceController implements Initializable {
         fillRecycleTable();
     }
 
-    //Hinzugefügt von Wagenhuber: Wird nach dem Hinzufügen / Updaten eines neuen / bestehenden Entries ausgeführt um die View zu aktualisieren
     public void updateView() {
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
@@ -157,7 +156,7 @@ public class MainInterfaceController implements Initializable {
 
         //Spalte Title
         JFXTreeTableColumn<EntryProperty, String> titleName = new JFXTreeTableColumn<>(bundle.getString("tableColumn.title"));
-        titleName.setPrefWidth(120);
+        titleName.setPrefWidth(128);
         titleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -231,9 +230,6 @@ public class MainInterfaceController implements Initializable {
             }
         });
     }
-
-
-
 
     /**
      * public void searchFunction()
@@ -422,7 +418,6 @@ public class MainInterfaceController implements Initializable {
         textField_Search.clear();
         textField_Search.setVisible(false);
 
-        //Hinzugefügt durch Wagenhuber: Textfelder für Settings
         textField_settings_backupEntries.setText(presenter.getTextField_settings_numberBackupEntries());
         textField_settings_lengthRandomPasswords.setText(presenter.getTextField_settings_lengthRandomPasswords());
         textField_settings_timeoutClipboard.setText(presenter.getTextField_settings_timeoutClipboard());
@@ -433,59 +428,29 @@ public class MainInterfaceController implements Initializable {
      * public void btn_newMasterPassword()
      * Ruft einen neuen Dialog auf, um das MasterPasswort zu ändern
      */
-    public void btn_newMasterPassword() {
+    public void btn_newMasterPassword() throws SQLException {
         ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(presenter);
     }
 
-    public void btn_lang_en(ActionEvent actionEvent) throws SQLException {
-        System.out.println("Englisch");
-        bundle = presenter.setLanguage("en");
-        setLang();
-    }
 
-    public void btn_lang_de(ActionEvent actionEvent) throws SQLException {
-        System.out.println("Deutsch");
-        bundle = presenter.setLanguage("de");
-        setLang();
 
-    }
 
     public void btn_about(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(bundle.getString("title.about"));
         alert.setHeaderText("jPasswortBunker");
         alert.setContentText(bundle.getString("text.about"));
-        // Get the Stage.
+
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 
-
-        // Add a custom icon.
+        // Fügt Icon hinzu.
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.getIcons().add(new Image(this.getClass().getResource("images/logo.png").toString()));
         alert.setGraphic(new ImageView(this.getClass().getResource("images/logo.png").toString()));
         alert.showAndWait();
     }
 
-    public void btn_help(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(bundle.getString("title.help"));
-        alert.setHeaderText("jPasswortBunker");
-        alert.setContentText(bundle.getString("text.help"));
-        // Get the Stage.
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 
-        // Add a custom icon.
-        stage.getIcons().add(new Image(this.getClass().getResource("images/logo.png").toString()));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        alert.setGraphic(new ImageView(this.getClass().getResource("images/logo.png").toString()));
-        alert.showAndWait();
-    }
-
-    /**
-     * private void loadLang(String lang)
-     * Bekommt als Paramter das jeweilige Landeskuerzel
-     * setzt die jeweiligen Felder dann neu mit der neuen Sprache
-     */
     private void loadLang(String lang) {
         locale = new Locale(lang);
         bundle = ResourceBundle.getBundle("jpasswortbunker.mgm.view.bundles.LangBundle", locale);
@@ -503,17 +468,19 @@ public class MainInterfaceController implements Initializable {
         textField_Search.setPromptText(bundle.getString("promptText.search"));
         menu_File.setText(bundle.getString("menu.file"));
         menu_Edit.setText(bundle.getString("menu.edit"));
-        menu_Help.setText(bundle.getString("menu.help"));
         menuItem_NewMasterpassword.setText(bundle.getString("menuItem.newMasterPassword"));
         menuItem_NewEntry.setText(bundle.getString("menuItem.newEntry"));
-        menuItem_Help.setText(bundle.getString("menuItem.help"));
         menuItem_About.setText(bundle.getString("menuItem.about"));
+        menuItem_Settings.setText(bundle.getString("button.settings"));
         textField_settings_numberBackupEntries.setText(bundle.getString("textField.settings.numberBackupEntries"));
         textField_settings_lengthRandomPasswordsText.setText(bundle.getString("textField.settings.lenghtRandomPasswordText"));
         textField_settings_timeoutClipboardText.setText(bundle.getString("textField.settings.timeoutClipboardText"));
         textField_settings_saveStatusText.setText(bundle.getString("textField.settings.saveSatusText"));
         textField_settings_language.setText(bundle.getString("textField.settings.language"));
         textField_settings_saveStatus.setText(bundle.getString("textField.settings.saveStatus"));
+        textField_settings_description1.setText(bundle.getString("textField.settings.description"));
+        textField_settings_description2.setText(bundle.getString("textField.settings.description"));
+        textField_settings_description3.setText(bundle.getString("textField.settings.description"));
         btn_settings_numberBackupEntriesOk.setText(bundle.getString("button.settings.numberBackupEntries"));
         btn_settings_timeoutClipboard.setText(bundle.getString("button.settings.timeoutClipboard"));
         btn_settings_lengthRandomPasswords.setText(bundle.getString("button.settings.lengthRandomPassword"));
@@ -525,6 +492,7 @@ public class MainInterfaceController implements Initializable {
         treeView.getColumns().get(1).setText(bundle.getString("tableColumn.username"));
         treeView.getColumns().get(2).setText(bundle.getString("tableColumn.url"));
         treeView.getColumns().get(3).setText(bundle.getString("tableColumn.description"));
+
     }
 
     /**
@@ -532,7 +500,7 @@ public class MainInterfaceController implements Initializable {
      * Baut Context Menu zusammen
      */
     private void buildContextMenu() {
-        //ToDo eventuell noch mal anpassen wenn Zeit
+
         contextMenu = null;
         contextMenu = new ContextMenu();
         MenuItem item1 = new MenuItem(bundle.getString("contextMenu.delete"));
@@ -550,7 +518,7 @@ public class MainInterfaceController implements Initializable {
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
-                    // ... user chose OK
+                    // ... auswahl ok
                     try {
                         presenter.removeEntry(treeView.getSelectionModel().getSelectedItem().getValue());
                     } catch (IllegalBlockSizeException e) {
@@ -565,7 +533,7 @@ public class MainInterfaceController implements Initializable {
                         e.printStackTrace();
                     }
                 } else {
-                    // ... user chose CANCEL or closed the dialog
+
 
                 }
             }
@@ -610,7 +578,6 @@ public class MainInterfaceController implements Initializable {
         contextMenu.getItems().add(item3);
     }
 
-//Folgende Methode Hinzugefügt von Eglseder am 22.04.18
 
     private void buildContextMenuRecycleBin() {
         contextMenuRecycleBin = null;
@@ -631,7 +598,7 @@ public class MainInterfaceController implements Initializable {
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
-                    // ... user chose OK
+                    // ... Auswahl OK
                     try {
                         presenter.removeEntry(tableView_recylce.getSelectionModel().getSelectedItem().getValue());
                     } catch (IllegalBlockSizeException e) {
@@ -646,7 +613,7 @@ public class MainInterfaceController implements Initializable {
                         e.printStackTrace();
                     }
                 } else {
-                    // ... user chose CANCEL or closed the dialog
+                    // ... Auswahl Abbrechen
 
                 }
             }
@@ -710,7 +677,7 @@ public class MainInterfaceController implements Initializable {
 
         //Spalte Title
         JFXTreeTableColumn<EntryProperty, String> columntitleName = new JFXTreeTableColumn<>(bundle.getString("tableColumn.title"));
-        columntitleName.setPrefWidth(100);
+        columntitleName.setPrefWidth(128);
         columntitleName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -720,7 +687,7 @@ public class MainInterfaceController implements Initializable {
 
         //Spalte Username
         JFXTreeTableColumn<EntryProperty, String> usernameCol = new JFXTreeTableColumn<>(bundle.getString("tableColumn.username"));
-        usernameCol.setPrefWidth(100);
+        usernameCol.setPrefWidth(200);
         usernameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -730,7 +697,7 @@ public class MainInterfaceController implements Initializable {
 
         //Spalte URL
         JFXTreeTableColumn<EntryProperty, String> urlCol = new JFXTreeTableColumn<>(bundle.getString("tableColumn.url"));
-        urlCol.setPrefWidth(150);
+        urlCol.setPrefWidth(190);
         urlCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -740,7 +707,7 @@ public class MainInterfaceController implements Initializable {
 
         //Spalte Description
         JFXTreeTableColumn<EntryProperty, String> desCol = new JFXTreeTableColumn<>(bundle.getString("tableColumn.description"));
-        desCol.setPrefWidth(150);
+        desCol.setPrefWidth(180);
         desCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<EntryProperty, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<EntryProperty, String> param) {
@@ -820,10 +787,6 @@ public class MainInterfaceController implements Initializable {
         comboBox_settings_language.getItems().add(new Label("German"));
     }
 
-
-// Folgende Methoden hinzugefügt von Wagenhuber:
-
-
     public void btn_settings_setNumberBackupEntries(ActionEvent actionEvent) {
         presenter.setTextField_settings_numberBackupEntries(textField_settings_backupEntries.getText());
         updateSaveStatus();
@@ -841,7 +804,6 @@ public class MainInterfaceController implements Initializable {
         updateSaveStatus();
     }
 
-    //Hinzugefügt Kopp
     public void btn_settings_language(ActionEvent actionEvent) throws SQLException {
         switch (comboBox_settings_language.getSelectionModel().getSelectedIndex()) {
             case 0:

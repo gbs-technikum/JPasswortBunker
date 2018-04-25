@@ -40,9 +40,7 @@ public final class SetMasterPasswordController{
     public void btn_setMasterPassword(ActionEvent actionEvent) throws BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
         if (!(passwordField1.getText().equals("") || passwordField2.getText().equals(""))) {
             if (equalsPassword()) {
-                //Hinzugefügt Wagenhuber am 16-4-2018
                 presenter.setMasterPasswordinDB(passwordField1.getText());
-                //Hinzugefügt Kopp am 16-4-2018
                 Stage stage = (Stage) btn_OK.getScene().getWindow();
                 stage.close();
             }

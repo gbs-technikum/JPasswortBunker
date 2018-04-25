@@ -65,7 +65,7 @@ public class NewEntryController{
                     presenter.newEntry(textFieldTitle.getText(), textFieldUsername.getText(), passwordField1.getText(), textFieldURL.getText(),
                             textAreaDescription.getText(), (comboBox.getSelectionModel().getSelectedIndex() + 1));
 
-                    //Eingefügt Wagenhuber: Zwischenspeichern der gewählten Kategorie, um diese anschließend im View anzuzeigen
+
                     presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex() + 1));
 
 
