@@ -88,7 +88,7 @@ public class MainInterfaceController implements Initializable {
     private Menu menu_File, menu_Edit;
 
     @FXML
-    private MenuItem menuItem_NewMasterpassword, menuItem_NewEntry, menuItem_About, menuItem_Settings;
+    private MenuItem menuItem_NewMasterpassword, menuItem_NewEntry, menuItem_About, menuItem_Settings, menuItem_Exit;
 
     private static Stage stageMainInterfaceController, stageSetMasterPassword, stageLogin, stageNewEntry;
     private ContextMenu contextMenu, contextMenuRecycleBin;
@@ -116,6 +116,10 @@ public class MainInterfaceController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         //bekommt die Stage der Main methode um diese später sichtbar zu schalten
@@ -257,7 +261,7 @@ public class MainInterfaceController implements Initializable {
      * true -> LoginScreen
      * false -> SetMasterPassword
      */
-    private void checkIfMasterPasswortExistsInDB() throws IOException, SQLException {
+    private void checkIfMasterPasswortExistsInDB() throws IOException, SQLException, NoSuchAlgorithmException, NoSuchPaddingException {
         if (presenter.checkIfMasterPasswortExistsInDB()) {
             System.out.println("gesetzt");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
@@ -310,6 +314,20 @@ public class MainInterfaceController implements Initializable {
 
 
     //Button Logo zeit alle Einträge an und setzt Suchfilter bzw Kategorie zurück
+    public void btn_logo() {
+        pane_settings.setVisible(false);
+        pane_entrys.setVisible(true);
+        pane_recycle.setVisible(false);
+        textField_Search.clear();
+        textField_Search.setVisible(true);
+        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+            @Override
+            public boolean test(TreeItem<EntryProperty> entryTreeItem) {
+                return true;
+            }
+        });
+    }
+
     public void btn_logo(MouseEvent mouseEvent) {
         pane_settings.setVisible(false);
         pane_entrys.setVisible(true);
@@ -323,6 +341,7 @@ public class MainInterfaceController implements Initializable {
             }
         });
     }
+
 
     //Button Kategorie_Finanzen
     public void btn_finance(ActionEvent actionEvent) {
@@ -432,7 +451,9 @@ public class MainInterfaceController implements Initializable {
         ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(presenter);
     }
 
-
+    public void btn_exit() {
+        System.exit(0);
+    }
 
 
     public void btn_about(ActionEvent actionEvent) {
@@ -469,6 +490,7 @@ public class MainInterfaceController implements Initializable {
         menu_File.setText(bundle.getString("menu.file"));
         menu_Edit.setText(bundle.getString("menu.edit"));
         menuItem_NewMasterpassword.setText(bundle.getString("menuItem.newMasterPassword"));
+        menuItem_Exit.setText(bundle.getString("menuItem.exit"));
         menuItem_NewEntry.setText(bundle.getString("menuItem.newEntry"));
         menuItem_About.setText(bundle.getString("menuItem.about"));
         menuItem_Settings.setText(bundle.getString("button.settings"));

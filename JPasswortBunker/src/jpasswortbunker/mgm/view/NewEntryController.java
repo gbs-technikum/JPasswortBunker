@@ -51,9 +51,11 @@ public class NewEntryController{
      * public void btn_save(ActionEvent actionEvent)
      * speichert den neu erstellten Eintrag
      */
-    public void btn_save(ActionEvent actionEvent) {
+    public void btn_save(ActionEvent actionEvent) throws IllegalBlockSizeException, SQLException, InvalidKeyException, BadPaddingException, UnsupportedEncodingException {
         if (!textFieldTitle.getText().equals("")) {
             if (equalsPassword()) {
+                presenter.newEntry(textFieldTitle.getText(), textFieldUsername.getText(), passwordField1.getText(), textFieldURL.getText(),
+                            textAreaDescription.getText(), (comboBox.getSelectionModel().getSelectedIndex() + 1));
                 try {
                     /**
                      * comboBox.getValue().getText();
@@ -62,11 +64,14 @@ public class NewEntryController{
                      * Ja -> Eintrag wird erstellt
                      */
                     comboBox.getValue().getText();
-                    presenter.newEntry(textFieldTitle.getText(), textFieldUsername.getText(), passwordField1.getText(), textFieldURL.getText(),
-                            textAreaDescription.getText(), (comboBox.getSelectionModel().getSelectedIndex() + 1));
+                    System.out.println("-------");
+//                    presenter.newEntry(textFieldTitle.getText(), textFieldUsername.getText(), passwordField1.getText(), textFieldURL.getText(),
+//                            textAreaDescription.getText(), (comboBox.getSelectionModel().getSelectedIndex() + 1));
+                    System.out.println("ddddd");
 
 
                     presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex() + 1));
+                    System.out.println("ddddddddafdsgshrthhhtzhtzh");
 
 
                     Stage stage = (Stage) btn_save.getScene().getWindow();
@@ -78,16 +83,6 @@ public class NewEntryController{
                     labelErrorMessage.setText(bundle.getString("entry.labelErrorMessage.chooseCategorie"));
 
 
-                } catch (InvalidKeyException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBlockSizeException e) {
-                    e.printStackTrace();
-                } catch (BadPaddingException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 }
             } else {
                 System.out.println("Eintrag konnte nicht erstellt werden");

@@ -99,7 +99,11 @@ public final class PresenterMain {
 
     public void renewMasterPassword(String password) throws BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
         model.renewMasterPassword(password);
-        controller.fillTreeView();
+        writeToObservableListrecycle();
+        writeToObservableList();
+        controller.updateRecycleView();
+        controller.updateView();
+        controller.btn_logo();
     }
 
     public void initMasterPassword(String password) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
