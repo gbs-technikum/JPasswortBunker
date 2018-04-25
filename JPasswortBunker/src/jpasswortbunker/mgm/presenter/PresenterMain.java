@@ -106,9 +106,11 @@ public final class PresenterMain {
         model.initMasterPassword(password);
     }
 
-    //Hinzugefügt Wagenhuber am 16-04-2018
-    public void setMasterPasswordinDB(String password) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+
+    public void setMasterPasswordinDB(String password) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException {
         model.setSaltPasswordHashForPasswortStoreInDb(password);
+        model.initMasterPassword(password);
+        model.initEncryptionService();
         controller.loadView();
     }
 
