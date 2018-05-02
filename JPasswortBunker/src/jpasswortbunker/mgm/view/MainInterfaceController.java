@@ -277,7 +277,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.initModality(Modality.APPLICATION_MODAL);
             stageLogin.show();
         } else {
-            System.out.println("##Status## MasterPassword icht gesetzt");
+            System.out.println("##Status## MasterPassword nicht gesetzt");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SetMasterPassword.fxml"));
             Parent parent = fxmlLoader.load();
             SetMasterPasswordController loginScreenController = fxmlLoader.<SetMasterPasswordController>getController();
