@@ -236,7 +236,7 @@
       </MenuBar>
       <AnchorPane fx:id="pane_entrys" layoutX="200.0" layoutY="95.0" prefHeight="530.0" prefWidth="700.0" style="-fx-background-color: white;">
          <children>
-            <JFXTreeTableView fx:id="treeView" prefHeight="530.0" prefWidth="700.0" />
+            <JFXTreeTableView fx:id="tableView" prefHeight="530.0" prefWidth="700.0" />
          </children>
       </AnchorPane>
    </children>

@@ -69,7 +69,7 @@ public class MainInterfaceController implements Initializable {
     private AnchorPane pane_entrys, pane_settings, pane_recycle;
 
     @FXML
-    private JFXTreeTableView<EntryProperty> treeView;
+    private JFXTreeTableView<EntryProperty> tableView;
 
     @FXML
     private JFXTreeTableView<EntryProperty> tableView_recylce;
@@ -145,7 +145,7 @@ public class MainInterfaceController implements Initializable {
         textField_Search.clear();
         textField_Search.setVisible(true);
         stageMainInterfaceController.show();
-        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+        tableView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
                 Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(presenter.getCategoryChoosenForLastNewEntry());
@@ -200,22 +200,22 @@ public class MainInterfaceController implements Initializable {
 
         //Inhalte werden in die Tabelle geschrieben
         final TreeItem<EntryProperty> root = new RecursiveTreeItem<EntryProperty>(presenter.getEntryPropertiesList(), RecursiveTreeObject::getChildren);
-        treeView.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
-        treeView.setRoot(root);
-        treeView.sort();
-        treeView.setShowRoot(false);
+        tableView.getColumns().setAll(titleName, usernameCol, urlCol, desCol);
+        tableView.setRoot(root);
+        tableView.sort();
+        tableView.setShowRoot(false);
         //ruft Methode auf und baut ContextMenu zusammen
         buildContextMenu();
 
 
         //Eventhandling für die Elemente
-        treeView.setOnMousePressed(new EventHandler<MouseEvent>() {
+        tableView.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent ee) {
                 if (ee.isPrimaryButtonDown() && ee.getClickCount() == 2) {
 
                     try {
-                        editEntryScene(treeView.getSelectionModel().getSelectedItem());
+                        editEntryScene(tableView.getSelectionModel().getSelectedItem());
                     } catch (SQLException e) {
                         e.printStackTrace();
                     } catch (BadPaddingException e) {
@@ -229,7 +229,7 @@ public class MainInterfaceController implements Initializable {
                     }
                 }
                 if (ee.isSecondaryButtonDown()) {
-                    contextMenu.show(treeView, ee.getScreenX(), ee.getScreenY());
+                    contextMenu.show(tableView, ee.getScreenX(), ee.getScreenY());
                 }
             }
         });
@@ -243,7 +243,7 @@ public class MainInterfaceController implements Initializable {
         textField_Search.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+                tableView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
                     @Override
                     public boolean test(TreeItem<EntryProperty> entryTreeItem) {
                         Boolean flag = entryTreeItem.getValue().titleProperty().getValue().toLowerCase().contains(newValue.toLowerCase()) ||
@@ -320,7 +320,7 @@ public class MainInterfaceController implements Initializable {
         pane_recycle.setVisible(false);
         textField_Search.clear();
         textField_Search.setVisible(true);
-        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+        tableView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
                 return true;
@@ -334,7 +334,7 @@ public class MainInterfaceController implements Initializable {
         pane_recycle.setVisible(false);
         textField_Search.clear();
         textField_Search.setVisible(true);
-        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+        tableView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
                 return true;
@@ -353,7 +353,7 @@ public class MainInterfaceController implements Initializable {
         pane_recycle.setVisible(false);
         textField_Search.clear();
         textField_Search.setVisible(true);
-        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+        tableView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
                 Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(1);
@@ -369,7 +369,7 @@ public class MainInterfaceController implements Initializable {
         pane_recycle.setVisible(false);
         textField_Search.clear();
         textField_Search.setVisible(true);
-        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+        tableView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
                 Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(2);
@@ -386,7 +386,7 @@ public class MainInterfaceController implements Initializable {
         pane_recycle.setVisible(false);
         textField_Search.clear();
         textField_Search.setVisible(true);
-        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+        tableView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
                 Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(3);
@@ -406,7 +406,7 @@ public class MainInterfaceController implements Initializable {
         pane_recycle.setVisible(false);
         textField_Search.clear();
         textField_Search.setVisible(true);
-        treeView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
+        tableView.setPredicate(new Predicate<TreeItem<EntryProperty>>() {
             @Override
             public boolean test(TreeItem<EntryProperty> entryTreeItem) {
                 Boolean flag = entryTreeItem.getValue().categoryIDProperty().getValue().equals(4);
@@ -510,10 +510,10 @@ public class MainInterfaceController implements Initializable {
         contextMenu.getItems().get(0).setText(bundle.getString("contextMenu.delete"));
         contextMenu.getItems().get(1).setText(bundle.getString("contextMenu.edit"));
         contextMenu.getItems().get(2).setText(bundle.getString("contextMenu.copyPassword"));
-        treeView.getColumns().get(0).setText(bundle.getString("tableColumn.title"));
-        treeView.getColumns().get(1).setText(bundle.getString("tableColumn.username"));
-        treeView.getColumns().get(2).setText(bundle.getString("tableColumn.url"));
-        treeView.getColumns().get(3).setText(bundle.getString("tableColumn.description"));
+        tableView.getColumns().get(0).setText(bundle.getString("tableColumn.title"));
+        tableView.getColumns().get(1).setText(bundle.getString("tableColumn.username"));
+        tableView.getColumns().get(2).setText(bundle.getString("tableColumn.url"));
+        tableView.getColumns().get(3).setText(bundle.getString("tableColumn.description"));
         tableView_recylce.getColumns().get(0).setText(bundle.getString("tableColumn.title"));
         tableView_recylce.getColumns().get(1).setText(bundle.getString("tableColumn.username"));
         tableView_recylce.getColumns().get(2).setText(bundle.getString("tableColumn.url"));
@@ -546,7 +546,7 @@ public class MainInterfaceController implements Initializable {
                 if (result.get() == ButtonType.OK) {
                     // ... auswahl ok
                     try {
-                        presenter.removeEntry(treeView.getSelectionModel().getSelectedItem().getValue());
+                        presenter.removeEntry(tableView.getSelectionModel().getSelectedItem().getValue());
                     } catch (IllegalBlockSizeException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
@@ -571,7 +571,7 @@ public class MainInterfaceController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    editEntryScene(treeView.getSelectionModel().getSelectedItem());
+                    editEntryScene(tableView.getSelectionModel().getSelectedItem());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (BadPaddingException e) {
@@ -593,7 +593,7 @@ public class MainInterfaceController implements Initializable {
             public void handle(ActionEvent event) {
                 Clipboard clipboard = Clipboard.getSystemClipboard();
                 ClipboardContent content = new ClipboardContent();
-                content.putString(treeView.getSelectionModel().getSelectedItem().getValue().getPassword());
+                content.putString(tableView.getSelectionModel().getSelectedItem().getValue().getPassword());
                 clipboard.setContent(content);
                 Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(Integer.parseInt(presenter.getTextField_settings_timeoutClipboard())), ev -> {
                     clipboard.clear();
@@ -678,7 +678,7 @@ public class MainInterfaceController implements Initializable {
         }
         //übergibt an EditEntryController den ausgewählten Eintrag
         EditEntryController editEntryController = loader.getController();
-        //Ausgewähltes Element treeView.getSelectionModel().getSelectedItem()
+        //Ausgewähltes Element tableView.getSelectionModel().getSelectedItem()
         editEntryController.setPresenter(presenter);
         editEntryController.setEntry(selectedItem);
         editEntryController.fillComboBox();
