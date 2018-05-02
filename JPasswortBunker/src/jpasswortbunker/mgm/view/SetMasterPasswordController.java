@@ -47,7 +47,6 @@ public final class SetMasterPasswordController{
         } else {
             labelErrorMessage.setText("Field can not be empty");
         }
-        System.out.println("Button gedrückt");
     }
 
     //Ueberpruefung ob Passwoerter gleich sind gibt true oder false zurück und setzt Label bei false

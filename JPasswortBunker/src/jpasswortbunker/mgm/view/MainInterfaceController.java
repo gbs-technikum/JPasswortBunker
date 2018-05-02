@@ -263,7 +263,7 @@ public class MainInterfaceController implements Initializable {
      */
     private void checkIfMasterPasswortExistsInDB() throws IOException, SQLException, NoSuchAlgorithmException, NoSuchPaddingException {
         if (presenter.checkIfMasterPasswortExistsInDB()) {
-            System.out.println("gesetzt");
+            System.out.println("##Status## MasterPassword gesetzt");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginScreen.fxml"));
             Parent parent = fxmlLoader.load();
             LoginScreenController loginScreenController = fxmlLoader.<LoginScreenController>getController();
@@ -277,7 +277,7 @@ public class MainInterfaceController implements Initializable {
             stageLogin.initModality(Modality.APPLICATION_MODAL);
             stageLogin.show();
         } else {
-            System.out.println("Nicht gesetzt");
+            System.out.println("##Status## MasterPassword icht gesetzt");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SetMasterPassword.fxml"));
             Parent parent = fxmlLoader.load();
             SetMasterPasswordController loginScreenController = fxmlLoader.<SetMasterPasswordController>getController();

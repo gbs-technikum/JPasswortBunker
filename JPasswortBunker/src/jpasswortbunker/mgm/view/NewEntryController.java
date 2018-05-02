@@ -54,8 +54,6 @@ public class NewEntryController{
     public void btn_save(ActionEvent actionEvent) throws IllegalBlockSizeException, SQLException, InvalidKeyException, BadPaddingException, UnsupportedEncodingException {
         if (!textFieldTitle.getText().equals("")) {
             if (equalsPassword()) {
-                presenter.newEntry(textFieldTitle.getText(), textFieldUsername.getText(), passwordField1.getText(), textFieldURL.getText(),
-                            textAreaDescription.getText(), (comboBox.getSelectionModel().getSelectedIndex() + 1));
                 try {
                     /**
                      * comboBox.getValue().getText();
@@ -64,28 +62,24 @@ public class NewEntryController{
                      * Ja -> Eintrag wird erstellt
                      */
                     comboBox.getValue().getText();
-                    System.out.println("-------");
-//                    presenter.newEntry(textFieldTitle.getText(), textFieldUsername.getText(), passwordField1.getText(), textFieldURL.getText(),
-//                            textAreaDescription.getText(), (comboBox.getSelectionModel().getSelectedIndex() + 1));
-                    System.out.println("ddddd");
-
+                    presenter.newEntry(textFieldTitle.getText(), textFieldUsername.getText(), passwordField1.getText(), textFieldURL.getText(),
+                            textAreaDescription.getText(), (comboBox.getSelectionModel().getSelectedIndex() + 1));
 
                     presenter.setCategoryChoosenForLastNewEntry((comboBox.getSelectionModel().getSelectedIndex() + 1));
-                    System.out.println("ddddddddafdsgshrthhhtzhtzh");
 
 
                     Stage stage = (Stage) btn_save.getScene().getWindow();
                     stage.close();
                     stage.setResizable(false);
-                    System.out.println("neuer Eintrag angelegt");
+                    System.out.println("##Status## Neuer Eintrag angelegt");
                 } catch (NullPointerException e) {
-                    System.out.println("Kategorie nicht ausgewählt");
+                    System.out.println("##Status## Kategorie nicht ausgewählt");
                     labelErrorMessage.setText(bundle.getString("entry.labelErrorMessage.chooseCategorie"));
 
 
                 }
             } else {
-                System.out.println("Eintrag konnte nicht erstellt werden");
+                System.out.println("##Status## Eintrag konnte nicht erstellt werden");
             }
         } else {
             labelErrorMessage.setText(bundle.getString("entry.labelErrorMessage.setTitle"));
