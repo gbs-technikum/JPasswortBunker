@@ -17,6 +17,11 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 
 public final class PresenterMain {
 
@@ -29,15 +34,32 @@ public final class PresenterMain {
     private StringProperty textField_settings_timeoutClipboard;
     private BooleanProperty textField_settings_saveStatusBoolean;
     private IntegerProperty categoryChoosenForLastNewEntry;
+    private StringProperty textField_settings_TimeClipboard;
+    //private String language = "en";
+
+    private Locale locale;
+    private ResourceBundle bundle;
+
+
+    public ResourceBundle setLanguage(String language) throws SQLException {
+        locale = new Locale(language);
+        bundle = ResourceBundle.getBundle("jpasswortbunker.mgm.view.bundles.LangBundle", locale);
+        model.setLanguageToDB(language);
+        return bundle;
+    }
+
+    public ResourceBundle getLangBundle() throws SQLException {
+        locale = new Locale(model.getLanguageFromDB());
+        bundle = ResourceBundle.getBundle("jpasswortbunker.mgm.view.bundles.LangBundle", locale);
+        return bundle;
+    }
 
     public PresenterMain(MainInterfaceController controller) throws NoSuchPaddingException, BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, InvalidKeyException {
         this.controller = controller;
         model = new ModelMain();
 
         initProperties();
-
-        //model.initMasterPassword("test");
-        //model.initEncryptionService();
+        getLangBundle();
     }
 
 
@@ -56,25 +78,32 @@ public final class PresenterMain {
     //Schreibt die Liste der Arraylist aus Model in die Observable List im Presenter
     public void writeToObservableList() throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
         model.FillEntryListFromDb();
+        entryPropertiesList.clear();
         for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListEntrysTable()) {
             entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
-                    entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
+                    entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID(), entry.getTimestamp()));
         }
     }
 
-    //TODO: 14.03.2018  anpassen für das Schreiben in den Mülleimer
+
     //Schreibt die Liste der Arraylist aus Model in die Observable List im Presenter
     public void writeToObservableListrecycle() throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
         model.FillEntryListFromRecycleBin();
-        for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListRecycleBinTable()) {
+        entryPropertiesListRecycle.clear();
+        //Geändert Wagenhuber - Vorher: for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListRecycleBinTable()) {
+        for (jpasswortbunker.mgm.model.Entry entry : model.getEntryListRecycleBinTableLatestTimestamp()) {
             entryPropertiesListRecycle.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
-                    entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
+                    entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID(), entry.getTimestamp()));
         }
     }
 
     public void renewMasterPassword(String password) throws BadPaddingException, UnsupportedEncodingException, IllegalBlockSizeException, SQLException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
         model.renewMasterPassword(password);
-        controller.fillTreeView();
+        writeToObservableListrecycle();
+        writeToObservableList();
+        controller.updateRecycleView();
+        controller.updateView();
+        controller.btn_logo();
     }
 
     public void initMasterPassword(String password) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
@@ -82,14 +111,19 @@ public final class PresenterMain {
     }
 
 
+    public void setMasterPasswordinDB(String password) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException {
+        model.setSaltPasswordHashForPasswortStoreInDb(password);
+        model.initMasterPassword(password);
+        model.initEncryptionService();
+        controller.loadView();
+    }
+
     public boolean checkIfMasterPasswordIsCorrect() throws UnsupportedEncodingException, SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
         if (model.checkIfMasterPasswordIsCorrect()) {
             model.initEncryptionService();
             writeToObservableList();
-            //Todo Fehler mit den Recycle Einträgen, wirft eine Exception nach MasterPasswort Änderung
-            //Könnte ein Problem mit der Verschlüsselung oder Datenbank sein
             writeToObservableListrecycle();
-            controller.updateView();
+            controller.loadView();
             return true;
         }
         return false;
@@ -99,7 +133,7 @@ public final class PresenterMain {
         return model.checkIfMasterPasswortExistsInDB();
     }
 
-    public void newEntry(String title, String username, String password, String description, String url, int categoryID) throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
+    public void newEntry(String title, String username, String password, String url, String description, int categoryID) throws SQLException, BadPaddingException, InvalidKeyException, IllegalBlockSizeException, UnsupportedEncodingException {
         model.newEntry(title, username, password, description, url, categoryID);
         /**
          * Parameter werden an Model übergeben und Entry in Model erstellt
@@ -107,28 +141,36 @@ public final class PresenterMain {
          */
         Entry entry = model.getEntryListEntrysTable().get(model.getEntryListEntrysTable().size() - 1);
         entryPropertiesList.add(new EntryProperty(entry.getDbID(), entry.getEntryID(), entry.getTitle(),
-                entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID()));
-        controller.updateView2();
+                entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID(), entry.getTimestamp()));
+        controller.updateView();
     }
 
     public void removeEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
-        model.removeEntry(entry.getEntryID().toString());
+        model.removeEntry(entry.getEntryID().toString(), entry.getCategoryID());
         entryPropertiesList.remove(entry);
         //controller.fillTreeView();
+        writeToObservableListrecycle();
+        controller.updateRecycleView();
+
     }
 
     public void updateEntry(EntryProperty entry) throws IllegalBlockSizeException, SQLException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
-        model.updateEntry(entry.getEntryID().toString(), entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getPassword(), entry.getDescription(), entry.getCategoryID());
+        model.updateEntry(entry.getEntryID().toString(), entry.getTitle(), entry.getUsername(), entry.getPassword(), entry.getUrl(), entry.getDescription(), entry.getCategoryID());
         //controller.fillTreeView();//Obsolet - führt zu Programmabsturz
-    }
-
-    public void updateView() {
         controller.updateView();
     }
+
+//    public void updateView() {
+//        controller.loadView();
+//    }
 
     public List getCategoryListFromDB() throws SQLException {
         //System.out.println(model.getCategoryListFromDB().size() + "-------------");
         return model.getCategoryListFromDB();
+    }
+
+    public ArrayList<Entry> getEntrysFromRecycleBinForEntryID(String id) throws SQLException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        return model.getEntrysFromRecycleBinForEntryID(id);
     }
 
     public String createPassword() throws SQLException {
@@ -138,6 +180,14 @@ public final class PresenterMain {
 
     public void test() {
         System.out.println("testMethode Presenter");
+    }
+
+    public void restoreEntryFromRecycleBin(String entryID, int categoryID, long timestamp) throws SQLException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, UnsupportedEncodingException {
+        model.restoreEntryFromRecycleBin(entryID, categoryID, timestamp);
+        writeToObservableListrecycle();
+        writeToObservableList();
+        controller.updateRecycleView();
+        controller.updateView();
     }
 
 
@@ -159,7 +209,6 @@ public final class PresenterMain {
     public void setTextField_settings_numberBackupEntries(String textField_settings_numberBackupEntries) {
         this.textField_settings_numberBackupEntries.set(textField_settings_numberBackupEntries);
     }
-
 
 
     public String getTextField_settings_lengthRandomPasswords() {
@@ -188,8 +237,6 @@ public final class PresenterMain {
     }
 
 
-
-
     public boolean isTextField_settings_saveStatusBoolean() {
         return textField_settings_saveStatusBoolean.getValue();
     }
@@ -215,8 +262,24 @@ public final class PresenterMain {
         this.categoryChoosenForLastNewEntry.setValue(categoryChoosenForLastNewEntry);
     }
 
+    public void setTimePeriodForClipboardFromDB(int timePeriodForClipboardFromDB) {
+        this.textField_settings_TimeClipboard.setValue(String.valueOf(timePeriodForClipboardFromDB));
+    }
 
+    public StringProperty getTimePeriodForClipboardFromDB(String text) {
+        return textField_settings_TimeClipboard;
+    }
 
+    public void setTextfield_TimePeriodForClipboardFromDB(String textField_settings_TimeClipboard) {
+        this.textField_settings_TimeClipboard.setValue(textField_settings_TimeClipboard);
+    }
+
+    public String timestampToTime(long timeStamp) {
+        Date date = new Date(timeStamp * 1000L);
+        SimpleDateFormat jdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String java_date = jdf.format(date);
+        return java_date;
+    }
 
 
     private void initProperties() {
@@ -247,14 +310,12 @@ public final class PresenterMain {
         }
 
 
-
         try {
             textField_settings_timeoutClipboard = new SimpleStringProperty();
             textField_settings_timeoutClipboard.setValue(String.valueOf(model.getTimePeriodForClipboardFromDB()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
 
         textField_settings_saveStatusBoolean = new SimpleBooleanProperty();
@@ -298,7 +359,6 @@ public final class PresenterMain {
         });
 
 
-
         textField_settings_timeoutClipboard.addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -322,12 +382,15 @@ public final class PresenterMain {
     }//ende initProperties
 
     public boolean checkIfTextFieldNumeric(String value) {
-        if (value.matches("^\\d+$")){
-        //if (value.matches("[0-9][0-9]")){
-            return true;
-        } else {
-            return false;
+        try {
+            int i = Integer.parseInt(value);
+            if (i > 0 && i < 31) {
+                return true;
+            }
+        } catch (NumberFormatException e) {
         }
+        return false;
+
     }
 
 

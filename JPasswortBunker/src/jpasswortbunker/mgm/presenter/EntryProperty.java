@@ -14,10 +14,11 @@ public class EntryProperty extends RecursiveTreeObject<EntryProperty> {
     private IntegerProperty dbID, categoryID;
     private UUID entryID;
     private StringProperty title, username, password, url, description;
+    private long timestamp;
 
 
 
-    public EntryProperty(int dbID, UUID entryID, String title, String username, String password, String url, String description, int categorieID) {
+    public EntryProperty(int dbID, UUID entryID, String title, String username, String password, String url, String description, int categorieID, long timestamp) {
         this.dbID = new SimpleIntegerProperty(dbID);
         this.entryID = entryID;
         this.title = new SimpleStringProperty(title);
@@ -26,6 +27,7 @@ public class EntryProperty extends RecursiveTreeObject<EntryProperty> {
         this.url = new SimpleStringProperty(url);
         this.description = new SimpleStringProperty(description);
         this.categoryID = new SimpleIntegerProperty(categorieID);
+        this.timestamp = timestamp;
     }
 
     public EntryProperty(EntryProperty entryProperty) {
@@ -37,6 +39,14 @@ public class EntryProperty extends RecursiveTreeObject<EntryProperty> {
         this.url = new SimpleStringProperty(entryProperty.getUrl());
         this.description = new SimpleStringProperty(entryProperty.getDescription());
         this.categoryID = new SimpleIntegerProperty(entryProperty.getCategoryID());
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public int getDbID() {

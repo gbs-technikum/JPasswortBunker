@@ -11,25 +11,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="300.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.view.NewEntryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="300.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.view.NewEntryController">
    <children>
       <AnchorPane prefHeight="66.0" prefWidth="400.0" style="-fx-background-color: #0747A6;">
          <children>
-            <Label layoutX="91.0" layoutY="16.0" text="NEW ENTRY" textFill="WHITE">
+            <Label fx:id="labelEntryHead" layoutX="14.0" layoutY="16.0" text="NEW ENTRY" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
+            <ImageView fx:id="btn_logo" fitHeight="54.0" fitWidth="93.0" layoutX="297.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/logoJpasswortBunkerWhiteFont.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-      <JFXTextField fx:id="tfTitle" layoutX="16.0" layoutY="75.0" prefHeight="25.0" prefWidth="234.0" promptText="Title" />
-      <JFXTextField fx:id="tfUsername" layoutX="16.0" layoutY="113.0" prefHeight="25.0" prefWidth="234.0" promptText="Username" />
-      <JFXPasswordField fx:id="pf1" layoutX="16.0" layoutY="149.0" prefHeight="25.0" prefWidth="234.0" promptText="Password" />
-      <JFXPasswordField fx:id="pf2" layoutX="16.0" layoutY="191.0" prefHeight="25.0" prefWidth="234.0" promptText="Repeat Password" />
-      <JFXTextField fx:id="tfURL" layoutX="16.0" layoutY="229.0" prefHeight="25.0" prefWidth="234.0" promptText="URL" />
-      <JFXTextArea fx:id="taDescription" layoutX="15.0" layoutY="311.0" prefHeight="75.0" prefWidth="257.0" style="-fx-background-color: lightgrey;" unFocusColor="WHITE" />
-      <Label layoutX="16.0" layoutY="290.0" prefHeight="17.0" prefWidth="81.0" text="Description" />
-      <JFXButton fx:id="btn_save" layoutX="303.0" layoutY="341.0" onAction="#btn_save" prefHeight="45.0" prefWidth="74.0" style="-fx-background-color: orange; -fx-border-color: #ffffff; -fx-border-radius: 2px;" text="SAVE">
+      <JFXTextField fx:id="textFieldTitle" layoutX="16.0" layoutY="75.0" prefHeight="25.0" prefWidth="234.0" promptText="Title" />
+      <JFXTextField fx:id="textFieldUsername" layoutX="16.0" layoutY="113.0" prefHeight="25.0" prefWidth="234.0" promptText="Username" />
+      <JFXPasswordField fx:id="passwordField1" layoutX="16.0" layoutY="149.0" prefHeight="25.0" prefWidth="234.0" promptText="Password" />
+      <JFXPasswordField fx:id="passwordField2" layoutX="16.0" layoutY="191.0" prefHeight="25.0" prefWidth="234.0" promptText="Repeat Password" />
+      <JFXTextField fx:id="textFieldURL" layoutX="16.0" layoutY="229.0" prefHeight="25.0" prefWidth="234.0" promptText="URL" />
+      <JFXTextArea fx:id="textAreaDescription" layoutX="15.0" layoutY="311.0" prefHeight="75.0" prefWidth="257.0" style="-fx-background-color: lightgrey;" unFocusColor="WHITE" />
+      <Label fx:id="labelDescriptionText" layoutX="16.0" layoutY="290.0" prefHeight="17.0" prefWidth="191.0" text="Descripntion" />
+      <JFXButton id="button" fx:id="btn_save" layoutX="303.0" layoutY="341.0" onAction="#btn_save" prefHeight="45.0" prefWidth="74.0" stylesheets="@style/default_style.css" text="OK">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -58,5 +63,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
+      <JFXTextField fx:id="textFieldPassword1" layoutX="15.0" layoutY="149.0" prefHeight="25.0" prefWidth="234.0" />
+      <JFXTextField fx:id="textFieldPassword2" layoutX="14.0" layoutY="191.0" prefHeight="25.0" prefWidth="234.0" />
    </children>
 </AnchorPane>

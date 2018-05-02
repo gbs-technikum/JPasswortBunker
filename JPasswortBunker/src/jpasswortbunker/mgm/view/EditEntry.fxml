@@ -11,44 +11,67 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="300.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.view.EditEntryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="300.0" prefHeight="437.0" prefWidth="438.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jpasswortbunker.mgm.view.EditEntryController">
    <children>
-      <AnchorPane prefHeight="66.0" prefWidth="400.0" style="-fx-background-color: #0747A6;">
+      <AnchorPane prefHeight="66.0" prefWidth="438.0" style="-fx-background-color: #0747A6;">
          <children>
-            <Label layoutX="47.0" layoutY="16.0" text="Edit Entry" textFill="WHITE">
+            <Label fx:id="labelEntryHead" layoutX="47.0" layoutY="16.0" text="Edit Entry" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
+            <ImageView fx:id="btn_logo" fitHeight="54.0" fitWidth="93.0" layoutX="319.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/logoJpasswortBunkerWhiteFont.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-      <JFXTextField fx:id="textFieldTitle" layoutX="50.0" layoutY="75.0" promptText="Title" />
-      <JFXTextField fx:id="textFieldUsername" layoutX="50.0" layoutY="113.0" promptText="Username" />
-      <JFXPasswordField fx:id="passwordField1" layoutX="50.0" layoutY="149.0" promptText="Password" />
-      <JFXPasswordField fx:id="passwordField2" layoutX="50.0" layoutY="191.0" promptText="Repeat Password" />
-      <JFXTextField fx:id="textFieldURL" layoutX="50.0" layoutY="229.0" promptText="URL" />
-      <JFXTextArea fx:id="textAreaDescription" layoutX="50.0" layoutY="311.0" prefHeight="75.0" prefWidth="222.0" style="-fx-background-color: lightgrey;" unFocusColor="WHITE" />
-      <Label layoutX="50.0" layoutY="286.0" prefHeight="17.0" prefWidth="81.0" text="Description" />
-      <JFXButton fx:id="btn_save" layoutX="281.0" layoutY="341.0" onAction="#btn_save" prefHeight="45.0" prefWidth="111.0" style="-fx-background-color: orange;" text="SAVE">
+      <JFXTextField fx:id="textFieldTitle" layoutX="50.0" layoutY="75.0" prefHeight="25.0" prefWidth="222.0" promptText="Title" />
+      <JFXTextField fx:id="textFieldUsername" layoutX="50.0" layoutY="113.0" prefHeight="25.0" prefWidth="222.0" promptText="Username" />
+      <JFXPasswordField fx:id="passwordField1" layoutX="50.0" layoutY="149.0" prefHeight="25.0" prefWidth="222.0" promptText="Password" />
+      <JFXPasswordField fx:id="passwordField2" layoutX="50.0" layoutY="191.0" prefHeight="25.0" prefWidth="222.0" promptText="Repeat Password" />
+      <JFXTextField fx:id="textFieldURL" layoutX="50.0" layoutY="229.0" prefHeight="25.0" prefWidth="222.0" promptText="URL" />
+      <JFXTextArea fx:id="textAreaDescription" layoutX="50.0" layoutY="306.0" prefHeight="75.0" prefWidth="222.0" style="-fx-background-color: lightgrey;" unFocusColor="WHITE" />
+       <Label fx:id="labelDescriptionText" layoutX="50.0" layoutY="286.0" prefHeight="17.0" prefWidth="205.0" text="Description" />
+      <JFXButton fx:id="btn_restore" layoutX="300.0" layoutY="337.0" onAction="#btn_restore" prefHeight="45.0" prefWidth="111.0" style="-fx-background-color: orange;" text="RESTORE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="comboBox" focusColor="WHITE" layoutX="230.0" layoutY="75.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: lightgrey;" unFocusColor="#fffafa" />
-      <Label fx:id="labelErrorMessage" layoutX="208.0" layoutY="278.0" prefHeight="20.0" prefWidth="173.0" textAlignment="CENTER" textFill="RED">
+      <JFXButton id="button" fx:id="btn_save" layoutX="300.0" layoutY="337.0" onAction="#btn_save" prefHeight="45.0" prefWidth="111.0" stylesheets="@style/default_style.css" text="SAVE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXComboBox fx:id="comboBox" focusColor="WHITE" layoutX="272.0" layoutY="75.0" prefHeight="25.0" prefWidth="126.0" unFocusColor="#fffafa" />
+      <Label fx:id="labelErrorMessage" layoutX="249.0" layoutY="285.0" prefHeight="20.0" prefWidth="173.0" textAlignment="CENTER" textFill="RED">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ImageView fitHeight="20.0" fitWidth="27.0" layoutX="250.0" layoutY="152.0" onMouseClicked="#btn_eyeIcon" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/eye.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="20.0" fitWidth="27.0" layoutX="290.0" layoutY="152.0" onMouseClicked="#btn_copyPasswordToClipboard" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/copy_icon.png" />
-         </image>
-      </ImageView>
+      <JFXTextField fx:id="textFieldPassword1" layoutX="50.0" layoutY="149.0" prefHeight="25.0" prefWidth="222.0" />
+      <JFXTextField fx:id="textFieldPassword2" layoutX="50.0" layoutY="191.0" prefHeight="25.0" prefWidth="222.0" />
+      <JFXButton fx:id="btn_eye" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="295.0" layoutY="147.0" onAction="#btn_eyeIcon" prefHeight="28.0" prefWidth="27.0" text=" " textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/eye.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btn_copyPassword" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="337.0" layoutY="148.0" onAction="#btn_copyPasswordToClipboard" prefHeight="28.0" prefWidth="27.0" text=" " textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="27.0" onMouseClicked="#btn_copyPasswordToClipboard" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/copy_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="btn_historie" layoutX="108.0" layoutY="256.0" text=" " />
+      <JFXComboBox fx:id="comboBoxHistorie" focusColor="#ffffff00" layoutX="50.0" layoutY="385.0" prefHeight="32.0" prefWidth="222.0" unFocusColor="WHITE" />
+      <Label fx:id="labelTimestamp" layoutX="285.0" layoutY="393.0" prefHeight="17.0" prefWidth="142.0" />
    </children>
 </AnchorPane>

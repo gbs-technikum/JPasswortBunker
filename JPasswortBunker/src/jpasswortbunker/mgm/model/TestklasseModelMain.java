@@ -29,7 +29,11 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Masterpassword übergeben
-        modelMain.initMasterPassword("test");
+        modelMain.initMasterPassword("buildView");
+
+
+        //Beschreibung: Masterpassword in DB setzen
+        //modelMain.setSaltPasswordHashForPasswortStoreInDb("buildView");
 
 
         //Beschreibung: Prüfen ob richtigs MasterPasswort übergeben wurde (Oben eingegebenes Passwort wird mit DB abgeglichen)
@@ -59,8 +63,13 @@ public class TestklasseModelMain {
         modelMain.getEntryListRecycleBinTable();
 
 
+        //Beschreibung: ArrayList<Entry> nur mit Neuesten Entrys aus Tabelle Recycle_Bin zurückgeben lassen
+        modelMain.getEntryListRecycleBinTableLatestTimestamp();
+
+
         //Beschreibung: ArrayList<Entry> mit allen Entrys aus Tabelle Recycle_Bin zurückgeben lassen, die der übergebenen entryID entsprechen
         modelMain.getEntrysFromRecycleBinForEntryID("2e264826-6f2a-462a-a114-68c14da385fa");
+
 
 
         //Beschreibung: ArrayList<Entry> mit allen Entrys aus Tabelle Recycle_Bin mit Kategorie -1 (Status gelöscht) zurückgeben lassen
@@ -89,7 +98,7 @@ public class TestklasseModelMain {
 
 
         //Beschreibung: Masterpassword neu setzen (alle bestehenden Einträge werden neu verschlüsselt)
-        /*modelMain.renewMasterPassword("test");
+        /*modelMain.renewMasterPassword("buildView");
         modelMain.getEntryListEntrysTable();
         modelMain.getEntryListRecycleBinTable();*/
 
@@ -124,12 +133,7 @@ public class TestklasseModelMain {
 
 
 
-
-
-
-
-
-        //#######################Testausgabe auf Console################################
+        //#######################Testausgabe auf Console################################*/
         //==============================================================================
 
 

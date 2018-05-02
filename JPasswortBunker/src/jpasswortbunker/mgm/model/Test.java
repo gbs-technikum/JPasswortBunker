@@ -13,7 +13,7 @@ public class Test {
     public void test3() {
 
         File file = null;
-        URL url = this.getClass().getResource("/test.txt");
+        URL url = this.getClass().getResource("/buildView.txt");
         if (url != null) {
             System.out.println("url = nicht null");
             try {
@@ -45,8 +45,8 @@ public class Test {
 
     public static void main(String[] args) throws URISyntaxException, NoSuchPaddingException, UnsupportedEncodingException, NoSuchAlgorithmException {
 
-//        Test test = new Test();
-//        test.test3();
+//        Test buildView = new Test();
+//        buildView.test3();
 
         /*ModelMain modelMain = new ModelMain();
         modelMain.addEntryToList("Netflix", "Underwoo", "123", "12d3");*/

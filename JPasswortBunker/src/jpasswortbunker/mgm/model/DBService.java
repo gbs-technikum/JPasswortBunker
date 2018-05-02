@@ -1,5 +1,7 @@
 package jpasswortbunker.mgm.model;
 
+import jdk.jfr.Category;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,7 +14,7 @@ public class DBService {
     //private static final String URL = "jdbc:sqlite:C:\\Users\\guenther\\IdeaProjects\\JPasswortBunker\\jPasswordBunker.db";
 
     //Pfad zu aktueller Testdatenbank im Projektordner
-    private static final String URL = "jdbc:sqlite:"+System.getProperty("user.dir")+"/jPasswortBunker.db";
+    private static final String URL = "jdbc:sqlite:" + System.getProperty("user.dir") + "/jPasswortBunker.db";
     //private static final String URL = "jdbc:sqlite:jPasswortBunker.db";
     //private static final String URL = "jdbc:sqlite::resource:jPasswortBunker.db";
     //private static final String URL = "jdbc:sqlite:Database:jPasswortBunker.db";
@@ -29,6 +31,7 @@ public class DBService {
 
         this.connection = DriverManager.getConnection(URL);
         this.statement = connection.createStatement();
+        checkIfDBTableExists();
 
 
     }
@@ -228,6 +231,13 @@ public class DBService {
     }
 
 
+    public void removeEntryFromRecycleBinCurrentRestore(String entryID, long timestamp) throws SQLException {
+        String sql = "delete from Recycle_Bin where Entry_ID = '" + entryID + "' and timestamp = '" + timestamp + "'";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+
     public void removeEntriesFromRecycleBinFinal(String entryID) throws SQLException {
         String sql = "delete from Recycle_Bin where Entry_ID = '" + entryID + "'";
         this.statement.execute(sql);
@@ -237,6 +247,12 @@ public class DBService {
 
     public void updateRecycleBinForRemovedEntrys(String entryID) throws SQLException {
         String sql = "update Recycle_Bin set Categorie_ID = '-1' where Entry_ID = '" + entryID + "'";
+        this.statement.execute(sql);
+        statement.close();
+    }
+
+    public void updateRecycleBinToUpdateCategory(String entryID, int categoryID) throws SQLException {
+        String sql = "update Recycle_Bin set Categorie_ID = '" + categoryID + "' where Entry_ID = '" + entryID + "'";
         this.statement.execute(sql);
         statement.close();
     }
@@ -262,6 +278,24 @@ public class DBService {
         return true;
     }
 
+    public boolean setLanguageToDB(String language) throws SQLException {
+        String sql ="update System set Language = '" + language + "' where id = 1";
+        this.statement.execute(sql);
+        statement.close();
+        return true;
+    }
+
+    public String getLanguageFromDB() throws SQLException {
+        String sql = "select LANGUAGE from System where id=1";
+        ResultSet resultSet = this.statement.executeQuery(sql);
+        String language = "";
+        if (resultSet.next()) {
+            language = resultSet.getString(1);
+        }
+        resultSet.close();
+        statement.close();
+        return language;
+    }
 
 
     public int getLenthOfRandomPasswordsFromDB() throws SQLException {
@@ -285,8 +319,6 @@ public class DBService {
     }
 
 
-
-
     public int getNumberOfBackupEntiresFromDB() throws SQLException {
         String sql = "select NumberOfBackupEntries from System where id=1";
         ResultSet resultSet = this.statement.executeQuery(sql);
@@ -300,14 +332,12 @@ public class DBService {
     }
 
 
-
     public boolean setNumberOfBackupEntiresToDB(int numberEntries) throws SQLException {
         String sql = "update System set NumberOfBackupEntries = '" + numberEntries + "' where id = 1";
         this.statement.execute(sql);
         statement.close();
         return true;
     }
-
 
 
     public ArrayList<String> getCategoryListFromDB() throws SQLException {
@@ -361,7 +391,7 @@ public class DBService {
 
 
     public int getNumberOfExistingRecycleBinEntriesForEntryId(String entryID) throws SQLException {
-        String sql = "select count(*) from Recycle_Bin where Entry_ID = '" + entryID +"'";
+        String sql = "select count(*) from Recycle_Bin where Entry_ID = '" + entryID + "'";
         ResultSet resultSet = this.statement.executeQuery(sql);
         int numberOfEntriesInRecycleBinForEntryId = -1;
         if (resultSet.next()) {
@@ -385,8 +415,50 @@ public class DBService {
         return oldestTimestampOfEntriesInRecycleBinForEntryId;
     }
 
+    //Hinzugefügt von EGLSEDER/KOPP :
 
+    /**
+     * createDatabaseTables()
+     * Erstellt die benötigten Tabellen, DB wird automatisch erstellt, falls nicht vorhanden.
+     */
 
+    public void createDatabaseTables() throws SQLException {
+        String sql = "CREATE TABLE \"Categorie\" ( `Categorie_ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `Categorie_Name` TEXT NOT NULL )";
+        String sql1 = "CREATE TABLE \"Entrys\" ( `DB_ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `Entry_ID` INTEGER NOT NULL, `Title` TEXT NOT NULL, `Username` TEXT NOT NULL, `Password` TEXT NOT NULL, `URL` TEXT, `Description` TEXT, `Categorie_ID` TEXT, `timestamp` INTEGER NOT NULL )";
+        String sql2 = "CREATE TABLE `Masterkey` ( `id` INTEGER, `password` TEXT )";
+        String sql3 = "CREATE TABLE \"Recycle_Bin\" ( `DB_ID` INTEGER NOT NULL, `Entry_ID` INTEGER NOT NULL, `Title` INTEGER NOT NULL, `Username` TEXT NOT NULL, `Password` TEXT NOT NULL, `URL` TEXT, `Description` TEXT, `Categorie_ID` INTEGER, `timestamp` INTEGER NOT NULL, PRIMARY KEY(`DB_ID`) )";
+        String sql4 = "CREATE TABLE \"System\" ( `ID` INTEGER NOT NULL, `Cache_Time` INTEGER NOT NULL, `Language` TEXT NOT NULL, `NumberOfBackupEntries` INTEGER, `LengthOfRandomPasswords` INTEGER, PRIMARY KEY(`ID`) )";
+        String sql5 = "Insert into \"System\" (`ID`, `Cache_Time`, `Language`, `NumberOfBackupEntries`, `LengthOfRandomPasswords`) values (1 , 15, 'en' , 3, 10)" ;
+        String sql6 =  "Insert into \"Masterkey\" ('id', 'password') values (1, '' )";
+        String sql7 = "Insert into \"Categorie\" ('Categorie_ID', 'Categorie_Name') " +
+                "values ( 0, 'Uncategorized'),"+
+                "(1, 'Finance')," +
+                "( 2, 'Social')," +
+                "(3, 'E-Mail')," +
+                "(4, 'Others')";
 
+        this.statement.execute(sql);
+        this.statement.execute(sql1);
+        this.statement.execute(sql2);
+        this.statement.execute(sql3);
+        this.statement.execute(sql4);
+        this.statement.execute(sql5);
+        this.statement.execute(sql6);
+        this.statement.execute(sql7);
+        statement.close();
+        //Hinzugefügt von EGLSEDER/KOPP :
+        /**
+         * createDatabaseTables()
+         * Erstellt die benötigten Tabellen, DB wird automatisch erstellt, falls nicht vorhanden.
+         */
 
+    }
+
+    public void checkIfDBTableExists() throws SQLException {
+        DatabaseMetaData dbm = connection.getMetaData();
+        ResultSet rs = dbm.getTables(null, null, "Masterkey", null);
+        if (!rs.next()) {
+            createDatabaseTables();
+        }
+    }
 }
