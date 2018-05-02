@@ -514,6 +514,10 @@ public class MainInterfaceController implements Initializable {
         treeView.getColumns().get(1).setText(bundle.getString("tableColumn.username"));
         treeView.getColumns().get(2).setText(bundle.getString("tableColumn.url"));
         treeView.getColumns().get(3).setText(bundle.getString("tableColumn.description"));
+        tableView_recylce.getColumns().get(0).setText(bundle.getString("tableColumn.title"));
+        tableView_recylce.getColumns().get(1).setText(bundle.getString("tableColumn.username"));
+        tableView_recylce.getColumns().get(2).setText(bundle.getString("tableColumn.url"));
+        tableView_recylce.getColumns().get(3).setText(bundle.getString("tableColumn.description"));
 
     }
 
