@@ -436,7 +436,6 @@ public class DBService {
                 "( 2, 'Social')," +
                 "(3, 'E-Mail')," +
                 "(4, 'Others')";
-
         this.statement.execute(sql);
         this.statement.execute(sql1);
         this.statement.execute(sql2);

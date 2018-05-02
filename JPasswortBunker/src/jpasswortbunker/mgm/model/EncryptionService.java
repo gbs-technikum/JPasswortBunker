@@ -54,9 +54,10 @@ public class EncryptionService {
         if (geheimeDaten == null) {
             return null;
         }
-        this.geheimeDatenByteArray = geheimeDaten.getBytes();
+        this.geheimeDatenByteArray = geheimeDaten.getBytes("UTF-8");
         cipher.init(Cipher.ENCRYPT_MODE, this.secretKeySpec);
         byte[] verschluesselteDatenByteArray = cipher.doFinal(geheimeDatenByteArray);
+
         return Base64.encodeBase64String(verschluesselteDatenByteArray);
     }
 

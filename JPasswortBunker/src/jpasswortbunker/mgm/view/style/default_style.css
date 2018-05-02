@@ -17,3 +17,8 @@
 #button{
     -fx-background-color: orange;
 }
+.button:focused{
+     -fx-background-color: lightgrey;
+     -fx-opacity: 0.5;
+     -fx-text-fill: black;
+ }
